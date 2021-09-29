@@ -5,11 +5,6 @@
 3. Exploiting dependent types
 4. Implement a Library / Framework
 
-Aggregate:
-- combine MSFs and Free monads?
-- Input: command
-- Output: events
-
 Implement it with BOTH with Java AND Haskell for direct comparison
 - Java Monolith
 - Haskell Monolith
@@ -23,6 +18,7 @@ We need an interesting and complex domain
 - do Story mapping
 - Define aggregates and contexts
 - Draw domain model
+
 
 Ideas
 - what about using Idris 2 and make use of dependent types?
@@ -60,4 +56,4 @@ Relevant Books / References
 - Strategic Monoliths
 - Haskell in Depth
 - FaDD Granin
--
+

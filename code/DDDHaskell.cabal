@@ -58,7 +58,8 @@ executable DDDHaskell
   -- other-extensions:
 
   -- Other library packages from which modules are imported.
-  build-depends:      base >= 4.15.0.0
+  -- NOTE: to support GHC 9.0.1, set base >= 4.15.0.0
+  build-depends:      base
                     , dunai
                     , free
 

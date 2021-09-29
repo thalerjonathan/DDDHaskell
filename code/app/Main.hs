@@ -4,7 +4,8 @@ import Aggregate
 
 main :: IO ()
 main = do
-  let agg = testAggregate
+  let s   = 0 :: Int
+      agg = aggregate s
 
   (agg', es) <- execCommand agg CommandA
   (_, _) <- execCommand agg' CommandB

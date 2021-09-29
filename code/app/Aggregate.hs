@@ -25,16 +25,18 @@ type AggregateProgram = Free AggregateLang
 
 type Aggregate = MSF AggregateProgram Command DomainEvent
 
+-- TODO: how can we have an aggregate root with multiple entities?
+
 -- TODO: an aggregate should not run in IO but be pure. probably use state monad 
 execCommand :: Aggregate -> Command -> IO (Aggregate, [DomainEvent])
 execCommand agg cmd = do
   (es, agg') <- interpret (unMSF agg cmd)
   return (agg', [es])
 
-testAggregate :: Aggregate
-testAggregate = proc cmd -> do
+aggregate :: s -> Aggregate
+aggregate s0 = feedback s0 (proc (cmd, s) -> do
   _ <- arrM handleCommand -< cmd
-  returnA -< EventA
+  returnA -< (EventA, s))
 
 foo :: AggregateProgram ()
 foo = liftF (Foo ())
