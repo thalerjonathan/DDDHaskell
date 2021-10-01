@@ -1,54 +1,15 @@
-# Referee Assignments
+# Banking System
 
-Manager
-- Managers see the declare availabilities of Referees 
-- Managers assign and withdraw Referees to Fixtures
-- Managers assign and withdraw Clubs to Fixtures
-- Managers re-schedule Fixtures
+account with transaction lines, belonging to a user, has an iban, is at a bank. Transactions are eventually consistent. Model ledger of transactions as an entity.
 
-Referees
-- Referees have a first and last name.
-- Referees may belong to a Club or not.
-- Referees declare and withdraw availabilities.
-- Referees are assigned to Fixtures.
-- Referees can also be withdrawn from an assignment.
-- Referees see their assignments.
-- Referees get notified when a Fixture they are assigned to is re-scheduled.
-- Referees can not be assigned to a Fixture as both 1st and 2nd referee.
-- Referees can be assigned to multiple Fixtures in a row only if they are taking place in the same venue.
-- Referees are notified by email when assigned to or withdrawn from a Fixture.
-- Referees have to accept or turn down an assignment prior to 7 days before the Fixture.
-
-Clubreferees
-- Clubreferees can only be assigned to Fixtures their Club got assigned to.
-- Clubreferees are assigned by ther Clubmanager.
-
-Fixtures
-- Fixtures take place at a given date and time, at a specific venue, within a specific league, with a home and away team.
-- Fixtures can be re-scheduled, that is their date and time can change.
-
-Assignments
-- Assignments are made final and result in notifications when they are committed.
-- Unless committed, changes to assignments can be made arbitrarily without resulting in notifications to Referees, nor will Referees or Clubs see assignments or changes to existing assignments.
-
-Clubs
-- Clubs can be assigned to Fixtures.
-- Clubs have a name.
-
-Clubmanager
-- Clubmanagers can assign Clubreferees to the Fixtures the Clubmanagers Club is assigned to.
-- Assignments through the Clubmanager are visible immediately and result in an immediate notification by e-mail to the assigned Clubreferee.
-
-Teams
-- Teams have a name.
-- Teams belong to a Club.
-
-Venues
-- Venues have a name and a location.
-
-## Scenarios
-
-Scenario 1
-A Referee declares an availability for a Fixture. The Manager assigns the Referee to the given fixture as 1st referee. As 2nd referee the Manager assigns a Club. The Manager committs the changes. The Referee and the Club receive notifications and can see the assignments. The Referee confirms the assignment. The Clubmanager of the Club assigns a Clubreferee to the Fixture.
-
-Scenario 2
+1. List customers by applying a flexible and complex filter.
+2. List the orders when looking at a specific customer.
+3. An order can have many different lines. An order can have many order lines, where each line describes a product and the number of that product that has been ordered.
+4. Concurrency conflict detection is important.
+5. A customer may not owe us more than a certain amount of money.
+6. An order may not have a total value of more than one million Euro. This limit (unlike the previous one) is a system-wide rule.
+7. Each order and customer should have a unique and user-friendly number. Gaps in the series are acceptable.
+8. Before a new customer is considered acceptable, their credit will be checked with a credit institute.
+9. An order must have a customer; an order line must have an order. There must not be any orders with an undefined customer. The same goes for order lines: they must belong to an order.
+10. Saving an order and its lines should be atomic.
+11. Orders have an acceptance status that is changed by the user. 
