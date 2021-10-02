@@ -1,4 +1,5 @@
 # Banking System
+TODO: define a precise Ubiquitous Language
 
 account with transaction lines, belonging to a user, has an iban, is at a bank. Transactions are eventually consistent. Model ledger of transactions as an entity.
 
