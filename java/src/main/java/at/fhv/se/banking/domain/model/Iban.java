@@ -1,21 +1,22 @@
 package at.fhv.se.banking.domain.model;
 
-public class CustomerId {
-    private final int id;
+public class Iban {
+    private final String iban;
 
-    public CustomerId(int id) {
-        this.id = id;
+    public Iban(String iban) {
+        this.iban = iban;
     }
-    
-    public int id() {
-        return this.id;
+
+    @Override
+    public String toString() {
+        return iban;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = prime * result + ((iban == null) ? 0 : iban.hashCode());
         return result;
     }
 
@@ -27,8 +28,11 @@ public class CustomerId {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        CustomerId other = (CustomerId) obj;
-        if (id != other.id)
+        Iban other = (Iban) obj;
+        if (iban == null) {
+            if (other.iban != null)
+                return false;
+        } else if (!iban.equals(other.iban))
             return false;
         return true;
     }

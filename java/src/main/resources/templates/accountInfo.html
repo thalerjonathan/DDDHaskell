@@ -4,11 +4,13 @@
         <title>Banking</title>
     </head>
     <body>
-        <h1>Banking Customers</h1>
-        
+        <h1 th:text="${info.info.iban}"></h1>
+
+        <a href="/">Back</a>
+
         <ul>
-            <li th:each="n : ${customers}">
-                <a th:href="@{/customer(name=${n.name})}" th:text="${n.name}"></a>
+            <li th:each="tx : ${info.txLines}">
+                
             </li>
         </ul>
     </body>

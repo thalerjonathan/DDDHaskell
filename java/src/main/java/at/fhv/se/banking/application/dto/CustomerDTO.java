@@ -1,5 +1,7 @@
 package at.fhv.se.banking.application.dto;
 
+import java.util.Objects;
+
 public class CustomerDTO {
     private String name;
 
@@ -27,6 +29,8 @@ public class CustomerDTO {
         }
 
         public CustomerDTO build() {
+            Objects.requireNonNull(this.instance.name, "name must be set in CustomerDTO");
+
             return this.instance;
         }
     }

@@ -2,6 +2,8 @@ package at.fhv.se.banking.application.dto;
 
 import java.util.Objects;
 
+import at.fhv.se.banking.domain.model.Iban;
+
 public class TXLineDTO {
     private String iban;
     private String name;
@@ -27,14 +29,14 @@ public class TXLineDTO {
     }
 
     public static class Builder {
-        private TXLineDTO instance;
+        private final TXLineDTO instance;
 
         private Builder() {
             this.instance = new TXLineDTO();
         }
 
-        public Builder fromIban(String iban) {
-            this.instance.iban = iban;
+        public Builder fromIban(Iban iban) {
+            this.instance.iban = iban.toString();
             return this;
         }
 

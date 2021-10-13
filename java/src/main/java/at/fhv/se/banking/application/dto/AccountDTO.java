@@ -1,53 +1,51 @@
 package at.fhv.se.banking.application.dto;
 
-public class AccountDTO {
-    private String iban;
-    private double balance;
-    private String type;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
+public class AccountDTO {
+    private AccountInfoDTO accountInfo;
+    private final List<TXLineDTO> txLines;
+    
     public static Builder create() {
         return new Builder();
     }
 
-    public String iban() {
-        return this.iban;
+    public AccountInfoDTO info() {
+        return this.accountInfo;
     }
 
-    public String type() {
-        return this.type;
-    }
-
-    public double balance() {
-        return this.balance;
+    public List<TXLineDTO> txLines() {
+        return Collections.unmodifiableList(this.txLines);
     }
 
     private AccountDTO() {
+        this.txLines = new ArrayList<>();
     }
 
     public static class Builder {
-        private AccountDTO instance;
+        private final AccountDTO instance;
 
         private Builder() {
             this.instance = new AccountDTO();
         }
 
-        public Builder withIban(String iban) {
-            this.instance.iban = iban;
+        public Builder withInfo(AccountInfoDTO info) {
+            this.instance.accountInfo = info;
             return this;
         }
 
-        public Builder withType(String type) {
-            this.instance.type = type;
-            return this;
-        }
-
-        public Builder withBalance(double balance) {
-            this.instance.balance = balance;
+        public Builder addTXLine(TXLineDTO txLine) {
+            this.instance.txLines.add(txLine);
             return this;
         }
 
         public AccountDTO build() {
+            Objects.requireNonNull(this.instance.accountInfo, "accountInfo must be set in AccountDTO");
+
             return this.instance;
-        }
+        }   
     }
 }

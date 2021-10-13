@@ -3,10 +3,11 @@ package at.fhv.se.banking.application.dto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class CustomerInfoDTO {
     private CustomerDTO customer;
-    private List<AccountInfoDTO> accountInfos;
+    private final List<AccountInfoDTO> accountInfos;
 
     public static Builder create() {
         return new Builder();
@@ -25,7 +26,7 @@ public class CustomerInfoDTO {
     }
 
     public static class Builder {
-        private CustomerInfoDTO instance;
+        private final CustomerInfoDTO instance;
 
         private Builder() {
             this.instance = new CustomerInfoDTO();
@@ -42,6 +43,8 @@ public class CustomerInfoDTO {
         }
 
         public CustomerInfoDTO build() {
+            Objects.requireNonNull(this.instance.customer, "customer must be set in CustomerInfoDTO");
+
             return this.instance;
         }
     }
