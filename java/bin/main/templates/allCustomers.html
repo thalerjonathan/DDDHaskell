@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Banking Customers</title>
+    </head>
+    <body>
+        <ul>
+            <li th:each="n : ${customers}">
+                <a th:href="@{/customer(name=${n.name})}" th:text="${n.name}"></a>
+            </li>
+        </ul>
+    </body>
+</html>
