@@ -13,7 +13,7 @@ public class AccountDTO {
         return new Builder();
     }
 
-    public AccountInfoDTO info() {
+    public AccountInfoDTO getInfo() {
         return this.accountInfo;
     }
 

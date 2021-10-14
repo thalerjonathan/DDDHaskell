@@ -56,7 +56,7 @@ public class BankingViewController {
     @GetMapping(GET_ACCOUNT_URL)
     public String accountInfo(@RequestParam("iban") String iban, @RequestParam("customer") String customer, Model model) {
         final AccountDTO accountInfo = this.accountService.accountByIban(iban);
-        model.addAttribute("info", accountInfo);
+        model.addAttribute("account", accountInfo);
         model.addAttribute("customer", customer);
         
         return ACCOUNT_VIEW;

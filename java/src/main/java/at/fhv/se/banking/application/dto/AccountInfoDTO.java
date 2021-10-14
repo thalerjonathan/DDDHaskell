@@ -14,7 +14,7 @@ public class AccountInfoDTO {
         return new Builder();
     }
 
-    public String iban() {
+    public String getIban() {
         return this.iban;
     }
 

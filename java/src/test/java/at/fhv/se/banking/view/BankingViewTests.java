@@ -11,12 +11,12 @@ import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlHeading1;
 import com.gargoylesoftware.htmlunit.html.HtmlHeading2;
 import com.gargoylesoftware.htmlunit.html.HtmlHeading3;
+import com.gargoylesoftware.htmlunit.html.HtmlHiddenInput;
 import com.gargoylesoftware.htmlunit.html.HtmlListItem;
 import com.gargoylesoftware.htmlunit.html.HtmlNumberInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlParagraph;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
-import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -121,11 +121,11 @@ public class BankingViewTests {
         TestingUtils.assertEqualsCollections(accountButtons, customerInfo.accountInfos(), (ab, dto) -> {
             String href = ab.getHrefAttribute();
             String expectedHref = "/account?iban=" +
-                dto.iban().replace(" ", "%20") + "&customer=" + 
+                dto.getIban().replace(" ", "%20") + "&customer=" + 
                 customerName;
 
             String accountLinkText = ab.asNormalizedText();
-            String expectedLinkText = dto.iban() + " " + dto.balance();
+            String expectedLinkText = dto.getIban() + " " + dto.balance();
             
             assertEquals(expectedHref, href);
             assertEquals(expectedLinkText, accountLinkText);
@@ -173,7 +173,7 @@ public class BankingViewTests {
 
         assertEquals(customerName, customerHeading.getTextContent());
         assertEquals(iban.toString(), accountIbanHeading.getTextContent());
-        assertEquals("" + accountInfo.info().balance(), accountBalanceHeading.getTextContent());
+        assertEquals("" + accountInfo.getInfo().balance(), accountBalanceHeading.getTextContent());
 
         TestingUtils.assertEqualsCollections(txItems, accountInfo.txLines(), (li, txLine) -> {
             final List<HtmlParagraph> ps = li.getByXPath("p");
@@ -207,8 +207,14 @@ public class BankingViewTests {
         final HtmlForm depositForm = accountPageBefore.getFormByName("deposit");
         final HtmlSubmitInput submitButton = depositForm.getInputByName("submit");
         final HtmlNumberInput amountInput = depositForm.getInputByName("amount");
+        Object o = depositForm.getInputByName("deposit_hidden_customer");
 
+        final HtmlHiddenInput customerHiddenInput = accountPageBefore.getElementByName("deposit_hidden_customer");
+        final HtmlHiddenInput ibanHiddenInput = accountPageBefore.getElementByName("deposit_hidden_iban");
+        
         amountInput.type("" + depositAmount);
+        customerHiddenInput.setValueAttribute(customerName);
+        ibanHiddenInput.setValueAttribute(iban.toString());
 
         HtmlPage accountPageAfter = submitButton.click();
 
