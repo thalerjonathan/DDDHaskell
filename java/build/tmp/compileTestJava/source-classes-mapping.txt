@@ -1,10 +1,10 @@
-at/fhv/se/banking/application/BankingServiceTests.java
- at.fhv.se.banking.application.BankingServiceTests
+at/fhv/se/banking/utils/TestingUtils.java
+ at.fhv.se.banking.utils.TestingUtils
 at/fhv/se/banking/bdd/features/Transferring.java
  at.fhv.se.banking.bdd.features.Transferring
 at/fhv/se/banking/bdd/runner/CucumberTestRunner.java
  at.fhv.se.banking.bdd.runner.CucumberTestRunner
-at/fhv/se/banking/utils/TestingUtils.java
- at.fhv.se.banking.utils.TestingUtils
 at/fhv/se/banking/view/BankingViewTests.java
  at.fhv.se.banking.view.BankingViewTests
+at/fhv/se/banking/application/CustomerServiceTests.java
+ at.fhv.se.banking.application.CustomerServiceTests

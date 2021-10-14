@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BankingViewController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">banking</a> &gt; <a href="index.source.html" class="el_package">at.fhv.se.banking.view</a> &gt; <span class="el_source">BankingViewController.java</span></div><h1>BankingViewController.java</h1><pre class="source lang-java linenums">package at.fhv.se.banking.view;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import at.fhv.se.banking.application.api.AccountService;
+import at.fhv.se.banking.application.api.CustomerService;
+import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
+import at.fhv.se.banking.application.dto.AccountDTO;
+import at.fhv.se.banking.application.dto.CustomerDTO;
+import at.fhv.se.banking.application.dto.CustomerInfoDTO;
+import at.fhv.se.banking.view.forms.AccountForm;
+
+@Controller
+<span class="fc" id="L23">public class BankingViewController {</span>
+    
+    private static final String GET_ALL_CUSTOMERS_URL = &quot;/&quot;;
+    private static final String GET_CUSTOMER_INFO_URL = &quot;/customer&quot;;
+    private static final String GET_ACCOUNT_URL = &quot;/account&quot;;
+
+    private static final String POST_DEPOSIT_URL = &quot;/account/deposit&quot;;
+    private static final String POST_WITHDRAW_URL = &quot;/account/withdraw&quot;;
+    private static final String POST_TRANSFER_URL = &quot;/account/transfer&quot;;
+
+    private static final String ALL_CUSTOMERS_VIEW = &quot;allCustomers&quot;;
+    private static final String CUSTOMER_INFO_VIEW = &quot;customerInfo&quot;;
+    private static final String ACCOUNT_VIEW = &quot;account&quot;;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private AccountService accountService;
+
+    @GetMapping(GET_ALL_CUSTOMERS_URL)
+    public String allCustomers(Model model) {
+<span class="fc" id="L45">        final List&lt;CustomerDTO&gt; customers = this.customerService.listAll();</span>
+<span class="fc" id="L46">        model.addAttribute(&quot;customers&quot;, customers);</span>
+
+<span class="fc" id="L48">        return ALL_CUSTOMERS_VIEW;</span>
+    }
+
+    @GetMapping(GET_CUSTOMER_INFO_URL)
+    public String customerInfo(@RequestParam(&quot;name&quot;) String customerName, Model model) {
+        try {
+<span class="fc" id="L54">            CustomerInfoDTO customerInfo = this.customerService.informationFor(customerName);</span>
+<span class="fc" id="L55">            model.addAttribute(&quot;info&quot;, customerInfo);</span>
+<span class="nc" id="L56">        } catch (CustomerNotFoundException e) {</span>
+            // TODO Auto-generated catch block
+<span class="nc" id="L58">            e.printStackTrace();</span>
+<span class="fc" id="L59">        }</span>
+
+<span class="fc" id="L61">        return CUSTOMER_INFO_VIEW;</span>
+    }
+
+    @GetMapping(GET_ACCOUNT_URL)
+    public String accountInfo(@RequestParam(&quot;iban&quot;) String iban, @RequestParam(&quot;customer&quot;) String customer, Model model) {
+<span class="fc" id="L66">        final AccountDTO accountInfo = this.accountService.accountByIban(iban);</span>
+<span class="fc" id="L67">        final AccountForm form = new AccountForm(customer, iban);</span>
+
+<span class="fc" id="L69">        model.addAttribute(&quot;account&quot;, accountInfo);</span>
+<span class="fc" id="L70">        model.addAttribute(&quot;form&quot;, form);</span>
+        
+<span class="fc" id="L72">        return ACCOUNT_VIEW;</span>
+    }
+
+    @PostMapping(POST_DEPOSIT_URL)
+    public ModelAndView depositAccount(@ModelAttribute AccountForm form, Model model) {
+<span class="fc" id="L77">        this.accountService.deposit(form.getIban(), form.getAmount());</span>
+
+<span class="fc" id="L79">        return new ModelAndView(&quot;redirect:&quot; + </span>
+            GET_ACCOUNT_URL + 
+            &quot;?iban=&quot; + 
+<span class="fc" id="L82">            form.getIban() + </span>
+            &quot;&amp;customer=&quot; + 
+<span class="fc" id="L84">            form.getCustomer());</span>
+    }
+
+    @PostMapping(POST_WITHDRAW_URL)
+    public ModelAndView withdrawAccount(@ModelAttribute AccountForm form, Model model) {
+<span class="fc" id="L89">        this.accountService.withdraw(form.getIban(), form.getAmount());</span>
+
+<span class="fc" id="L91">        return new ModelAndView(&quot;redirect:&quot; + </span>
+            GET_ACCOUNT_URL + 
+            &quot;?iban=&quot; + 
+<span class="fc" id="L94">            form.getIban() + </span>
+            &quot;&amp;customer=&quot; + 
+<span class="fc" id="L96">            form.getCustomer());</span>
+    }
+
+    @PostMapping(POST_TRANSFER_URL)
+    public ModelAndView transferAccount(@ModelAttribute AccountForm form,
+            @RequestParam(&quot;receivingIban&quot;) String receivingIban, 
+            @RequestParam(&quot;reference&quot;) String reference, 
+            Model model) {
+<span class="fc" id="L104">        this.accountService.transfer(form.getIban(), receivingIban, form.getAmount(), reference);</span>
+
+<span class="fc" id="L106">        return new ModelAndView(&quot;redirect:&quot; + </span>
+            GET_ACCOUNT_URL + 
+            &quot;?iban=&quot; + 
+<span class="fc" id="L109">            form.getIban() + </span>
+            &quot;&amp;customer=&quot; + 
+<span class="fc" id="L111">            form.getCustomer());</span>
+    } 
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

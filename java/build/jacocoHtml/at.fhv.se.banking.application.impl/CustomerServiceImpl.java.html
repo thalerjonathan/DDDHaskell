@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">banking</a> &gt; <a href="index.source.html" class="el_package">at.fhv.se.banking.application.impl</a> &gt; <span class="el_source">CustomerServiceImpl.java</span></div><h1>CustomerServiceImpl.java</h1><pre class="source lang-java linenums">package at.fhv.se.banking.application.impl;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import at.fhv.se.banking.application.api.CustomerService;
+import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
+import at.fhv.se.banking.application.dto.AccountInfoDTO;
+import at.fhv.se.banking.application.dto.CustomerDTO;
+import at.fhv.se.banking.application.dto.CustomerInfoDTO;
+import at.fhv.se.banking.domain.model.Account;
+import at.fhv.se.banking.domain.model.Customer;
+import at.fhv.se.banking.domain.model.CustomerId;
+import at.fhv.se.banking.domain.repositories.AccountRepository;
+import at.fhv.se.banking.domain.repositories.CustomerRepository;
+
+@Component
+<span class="fc" id="L22">public class CustomerServiceImpl implements CustomerService {</span>
+
+    @Autowired
+    private CustomerRepository customerRepo;
+
+    @Autowired
+    private AccountRepository accountRepo;
+
+    @Override
+    public List&lt;CustomerDTO&gt; listAll() {
+<span class="fc" id="L32">        List&lt;Customer&gt; customers = this.customerRepo.all();</span>
+<span class="fc" id="L33">        return customers.stream().map(c -&gt; CustomerDTO.create().withName(c.name()).build()).collect(Collectors.toList());</span>
+    }
+
+    @Override
+    public CustomerInfoDTO informationFor(String id) throws CustomerNotFoundException {
+<span class="fc" id="L38">        CustomerId customerId = new CustomerId(id);</span>
+<span class="fc" id="L39">        Optional&lt;Customer&gt; customerOpt = this.customerRepo.byId(customerId);</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (customerOpt.isEmpty()) {</span>
+<span class="fc" id="L41">            throw new CustomerNotFoundException();</span>
+        }
+
+<span class="fc" id="L44">        Customer customer = customerOpt.get();</span>
+<span class="fc" id="L45">        List&lt;Account&gt; accounts = accountRepo.forCustomer(customerId);</span>
+
+<span class="fc" id="L47">        CustomerInfoDTO.Builder builder = CustomerInfoDTO.create();</span>
+<span class="fc" id="L48">        builder.withCustomer(CustomerDTO.create()</span>
+<span class="fc" id="L49">            .withName(customer.name())</span>
+<span class="fc" id="L50">            .build());</span>
+
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (Account a : accounts) {</span>
+<span class="fc" id="L53">            builder.addAccountInfo(AccountInfoDTO.create()</span>
+<span class="fc" id="L54">                .withBalance(a.balance())</span>
+<span class="fc" id="L55">                .withIban(a.iban())</span>
+<span class="fc" id="L56">                .withType(a.type())</span>
+<span class="fc" id="L57">                .build());</span>
+<span class="fc" id="L58">        }</span>
+
+<span class="fc" id="L60">        return builder.build();</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

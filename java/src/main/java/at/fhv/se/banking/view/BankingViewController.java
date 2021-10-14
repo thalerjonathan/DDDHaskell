@@ -13,10 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import at.fhv.se.banking.application.api.AccountService;
 import at.fhv.se.banking.application.api.CustomerService;
+import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.AccountDTO;
 import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.CustomerInfoDTO;
-import at.fhv.se.banking.view.forms.DepositWithdrawForm;
+import at.fhv.se.banking.view.forms.AccountForm;
 
 @Controller
 public class BankingViewController {
@@ -26,6 +27,8 @@ public class BankingViewController {
     private static final String GET_ACCOUNT_URL = "/account";
 
     private static final String POST_DEPOSIT_URL = "/account/deposit";
+    private static final String POST_WITHDRAW_URL = "/account/withdraw";
+    private static final String POST_TRANSFER_URL = "/account/transfer";
 
     private static final String ALL_CUSTOMERS_VIEW = "allCustomers";
     private static final String CUSTOMER_INFO_VIEW = "customerInfo";
@@ -47,8 +50,13 @@ public class BankingViewController {
 
     @GetMapping(GET_CUSTOMER_INFO_URL)
     public String customerInfo(@RequestParam("name") String customerName, Model model) {
-        final CustomerInfoDTO customerInfo = this.customerService.informationFor(customerName);
-        model.addAttribute("info", customerInfo);
+        try {
+            CustomerInfoDTO customerInfo = this.customerService.informationFor(customerName);
+            model.addAttribute("info", customerInfo);
+        } catch (CustomerNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         return CUSTOMER_INFO_VIEW;
     }
@@ -56,14 +64,44 @@ public class BankingViewController {
     @GetMapping(GET_ACCOUNT_URL)
     public String accountInfo(@RequestParam("iban") String iban, @RequestParam("customer") String customer, Model model) {
         final AccountDTO accountInfo = this.accountService.accountByIban(iban);
+        final AccountForm form = new AccountForm(customer, iban);
+
         model.addAttribute("account", accountInfo);
-        model.addAttribute("customer", customer);
+        model.addAttribute("form", form);
         
         return ACCOUNT_VIEW;
     }
 
     @PostMapping(POST_DEPOSIT_URL)
-    public ModelAndView depositAccount(@ModelAttribute DepositWithdrawForm form, Model model) {
+    public ModelAndView depositAccount(@ModelAttribute AccountForm form, Model model) {
+        this.accountService.deposit(form.getIban(), form.getAmount());
+
+        return new ModelAndView("redirect:" + 
+            GET_ACCOUNT_URL + 
+            "?iban=" + 
+            form.getIban() + 
+            "&customer=" + 
+            form.getCustomer());
+    }
+
+    @PostMapping(POST_WITHDRAW_URL)
+    public ModelAndView withdrawAccount(@ModelAttribute AccountForm form, Model model) {
+        this.accountService.withdraw(form.getIban(), form.getAmount());
+
+        return new ModelAndView("redirect:" + 
+            GET_ACCOUNT_URL + 
+            "?iban=" + 
+            form.getIban() + 
+            "&customer=" + 
+            form.getCustomer());
+    }
+
+    @PostMapping(POST_TRANSFER_URL)
+    public ModelAndView transferAccount(@ModelAttribute AccountForm form,
+            @RequestParam("receivingIban") String receivingIban, 
+            @RequestParam("reference") String reference, 
+            Model model) {
+        this.accountService.transfer(form.getIban(), receivingIban, form.getAmount(), reference);
 
         return new ModelAndView("redirect:" + 
             GET_ACCOUNT_URL + 

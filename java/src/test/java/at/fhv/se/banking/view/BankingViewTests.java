@@ -1,6 +1,7 @@
 package at.fhv.se.banking.view;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,12 +12,12 @@ import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlHeading1;
 import com.gargoylesoftware.htmlunit.html.HtmlHeading2;
 import com.gargoylesoftware.htmlunit.html.HtmlHeading3;
-import com.gargoylesoftware.htmlunit.html.HtmlHiddenInput;
 import com.gargoylesoftware.htmlunit.html.HtmlListItem;
 import com.gargoylesoftware.htmlunit.html.HtmlNumberInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlParagraph;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,6 +38,7 @@ import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.CustomerInfoDTO;
 import at.fhv.se.banking.application.dto.TXLineDTO;
 import at.fhv.se.banking.domain.model.AccountType;
+import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.Iban;
 import at.fhv.se.banking.utils.TestingUtils;
 
@@ -70,8 +72,14 @@ public class BankingViewTests {
     public void given_customers_when_welcomepage_displaycustomers() throws Exception {
         // given
         List<CustomerDTO> customers = Arrays.asList(
-            CustomerDTO.create().withName("Alice").build(),
-            CustomerDTO.create().withName("Bob").build()
+            CustomerDTO.create()
+                .withName("Alice")
+                .withId(new CustomerId("1"))
+                .build(),
+            CustomerDTO.create()
+                .withName("Bob")
+                .withId(new CustomerId("2"))
+                .build()
         );
         Mockito.when(customerService.listAll()).thenReturn(customers);
 
@@ -85,7 +93,7 @@ public class BankingViewTests {
         TestingUtils.assertEqualsCollections(customerButtons, customers, (cb, dto) -> {
             String href = cb.getHrefAttribute();
 
-            assertEquals("/customer?name=" + dto.name(), href);
+            assertEquals("/customer?id=" + dto.id(), href);
             assertEquals(dto.name(), cb.asNormalizedText());
         });
     }
@@ -95,7 +103,10 @@ public class BankingViewTests {
         // given
         String customerName = "Jonathan";
         CustomerInfoDTO customerInfo = CustomerInfoDTO.create()
-            .withCustomer(CustomerDTO.create().withName(customerName).build())
+            .withCustomer(CustomerDTO.create()
+                .withName(customerName)
+                .withId(new CustomerId("1"))
+                .build())
             .addAccountInfo(AccountInfoDTO.create()
                 .withIban(new Iban("AT12 3456 7890 1234"))
                 .withType(AccountType.GIRO)
@@ -136,7 +147,7 @@ public class BankingViewTests {
     public void given_account_when_view_displayinfoandalltransactions() throws Exception {
         // given
         String customerName = "Jonathan";
-        Iban iban = new Iban("AT 12 3456 7890 1234");
+        Iban iban = new Iban("AT12 3456 7890 1234");
         AccountDTO accountInfo = AccountDTO.create()
             .withInfo(AccountInfoDTO.create()
                 .withIban(iban)
@@ -186,13 +197,14 @@ public class BankingViewTests {
     }
 
     @Test
-    public void given_account_when_deposit_thendisplay() throws Exception {
+    public void given_account_when_deposit_thendisplaynewbalance() throws Exception {
         // given
-        double depositAmount = 1000.0;
-        double balance = 1234.0;
-
         String customerName = "Jonathan";
-        Iban iban = new Iban("AT 12 3456 7890 1234");
+        double balance = 1234.0;
+        Iban iban = new Iban("AT12 3456 7890 1234");
+
+        double depositAmount = 1000.0;
+
         AccountDTO accountInfo = AccountDTO.create()
             .withInfo(AccountInfoDTO.create()
                 .withIban(iban)
@@ -200,30 +212,131 @@ public class BankingViewTests {
                 .withBalance(balance)
                 .build())
             .build();
-        Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
-        HtmlPage accountPageBefore = this.webClient.getPage("http://localhost/account?iban=" + iban + "&customer=" + customerName);
 
+        AccountDTO newAccountInfo = AccountDTO.create()
+            .withInfo(AccountInfoDTO.create()
+                .withIban(iban)
+                .withType(AccountType.GIRO)
+                .withBalance(balance + depositAmount)
+                .build())
+            .build();
+
+        Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
+    
         // when
+        final HtmlPage accountPageBefore = this.webClient.getPage("http://localhost/account?iban=" + iban + "&customer=" + customerName);
         final HtmlForm depositForm = accountPageBefore.getFormByName("deposit");
         final HtmlSubmitInput submitButton = depositForm.getInputByName("submit");
         final HtmlNumberInput amountInput = depositForm.getInputByName("amount");
-        Object o = depositForm.getInputByName("deposit_hidden_customer");
 
-        final HtmlHiddenInput customerHiddenInput = accountPageBefore.getElementByName("deposit_hidden_customer");
-        final HtmlHiddenInput ibanHiddenInput = accountPageBefore.getElementByName("deposit_hidden_iban");
-        
-        amountInput.type("" + depositAmount);
-        customerHiddenInput.setValueAttribute(customerName);
-        ibanHiddenInput.setValueAttribute(iban.toString());
-
-        HtmlPage accountPageAfter = submitButton.click();
+        // type in the amount
+        amountInput.setValueAttribute("" + depositAmount);
+        // return different account info with new balance after deposit upon account page redirect
+        Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(newAccountInfo);
+        // submit form to post the deposit
+        final HtmlPage accountPageAfter = submitButton.click();
 
         // then
         final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) accountPageAfter.getByXPath("//h3").get(0);
-
-        assertEquals(balance + depositAmount, accountBalanceHeading.getTextContent());
+        Mockito.verify(accountService, times(1)).deposit(iban.toString(), depositAmount);
+        assertEquals("" + (balance + depositAmount), accountBalanceHeading.getTextContent());
     }
 
-    // TODO write test for withdraw form
-    // TODO write test for transfer form
+    @Test
+    public void given_account_when_withdraw_thendisplaynewbalance() throws Exception {
+        // given
+        double balance = 1234.0;
+        String customerName = "Jonathan";
+        Iban iban = new Iban("AT12 3456 7890 1234");
+
+        double withdrawAmount = 1000.0;
+
+        AccountDTO accountInfo = AccountDTO.create()
+            .withInfo(AccountInfoDTO.create()
+                .withIban(iban)
+                .withType(AccountType.GIRO)
+                .withBalance(balance)
+                .build())
+            .build();
+
+        AccountDTO newAccountInfo = AccountDTO.create()
+            .withInfo(AccountInfoDTO.create()
+                .withIban(iban)
+                .withType(AccountType.GIRO)
+                .withBalance(balance - withdrawAmount)
+                .build())
+            .build();
+
+        Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
+    
+        // when
+        final HtmlPage accountPageBefore = this.webClient.getPage("http://localhost/account?iban=" + iban + "&customer=" + customerName);
+        final HtmlForm withdrawForm = accountPageBefore.getFormByName("withdraw");
+        final HtmlSubmitInput submitButton = withdrawForm.getInputByName("submit");
+        final HtmlNumberInput amountInput = withdrawForm.getInputByName("amount");
+
+        // type in the amount
+        amountInput.setValueAttribute("" + withdrawAmount);
+        // return different account info with new balance after deposit upon account page redirect
+        Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(newAccountInfo);
+        // submit form to post the deposit
+        final HtmlPage accountPageAfter = submitButton.click();
+
+        // then
+        final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) accountPageAfter.getByXPath("//h3").get(0);
+        Mockito.verify(accountService, times(1)).withdraw(iban.toString(), withdrawAmount);
+        assertEquals("" + (balance - withdrawAmount), accountBalanceHeading.getTextContent());
+    }
+
+    @Test
+    public void given_account_when_transfer_thendisplaynewbalance() throws Exception {
+        // given
+        double balance = 1234.0;
+        String customerName = "Jonathan";
+        Iban iban = new Iban("AT12 3456 7890 1234");
+
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+        double transferAmount = 1000.0;
+        String reference = "Rent";
+
+        AccountDTO accountInfo = AccountDTO.create()
+            .withInfo(AccountInfoDTO.create()
+                .withIban(iban)
+                .withType(AccountType.GIRO)
+                .withBalance(balance)
+                .build())
+            .build();
+
+        AccountDTO newAccountInfo = AccountDTO.create()
+            .withInfo(AccountInfoDTO.create()
+                .withIban(iban)
+                .withType(AccountType.GIRO)
+                .withBalance(balance - transferAmount)
+                .build())
+            .build();
+
+        Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
+    
+        // when
+        final HtmlPage accountPageBefore = this.webClient.getPage("http://localhost/account?iban=" + iban + "&customer=" + customerName);
+        final HtmlForm transferForm = accountPageBefore.getFormByName("transfer");
+        final HtmlSubmitInput submitButton = transferForm.getInputByName("submit");
+        final HtmlTextInput receivingIbanInput = transferForm.getInputByName("receivingIban");
+        final HtmlNumberInput amountInput = transferForm.getInputByName("amount");
+        final HtmlTextInput referenceInput = transferForm.getInputByName("reference");
+
+        // type in the amount
+        receivingIbanInput.setValueAttribute(receivingIban.toString());
+        amountInput.setValueAttribute("" + transferAmount);
+        referenceInput.setValueAttribute(reference);
+        // return different account info with new balance after deposit upon account page redirect
+        Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(newAccountInfo);
+        // submit form to post the deposit
+        final HtmlPage accountPageAfter = submitButton.click();
+
+        // then
+        final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) accountPageAfter.getByXPath("//h3").get(0);
+        Mockito.verify(accountService, times(1)).transfer(iban.toString(), receivingIban.toString(), transferAmount, reference);
+        assertEquals("" + (balance - transferAmount), accountBalanceHeading.getTextContent());
+    }
 }

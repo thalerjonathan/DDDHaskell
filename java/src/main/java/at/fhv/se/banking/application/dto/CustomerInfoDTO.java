@@ -48,4 +48,35 @@ public class CustomerInfoDTO {
             return this.instance;
         }
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((accountInfos == null) ? 0 : accountInfos.hashCode());
+        result = prime * result + ((customer == null) ? 0 : customer.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        CustomerInfoDTO other = (CustomerInfoDTO) obj;
+        if (accountInfos == null) {
+            if (other.accountInfos != null)
+                return false;
+        } else if (!accountInfos.equals(other.accountInfos))
+            return false;
+        if (customer == null) {
+            if (other.customer != null)
+                return false;
+        } else if (!customer.equals(other.customer))
+            return false;
+        return true;
+    }
 }
