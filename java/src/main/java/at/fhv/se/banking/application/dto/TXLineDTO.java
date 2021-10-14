@@ -7,6 +7,7 @@ import at.fhv.se.banking.domain.model.Iban;
 public class TXLineDTO {
     private String iban;
     private String name;
+    private String reference;
     private double amount;
 
     public static Builder create() {
@@ -25,6 +26,10 @@ public class TXLineDTO {
         return this.amount;
     }
 
+    public String reference() {
+        return this.reference;
+    }
+
     private TXLineDTO() {
     }
 
@@ -35,18 +40,23 @@ public class TXLineDTO {
             this.instance = new TXLineDTO();
         }
 
-        public Builder fromIban(Iban iban) {
+        public Builder withIban(Iban iban) {
             this.instance.iban = iban.toString();
             return this;
         }
 
-        public Builder fromName(String name) {
+        public Builder withName(String name) {
             this.instance.name = name;
             return this;
         }
 
         public Builder ofAmount(double amount) {
             this.instance.amount = amount;
+            return this;
+        }
+
+        public Builder withReference(String reference) {
+            this.instance.reference = reference;
             return this;
         }
 
