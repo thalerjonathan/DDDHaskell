@@ -10,9 +10,13 @@ import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlHeading1;
 import com.gargoylesoftware.htmlunit.html.HtmlHeading2;
+import com.gargoylesoftware.htmlunit.html.HtmlHeading3;
 import com.gargoylesoftware.htmlunit.html.HtmlListItem;
+import com.gargoylesoftware.htmlunit.html.HtmlNumberInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlParagraph;
+import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,7 +79,7 @@ public class BankingViewTests {
         HtmlPage page = this.webClient.getPage("http://localhost/");
 
         // then
-        assertEquals("Banking", page.getTitleText(), "Mismatching page title text");
+        assertEquals("Banking", page.getTitleText());
 
         final List<HtmlAnchor> customerButtons = page.getByXPath("//ul//a");
         TestingUtils.assertEqualsCollections(customerButtons, customers, (cb, dto) -> {
@@ -111,8 +115,8 @@ public class BankingViewTests {
         final HtmlHeading1 heading = (HtmlHeading1) page.getByXPath("//h1").get(0);
         final List<HtmlAnchor> accountButtons = page.getByXPath("//ul//a");
 
-        assertEquals("Banking", page.getTitleText(), "Mismatching page title text");
-        assertEquals(customerName, heading.getTextContent(), "Mismatching page title text");
+        assertEquals("Banking", page.getTitleText());
+        assertEquals(customerName, heading.getTextContent());
 
         TestingUtils.assertEqualsCollections(accountButtons, customerInfo.accountInfos(), (ab, dto) -> {
             String href = ab.getHrefAttribute();
@@ -161,13 +165,15 @@ public class BankingViewTests {
         // then
         final HtmlHeading1 customerHeading = (HtmlHeading1) page.getByXPath("//h1").get(0);
         final HtmlHeading2 accountIbanHeading = (HtmlHeading2) page.getByXPath("//h2").get(0);
+        final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) page.getByXPath("//h3").get(0);
 
         final List<HtmlListItem> txItems = page.getByXPath("//ul//li");
     
-        assertEquals("Banking", page.getTitleText(), "Mismatching page title text");
+        assertEquals("Banking", page.getTitleText());
 
-        assertEquals(customerName, customerHeading.getTextContent(), "Mismatching heading title text");
-        assertEquals(iban.toString(), accountIbanHeading.getTextContent(), "Mismatching heading title text");
+        assertEquals(customerName, customerHeading.getTextContent());
+        assertEquals(iban.toString(), accountIbanHeading.getTextContent());
+        assertEquals("" + accountInfo.info().balance(), accountBalanceHeading.getTextContent());
 
         TestingUtils.assertEqualsCollections(txItems, accountInfo.txLines(), (li, txLine) -> {
             final List<HtmlParagraph> ps = li.getByXPath("p");
@@ -182,24 +188,34 @@ public class BankingViewTests {
     @Test
     public void given_account_when_deposit_thendisplay() throws Exception {
         // given
+        double depositAmount = 1000.0;
+        double balance = 1234.0;
+
         String customerName = "Jonathan";
         Iban iban = new Iban("AT 12 3456 7890 1234");
         AccountDTO accountInfo = AccountDTO.create()
             .withInfo(AccountInfoDTO.create()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
-                .withBalance(1234.5)
+                .withBalance(balance)
                 .build())
             .build();
-
         Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
+        HtmlPage accountPageBefore = this.webClient.getPage("http://localhost/account?iban=" + iban + "&customer=" + customerName);
 
         // when
-        HtmlPage page = this.webClient.getPage("http://localhost/account?iban=" + iban + "&customer=" + customerName);
+        final HtmlForm depositForm = accountPageBefore.getFormByName("deposit");
+        final HtmlSubmitInput submitButton = depositForm.getInputByName("submit");
+        final HtmlNumberInput amountInput = depositForm.getInputByName("amount");
+
+        amountInput.type("" + depositAmount);
+
+        HtmlPage accountPageAfter = submitButton.click();
 
         // then
-        final HtmlForm depositForm = page.getFormByName("deposit");
-        depositForm.getInputByName("amount");
+        final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) accountPageAfter.getByXPath("//h3").get(0);
+
+        assertEquals(balance + depositAmount, accountBalanceHeading.getTextContent());
     }
 
     // TODO write test for withdraw form
