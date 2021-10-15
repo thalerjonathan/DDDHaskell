@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 
 import at.fhv.se.banking.application.api.CustomerService;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
-import at.fhv.se.banking.application.dto.AccountInfoDTO;
+import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.CustomerDTO;
-import at.fhv.se.banking.application.dto.CustomerInfoDTO;
+import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
 import at.fhv.se.banking.domain.model.Account;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
@@ -30,11 +30,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDTO> listAll() {
         List<Customer> customers = this.customerRepo.all();
-        return customers.stream().map(c -> CustomerDTO.create().withName(c.name()).build()).collect(Collectors.toList());
+        return customers.stream().map(c -> CustomerDTO.create()
+            .withId(c.customerId())
+            .withName(c.name())
+            .build()).collect(Collectors.toList());
     }
 
     @Override
-    public CustomerInfoDTO informationFor(String id) throws CustomerNotFoundException {
+    public CustomerDetailsDTO detailsFor(String id) throws CustomerNotFoundException {
         CustomerId customerId = new CustomerId(id);
         Optional<Customer> customerOpt = this.customerRepo.byId(customerId);
         if (customerOpt.isEmpty()) {
@@ -44,13 +47,14 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerOpt.get();
         List<Account> accounts = accountRepo.forCustomer(customerId);
 
-        CustomerInfoDTO.Builder builder = CustomerInfoDTO.create();
+        CustomerDetailsDTO.Builder builder = CustomerDetailsDTO.create();
         builder.withCustomer(CustomerDTO.create()
+            .withId(customerId)
             .withName(customer.name())
             .build());
 
         for (Account a : accounts) {
-            builder.addAccountInfo(AccountInfoDTO.create()
+            builder.addAccount(AccountDetailsDTO.create()
                 .withBalance(a.balance())
                 .withIban(a.iban())
                 .withType(a.type())

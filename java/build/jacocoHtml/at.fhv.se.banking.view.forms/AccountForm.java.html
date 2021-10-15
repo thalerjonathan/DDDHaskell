@@ -2,46 +2,50 @@
 
 public class AccountForm {
     private double amount;
-    private String customer;
+    private String customerId;
+    private String customerName;
     private String iban;
 
     // required by spring/thymeleaf
-<span class="fc" id="L9">    public AccountForm() {</span>
-<span class="fc" id="L10">    }</span>
+<span class="fc" id="L10">    public AccountForm() {</span>
+<span class="fc" id="L11">    }</span>
 
-<span class="fc" id="L12">    public AccountForm(String customer, String iban) {</span>
-<span class="fc" id="L13">        this.customer = customer;</span>
-<span class="fc" id="L14">        this.iban = iban;</span>
-<span class="fc" id="L15">    }</span>
-
-<span class="nc" id="L17">    public AccountForm(double amount, String customer, String iban) {</span>
-<span class="nc" id="L18">        this.amount = amount;</span>
-<span class="nc" id="L19">        this.customer = customer;</span>
-<span class="nc" id="L20">        this.iban = iban;</span>
-<span class="nc" id="L21">    }</span>
+<span class="fc" id="L13">    public AccountForm(String customerId, String customerName, String iban) {</span>
+<span class="fc" id="L14">        this.customerId = customerId;</span>
+<span class="fc" id="L15">        this.customerName = customerName;</span>
+<span class="fc" id="L16">        this.iban = iban;</span>
+<span class="fc" id="L17">    }</span>
 
     public double getAmount() {
-<span class="fc" id="L24">        return amount;</span>
+<span class="fc" id="L20">        return amount;</span>
     }
 
     public void setAmount(double amount) {
-<span class="fc" id="L28">        this.amount = amount;</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L24">        this.amount = amount;</span>
+<span class="fc" id="L25">    }</span>
 
-    public String getCustomer() {
-<span class="fc" id="L32">        return customer;</span>
+    public String getCustomerId() {
+<span class="fc" id="L28">        return customerId;</span>
     }
 
-    public void setCustomer(String customer) {
-<span class="fc" id="L36">        this.customer = customer;</span>
-<span class="fc" id="L37">    }</span>
+    public void setCustomerId(String customerId) {
+<span class="fc" id="L32">        this.customerId = customerId;</span>
+<span class="fc" id="L33">    }</span>
+
+    public String getCustomerName() {
+<span class="fc" id="L36">        return customerName;</span>
+    }
+
+    public void setCustomerName(String customerName) {
+<span class="fc" id="L40">        this.customerName = customerName;</span>
+<span class="fc" id="L41">    }</span>
 
     public String getIban() {
-<span class="fc" id="L40">        return iban;</span>
+<span class="fc" id="L44">        return iban;</span>
     }
     
     public void setIban(String iban) {
-<span class="fc" id="L44">        this.iban = iban;</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L48">        this.iban = iban;</span>
+<span class="fc" id="L49">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

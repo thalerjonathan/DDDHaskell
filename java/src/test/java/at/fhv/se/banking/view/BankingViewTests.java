@@ -3,6 +3,7 @@ package at.fhv.se.banking.view;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,10 +33,12 @@ import org.springframework.web.context.WebApplicationContext;
 
 import at.fhv.se.banking.application.api.AccountService;
 import at.fhv.se.banking.application.api.CustomerService;
+import at.fhv.se.banking.application.api.exceptions.AccountNotFoundException;
+import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.AccountDTO;
-import at.fhv.se.banking.application.dto.AccountInfoDTO;
+import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.CustomerDTO;
-import at.fhv.se.banking.application.dto.CustomerInfoDTO;
+import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
 import at.fhv.se.banking.application.dto.TXLineDTO;
 import at.fhv.se.banking.domain.model.AccountType;
 import at.fhv.se.banking.domain.model.CustomerId;
@@ -102,25 +105,26 @@ public class BankingViewTests {
     public void given_customer_when_view_displaydetailsandaccounts() throws Exception {
         // given
         String customerName = "Jonathan";
-        CustomerInfoDTO customerInfo = CustomerInfoDTO.create()
+        CustomerId customerId = new CustomerId("1");
+        CustomerDetailsDTO customerInfo = CustomerDetailsDTO.create()
             .withCustomer(CustomerDTO.create()
                 .withName(customerName)
-                .withId(new CustomerId("1"))
+                .withId(customerId)
                 .build())
-            .addAccountInfo(AccountInfoDTO.create()
+            .addAccount(AccountDetailsDTO.create()
                 .withIban(new Iban("AT12 3456 7890 1234"))
                 .withType(AccountType.GIRO)
                 .withBalance(1234.5).build())
-            .addAccountInfo(AccountInfoDTO.create()
+            .addAccount(AccountDetailsDTO.create()
                 .withIban(new Iban("AT98 7654 3210 9876"))
                 .withType(AccountType.SAVINGS)
                 .withBalance(1234.5).build())
             .build();
 
-        Mockito.when(customerService.informationFor(customerName)).thenReturn(customerInfo);
+        Mockito.when(customerService.detailsFor(customerId.id())).thenReturn(customerInfo);
 
         // when
-        HtmlPage page = this.webClient.getPage("http://localhost/customer?name=" + customerName);
+        HtmlPage page = this.webClient.getPage("http://localhost/customer?id=" + customerId.id());
 
         // then
         final HtmlHeading1 heading = (HtmlHeading1) page.getByXPath("//h1").get(0);
@@ -129,10 +133,11 @@ public class BankingViewTests {
         assertEquals("Banking", page.getTitleText());
         assertEquals(customerName, heading.getTextContent());
 
-        TestingUtils.assertEqualsCollections(accountButtons, customerInfo.accountInfos(), (ab, dto) -> {
+        TestingUtils.assertEqualsCollections(accountButtons, customerInfo.accounts(), (ab, dto) -> {
             String href = ab.getHrefAttribute();
             String expectedHref = "/account?iban=" +
-                dto.getIban().replace(" ", "%20") + "&customer=" + 
+                dto.getIban().replace(" ", "%20") + "&id=" + 
+                customerId.id() + "&name=" + 
                 customerName;
 
             String accountLinkText = ab.asNormalizedText();
@@ -144,12 +149,31 @@ public class BankingViewTests {
     }
 
     @Test
+    public void given_customernotfound_when_view_displaydetailsandaccounts_thenerrorpage() throws Exception {
+        // given
+        String expectedErrorMessage = "Error: Customer not found!";
+        CustomerId customerId = new CustomerId("1");
+        Mockito.when(customerService.detailsFor(customerId.id())).thenThrow(new CustomerNotFoundException());
+
+        // when
+        HtmlPage page = this.webClient.getPage("http://localhost/customer?id=" + customerId.id());
+
+        // then
+        final HtmlHeading1 errorMessage = (HtmlHeading1) page.getByXPath("//h1").get(0);
+
+        assertEquals("Banking", page.getTitleText());
+        assertEquals(expectedErrorMessage, errorMessage.getTextContent());
+    }
+
+    @Test
     public void given_account_when_view_displayinfoandalltransactions() throws Exception {
         // given
+        String customerId = "1";
         String customerName = "Jonathan";
         Iban iban = new Iban("AT12 3456 7890 1234");
+
         AccountDTO accountInfo = AccountDTO.create()
-            .withInfo(AccountInfoDTO.create()
+            .withDeails(AccountDetailsDTO.create()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(1234.5)
@@ -158,12 +182,14 @@ public class BankingViewTests {
                 .withIban(new Iban("AT98 7654 3210 9876"))
                 .withName("Hans Huber")
                 .ofAmount(-100.0)
+                .atTime(LocalDateTime.now())
                 .withReference("Lunch")
                 .build())
             .addTXLine(TXLineDTO.create()
                 .withIban(new Iban("AT11 2222 3333 4444"))
                 .withName("Max Mustermann")
                 .ofAmount(200.0)
+                .atTime(LocalDateTime.now())
                 .withReference("Rent")
                 .build())
             .build();
@@ -171,7 +197,7 @@ public class BankingViewTests {
         Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
 
         // when
-        HtmlPage page = this.webClient.getPage("http://localhost/account?iban=" + iban + "&customer=" + customerName);
+        final HtmlPage page = this.fetchAccountPage(iban.toString(), customerId, customerName);
 
         // then
         final HtmlHeading1 customerHeading = (HtmlHeading1) page.getByXPath("//h1").get(0);
@@ -184,7 +210,7 @@ public class BankingViewTests {
 
         assertEquals(customerName, customerHeading.getTextContent());
         assertEquals(iban.toString(), accountIbanHeading.getTextContent());
-        assertEquals("" + accountInfo.getInfo().balance(), accountBalanceHeading.getTextContent());
+        assertEquals("" + accountInfo.details().balance(), accountBalanceHeading.getTextContent());
 
         TestingUtils.assertEqualsCollections(txItems, accountInfo.txLines(), (li, txLine) -> {
             final List<HtmlParagraph> ps = li.getByXPath("p");
@@ -197,16 +223,36 @@ public class BankingViewTests {
     }
 
     @Test
+    public void given_noaccount_when_viewdisplayinfoandalltransactions_then_showerrorpage() throws Exception {
+        // given
+        String expectedErrorMessage = "Error: Account not found!";
+        String customerName = "Jonathan";
+        CustomerId customerId = new CustomerId("1");
+        Iban iban = new Iban("AT12 3456 7890 1234");
+        Mockito.when(accountService.accountByIban(iban.toString())).thenThrow(new AccountNotFoundException(""));
+
+        // when
+        final HtmlPage page = this.fetchAccountPage(iban.toString(), customerId.id(), customerName);
+
+        // then
+        final HtmlHeading1 errorMessage = (HtmlHeading1) page.getByXPath("//h1").get(0);
+
+        assertEquals("Banking", page.getTitleText());
+        assertEquals(expectedErrorMessage, errorMessage.getTextContent());
+    }
+
+    @Test
     public void given_account_when_deposit_thendisplaynewbalance() throws Exception {
         // given
-        String customerName = "Jonathan";
         double balance = 1234.0;
+        String customerId = "1";
+        String customerName = "Jonathan";
+        
+        double depositAmount = 1000.0;
         Iban iban = new Iban("AT12 3456 7890 1234");
 
-        double depositAmount = 1000.0;
-
         AccountDTO accountInfo = AccountDTO.create()
-            .withInfo(AccountInfoDTO.create()
+            .withDeails(AccountDetailsDTO.create()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance)
@@ -214,7 +260,7 @@ public class BankingViewTests {
             .build();
 
         AccountDTO newAccountInfo = AccountDTO.create()
-            .withInfo(AccountInfoDTO.create()
+            .withDeails(AccountDetailsDTO.create()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance + depositAmount)
@@ -224,7 +270,7 @@ public class BankingViewTests {
         Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
     
         // when
-        final HtmlPage accountPageBefore = this.webClient.getPage("http://localhost/account?iban=" + iban + "&customer=" + customerName);
+        final HtmlPage accountPageBefore = this.fetchAccountPage(iban.toString(), customerId, customerName);
         final HtmlForm depositForm = accountPageBefore.getFormByName("deposit");
         final HtmlSubmitInput submitButton = depositForm.getInputByName("submit");
         final HtmlNumberInput amountInput = depositForm.getInputByName("amount");
@@ -243,16 +289,98 @@ public class BankingViewTests {
     }
 
     @Test
+    public void given_account_when_deposit_and_noaccount_thenshowerror() throws Exception {
+        // given
+        String expectedErrorMessage = "Error: Account not found!";
+        double balance = 1234.0;
+        String customerId = "1";
+        String customerName = "Jonathan";
+        
+        double depositAmount = 1000.0;
+        Iban iban = new Iban("AT12 3456 7890 1234");
+
+        AccountDTO accountInfo = AccountDTO.create()
+            .withDeails(AccountDetailsDTO.create()
+                .withIban(iban)
+                .withType(AccountType.GIRO)
+                .withBalance(balance)
+                .build())
+            .build();
+
+        Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
+    
+        // when
+        final HtmlPage accountPageBefore = this.fetchAccountPage(iban.toString(), customerId, customerName);
+        final HtmlForm depositForm = accountPageBefore.getFormByName("deposit");
+        final HtmlSubmitInput submitButton = depositForm.getInputByName("submit");
+        final HtmlNumberInput amountInput = depositForm.getInputByName("amount");
+
+        // type in the amount
+        amountInput.setValueAttribute("" + depositAmount);
+        // return different account info with new balance after deposit upon account page redirect
+        Mockito.doThrow(new AccountNotFoundException("")).when(accountService).deposit(iban.toString(), depositAmount);
+        // submit form to post the deposit
+        final HtmlPage errorPage = submitButton.click();
+
+        // then
+        final HtmlHeading1 errorMessage = (HtmlHeading1) errorPage.getByXPath("//h1").get(0);
+        assertEquals("Banking", errorPage.getTitleText());
+        assertEquals(expectedErrorMessage, errorMessage.getTextContent());
+    }
+
+    @Test
+    public void given_account_when_withdraw_andnoaccount_thendisplaynewbalance() throws Exception {
+        // given
+        String expectedErrorMessage = "Error: Account not found!";
+        
+        double balance = 1234.0;
+        String customerId = "1";
+        String customerName = "Jonathan";
+
+        double withdrawAmount = 1000.0;
+        Iban iban = new Iban("AT12 3456 7890 1234");
+
+        AccountDTO accountInfo = AccountDTO.create()
+            .withDeails(AccountDetailsDTO.create()
+                .withIban(iban)
+                .withType(AccountType.GIRO)
+                .withBalance(balance)
+                .build())
+            .build();
+
+        Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
+    
+        // when
+        final HtmlPage accountPageBefore = this.fetchAccountPage(iban.toString(), customerId, customerName);
+        final HtmlForm withdrawForm = accountPageBefore.getFormByName("withdraw");
+        final HtmlSubmitInput submitButton = withdrawForm.getInputByName("submit");
+        final HtmlNumberInput amountInput = withdrawForm.getInputByName("amount");
+
+        // type in the amount
+        amountInput.setValueAttribute("" + withdrawAmount);
+        // return different account info with new balance after deposit upon account page redirect
+        Mockito.doThrow(new AccountNotFoundException("")).when(accountService).withdraw(iban.toString(), withdrawAmount);
+        // submit form to post the deposit
+        final HtmlPage errorPage = submitButton.click();
+
+        // then
+        final HtmlHeading1 errorMessage = (HtmlHeading1) errorPage.getByXPath("//h1").get(0);
+        assertEquals("Banking", errorPage.getTitleText());
+        assertEquals(expectedErrorMessage, errorMessage.getTextContent());
+    }
+
+    @Test
     public void given_account_when_withdraw_thendisplaynewbalance() throws Exception {
         // given
         double balance = 1234.0;
+        String customerId = "1";
         String customerName = "Jonathan";
-        Iban iban = new Iban("AT12 3456 7890 1234");
 
         double withdrawAmount = 1000.0;
+        Iban iban = new Iban("AT12 3456 7890 1234");
 
         AccountDTO accountInfo = AccountDTO.create()
-            .withInfo(AccountInfoDTO.create()
+            .withDeails(AccountDetailsDTO.create()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance)
@@ -260,7 +388,7 @@ public class BankingViewTests {
             .build();
 
         AccountDTO newAccountInfo = AccountDTO.create()
-            .withInfo(AccountInfoDTO.create()
+            .withDeails(AccountDetailsDTO.create()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance - withdrawAmount)
@@ -270,7 +398,7 @@ public class BankingViewTests {
         Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
     
         // when
-        final HtmlPage accountPageBefore = this.webClient.getPage("http://localhost/account?iban=" + iban + "&customer=" + customerName);
+        final HtmlPage accountPageBefore = this.fetchAccountPage(iban.toString(), customerId, customerName);
         final HtmlForm withdrawForm = accountPageBefore.getFormByName("withdraw");
         final HtmlSubmitInput submitButton = withdrawForm.getInputByName("submit");
         final HtmlNumberInput amountInput = withdrawForm.getInputByName("amount");
@@ -288,19 +416,21 @@ public class BankingViewTests {
         assertEquals("" + (balance - withdrawAmount), accountBalanceHeading.getTextContent());
     }
 
+    // TODO: refactor, combine
     @Test
     public void given_account_when_transfer_thendisplaynewbalance() throws Exception {
         // given
         double balance = 1234.0;
+        String customerId = "1";
         String customerName = "Jonathan";
         Iban iban = new Iban("AT12 3456 7890 1234");
 
-        Iban receivingIban = new Iban("AT98 7654 3210 9876");
-        double transferAmount = 1000.0;
         String reference = "Rent";
-
+        double transferAmount = 1000.0;
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+        
         AccountDTO accountInfo = AccountDTO.create()
-            .withInfo(AccountInfoDTO.create()
+            .withDeails(AccountDetailsDTO.create()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance)
@@ -308,7 +438,7 @@ public class BankingViewTests {
             .build();
 
         AccountDTO newAccountInfo = AccountDTO.create()
-            .withInfo(AccountInfoDTO.create()
+            .withDeails(AccountDetailsDTO.create()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance - transferAmount)
@@ -318,7 +448,7 @@ public class BankingViewTests {
         Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
     
         // when
-        final HtmlPage accountPageBefore = this.webClient.getPage("http://localhost/account?iban=" + iban + "&customer=" + customerName);
+        final HtmlPage accountPageBefore = this.fetchAccountPage(iban.toString(), customerId, customerName);
         final HtmlForm transferForm = accountPageBefore.getFormByName("transfer");
         final HtmlSubmitInput submitButton = transferForm.getInputByName("submit");
         final HtmlTextInput receivingIbanInput = transferForm.getInputByName("receivingIban");
@@ -338,5 +468,105 @@ public class BankingViewTests {
         final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) accountPageAfter.getByXPath("//h3").get(0);
         Mockito.verify(accountService, times(1)).transfer(iban.toString(), receivingIban.toString(), transferAmount, reference);
         assertEquals("" + (balance - transferAmount), accountBalanceHeading.getTextContent());
+    }
+
+    // TODO: refactor, combine
+    @Test
+    public void given_account_when_transfer_and_noaccount_thenshowerror() throws Exception {
+        // given
+        String expectedErrorMessage = "Error: Account not found!";
+
+        double balance = 1234.0;
+        String customerId = "1";
+        String customerName = "Jonathan";
+        Iban iban = new Iban("AT12 3456 7890 1234");
+
+        String reference = "Rent";
+        double transferAmount = 1000.0;
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+        
+        AccountDTO accountInfo = AccountDTO.create()
+            .withDeails(AccountDetailsDTO.create()
+                .withIban(iban)
+                .withType(AccountType.GIRO)
+                .withBalance(balance)
+                .build())
+            .build();
+
+        Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
+    
+        // when
+        final HtmlPage accountPageBefore = this.fetchAccountPage(iban.toString(), customerId, customerName);
+        final HtmlForm transferForm = accountPageBefore.getFormByName("transfer");
+        final HtmlSubmitInput submitButton = transferForm.getInputByName("submit");
+        final HtmlTextInput receivingIbanInput = transferForm.getInputByName("receivingIban");
+        final HtmlNumberInput amountInput = transferForm.getInputByName("amount");
+        final HtmlTextInput referenceInput = transferForm.getInputByName("reference");
+
+        // type in the amount
+        receivingIbanInput.setValueAttribute(receivingIban.toString());
+        amountInput.setValueAttribute("" + transferAmount);
+        referenceInput.setValueAttribute(reference);
+        // return different account info with new balance after deposit upon account page redirect
+        Mockito.doThrow(new AccountNotFoundException("")).when(accountService).transfer(iban.toString(), receivingIban.toString(), transferAmount, reference);
+        // submit form to post the deposit
+        final HtmlPage errorPage = submitButton.click();
+
+        // then
+        final HtmlHeading1 errorMessage = (HtmlHeading1) errorPage.getByXPath("//h1").get(0);
+        assertEquals("Banking", errorPage.getTitleText());
+        assertEquals(expectedErrorMessage, errorMessage.getTextContent());
+    }
+
+    // TODO: refactor, combine
+    @Test
+    public void given_account_when_transfer_and_nocustomer_thenshowerror() throws Exception {
+        // given
+        String expectedErrorMessage = "Error: Customer not found!";
+        
+        double balance = 1234.0;
+        String customerId = "1";
+        String customerName = "Jonathan";
+        Iban iban = new Iban("AT12 3456 7890 1234");
+
+        String reference = "Rent";
+        double transferAmount = 1000.0;
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+        
+        AccountDTO accountInfo = AccountDTO.create()
+            .withDeails(AccountDetailsDTO.create()
+                .withIban(iban)
+                .withType(AccountType.GIRO)
+                .withBalance(balance)
+                .build())
+            .build();
+
+        Mockito.when(accountService.accountByIban(iban.toString())).thenReturn(accountInfo);
+    
+        // when
+        final HtmlPage accountPageBefore = this.fetchAccountPage(iban.toString(), customerId, customerName);
+        final HtmlForm transferForm = accountPageBefore.getFormByName("transfer");
+        final HtmlSubmitInput submitButton = transferForm.getInputByName("submit");
+        final HtmlTextInput receivingIbanInput = transferForm.getInputByName("receivingIban");
+        final HtmlNumberInput amountInput = transferForm.getInputByName("amount");
+        final HtmlTextInput referenceInput = transferForm.getInputByName("reference");
+
+        // type in the amount
+        receivingIbanInput.setValueAttribute(receivingIban.toString());
+        amountInput.setValueAttribute("" + transferAmount);
+        referenceInput.setValueAttribute(reference);
+        // return different account info with new balance after deposit upon account page redirect
+        Mockito.doThrow(new CustomerNotFoundException("")).when(accountService).transfer(iban.toString(), receivingIban.toString(), transferAmount, reference);
+        // submit form to post the deposit
+        final HtmlPage errorPage = submitButton.click();
+
+        // then
+        final HtmlHeading1 errorMessage = (HtmlHeading1) errorPage.getByXPath("//h1").get(0);
+        assertEquals("Banking", errorPage.getTitleText());
+        assertEquals(expectedErrorMessage, errorMessage.getTextContent());
+    }
+
+    private HtmlPage fetchAccountPage(String iban, String customerId, String customerName) throws Exception {
+        return this.webClient.getPage("http://localhost/account?iban=" + iban + "&id=" + customerId + "&name=" + customerName);
     }
 }

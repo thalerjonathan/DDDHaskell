@@ -4,3 +4,5 @@ Customers in the banking system have a Name and Address. Customers can have mult
 Customers can withdraw and depositing Money but only from/in to a Giro Account. Each withdrawing transaction has a fee of 0.1€, depositing is free. After withdrawing or depositing Money, the Account should immediately reflect the new balance.
 
 Customers can transfer Money between Giro Accounts but only up to a limit of 5000€ per transaction. Transferring money between accounts always takes some time, however the Money is withdrawn from the sending Account immediately and is reflected in the balance.
+
+TODO: check for concurrent modifications

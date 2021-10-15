@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class AccountDTO {
-    private AccountInfoDTO accountInfo;
+    private AccountDetailsDTO details;
     private final List&lt;TXLineDTO&gt; txLines;
     
     public static Builder create() {
 <span class="fc" id="L13">        return new Builder();</span>
     }
 
-    public AccountInfoDTO getInfo() {
-<span class="fc" id="L17">        return this.accountInfo;</span>
+    public AccountDetailsDTO details() {
+<span class="fc" id="L17">        return this.details;</span>
     }
 
     public List&lt;TXLineDTO&gt; txLines() {
@@ -32,8 +32,8 @@ public class AccountDTO {
 <span class="fc" id="L32">            this.instance = new AccountDTO();</span>
 <span class="fc" id="L33">        }</span>
 
-        public Builder withInfo(AccountInfoDTO info) {
-<span class="fc" id="L36">            this.instance.accountInfo = info;</span>
+        public Builder withDeails(AccountDetailsDTO details) {
+<span class="fc" id="L36">            this.instance.details = details;</span>
 <span class="fc" id="L37">            return this;</span>
         }
 
@@ -43,10 +43,41 @@ public class AccountDTO {
         }
 
         public AccountDTO build() {
-<span class="fc" id="L46">            Objects.requireNonNull(this.instance.accountInfo, &quot;accountInfo must be set in AccountDTO&quot;);</span>
+<span class="fc" id="L46">            Objects.requireNonNull(this.instance.details, &quot;details must be set in AccountDTO&quot;);</span>
 
 <span class="fc" id="L48">            return this.instance;</span>
         }   
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L54">        final int prime = 31;</span>
+<span class="nc" id="L55">        int result = 1;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        result = prime * result + ((details == null) ? 0 : details.hashCode());</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        result = prime * result + ((txLines == null) ? 0 : txLines.hashCode());</span>
+<span class="nc" id="L58">        return result;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (this == obj)</span>
+<span class="nc" id="L64">            return true;</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        if (obj == null)</span>
+<span class="nc" id="L66">            return false;</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (getClass() != obj.getClass())</span>
+<span class="nc" id="L68">            return false;</span>
+<span class="fc" id="L69">        AccountDTO other = (AccountDTO) obj;</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (details == null) {</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            if (other.details != null)</span>
+<span class="nc" id="L72">                return false;</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        } else if (!details.equals(other.details))</span>
+<span class="nc" id="L74">            return false;</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (txLines == null) {</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">            if (other.txLines != null)</span>
+<span class="nc" id="L77">                return false;</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        } else if (!txLines.equals(other.txLines))</span>
+<span class="nc" id="L79">            return false;</span>
+<span class="fc" id="L80">        return true;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

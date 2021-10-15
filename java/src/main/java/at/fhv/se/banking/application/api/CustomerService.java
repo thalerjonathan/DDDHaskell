@@ -4,10 +4,10 @@ import java.util.List;
 
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.CustomerDTO;
-import at.fhv.se.banking.application.dto.CustomerInfoDTO;
+import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
 
 public interface CustomerService {
 
     List<CustomerDTO> listAll();
-    CustomerInfoDTO informationFor(String customerId) throws CustomerNotFoundException;
+    CustomerDetailsDTO detailsFor(String customerId) throws CustomerNotFoundException;
 }

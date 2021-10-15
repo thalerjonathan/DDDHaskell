@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="at.fhv.se.banking.view.BankingViewTests" tests="6" skipped="0" failures="0" errors="0" timestamp="2021-10-14T20:52:36" hostname="zazengine" time="3.318">
+<testsuite name="at.fhv.se.banking.view.BankingViewTests" tests="12" skipped="0" failures="0" errors="0" timestamp="2021-10-15T12:51:33" hostname="zazengine" time="2.727">
   <properties/>
-  <testcase name="given_account_when_deposit_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="2.497"/>
-  <testcase name="given_account_when_view_displayinfoandalltransactions()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.065"/>
-  <testcase name="given_customer_when_view_displaydetailsandaccounts()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.458"/>
-  <testcase name="given_account_when_withdraw_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.075"/>
-  <testcase name="given_customers_when_welcomepage_displaycustomers()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.043"/>
-  <testcase name="given_account_when_transfer_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.17"/>
-  <system-out><![CDATA[22:52:28.330 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
-22:52:28.372 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
-22:52:28.461 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [at.fhv.se.banking.view.BankingViewTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
-22:52:28.499 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [at.fhv.se.banking.view.BankingViewTests]: class path resource [at/fhv/se/banking/view/BankingViewTests-context.xml] does not exist
-22:52:28.500 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [at.fhv.se.banking.view.BankingViewTests]: class path resource [at/fhv/se/banking/view/BankingViewTestsContext.groovy] does not exist
-22:52:28.500 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [at.fhv.se.banking.view.BankingViewTests]: no resource found for suffixes {-context.xml, Context.groovy}.
-22:52:28.502 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [at.fhv.se.banking.view.BankingViewTests]: BankingViewTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-22:52:28.637 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [at.fhv.se.banking.view.BankingViewTests]
-22:52:28.787 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/home/ionathan/gitrepos/DDDHaskell/java/build/classes/java/main/at/fhv/se/banking/BankingApplication.class]
-22:52:28.788 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration at.fhv.se.banking.BankingApplication for test class at.fhv.se.banking.view.BankingViewTests
-22:52:28.988 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [at.fhv.se.banking.view.BankingViewTests]: using defaults.
-22:52:28.990 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-22:52:29.035 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@1c4bb97a, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@3000a1af, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@1d5edf69, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@b90e060, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@4a510801, org.springframework.test.context.support.DirtiesContextTestExecutionListener@7f69d53d, org.springframework.test.context.transaction.TransactionalTestExecutionListener@14a7e82e, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@18b8993a, org.springframework.test.context.event.EventPublishingTestExecutionListener@5a6b9b2c, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@6b9a6d61, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@40571ea4, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@1c7a2edd, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@1ace6485, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@2287f3d8, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@5add7b12]
-22:52:29.044 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@6dc9424a testClass = BankingViewTests, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@1c1416d9 testClass = BankingViewTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@7f1e8fe5, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@6d1fc0eb, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@1e39cb29, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6895567c, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@6c2619c0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@21ae8702, org.springframework.test.context.web.socket.MockServerContainerContextCustomizer@40609aa6, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@5aa4c939], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true]], class annotated with @DirtiesContext [false] with mode [null].
-22:52:29.131 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}
+  <testcase name="given_account_when_transfer_and_noaccount_thenshowerror()" classname="at.fhv.se.banking.view.BankingViewTests" time="1.629"/>
+  <testcase name="given_account_when_deposit_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.104"/>
+  <testcase name="given_account_when_withdraw_andnoaccount_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.061"/>
+  <testcase name="given_account_when_view_displayinfoandalltransactions()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.074"/>
+  <testcase name="given_customernotfound_when_view_displaydetailsandaccounts_thenerrorpage()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.099"/>
+  <testcase name="given_customer_when_view_displaydetailsandaccounts()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.418"/>
+  <testcase name="given_noaccount_when_viewdisplayinfoandalltransactions_then_showerrorpage()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.028"/>
+  <testcase name="given_account_when_withdraw_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.065"/>
+  <testcase name="given_customers_when_welcomepage_displaycustomers()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.028"/>
+  <testcase name="given_account_when_deposit_and_noaccount_thenshowerror()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.052"/>
+  <testcase name="given_account_when_transfer_and_nocustomer_thenshowerror()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.066"/>
+  <testcase name="given_account_when_transfer_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.077"/>
+  <system-out><![CDATA[14:51:25.698 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+14:51:25.737 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+14:51:25.822 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [at.fhv.se.banking.view.BankingViewTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+14:51:25.856 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [at.fhv.se.banking.view.BankingViewTests]: class path resource [at/fhv/se/banking/view/BankingViewTests-context.xml] does not exist
+14:51:25.858 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [at.fhv.se.banking.view.BankingViewTests]: class path resource [at/fhv/se/banking/view/BankingViewTestsContext.groovy] does not exist
+14:51:25.859 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [at.fhv.se.banking.view.BankingViewTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+14:51:25.861 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [at.fhv.se.banking.view.BankingViewTests]: BankingViewTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:51:25.980 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [at.fhv.se.banking.view.BankingViewTests]
+14:51:26.149 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/home/ionathan/gitrepos/DDDHaskell/java/build/classes/java/main/at/fhv/se/banking/BankingApplication.class]
+14:51:26.152 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration at.fhv.se.banking.BankingApplication for test class at.fhv.se.banking.view.BankingViewTests
+14:51:26.450 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [at.fhv.se.banking.view.BankingViewTests]: using defaults.
+14:51:26.451 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+14:51:26.506 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@b34a7a5, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@4bbee723, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@6c3c0881, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@8c884e6, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@26ef03d5, org.springframework.test.context.support.DirtiesContextTestExecutionListener@1ad47fd4, org.springframework.test.context.transaction.TransactionalTestExecutionListener@16a0140f, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@5a035d89, org.springframework.test.context.event.EventPublishingTestExecutionListener@4ac1cb7, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@3dbff929, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@2b2982fd, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@6b067d04, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@fab8d77, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@4d9f4b1a, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@2ac6163e]
+14:51:26.535 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@4c64d08c testClass = BankingViewTests, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@19786f97 testClass = BankingViewTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@1527a5fc, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@4ff811ff, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@6d22b545, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@19531f01, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@2ef158ae, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@a68f65d, org.springframework.test.context.web.socket.MockServerContainerContextCustomizer@6d32efb3, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@7205f01c], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true]], class annotated with @DirtiesContext [false] with mode [null].
+14:51:26.652 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -31,40 +37,58 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v2.5.5)
 
-22:52:29.939 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Starting BankingViewTests using Java 15.0.3 on zazengine with PID 24745 (started by ionathan in /home/ionathan/gitrepos/DDDHaskell/java)
-22:52:29.941 [Test worker] DEBUG a.f.se.banking.view.BankingViewTests - Running with Spring Boot v2.5.5, Spring v5.3.10
-22:52:29.957 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - No active profile set, falling back to default profiles: default
-22:52:31.430 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-22:52:31.460 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 JPA repository interfaces.
-22:52:33.335 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-22:52:33.793 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-22:52:34.111 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-22:52:34.227 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.32.Final
-22:52:34.326 [Test worker] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-22:52:34.571 [Test worker] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-22:52:35.048 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-22:52:35.064 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-22:52:35.448 [Test worker] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-22:52:35.866 [Test worker] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:collabnotes'
-22:52:36.433 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Started BankingViewTests in 7.289 seconds (JVM running for 9.897)
-22:52:36.513 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-22:52:36.513 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:52:36.515 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
-22:52:38.979 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-22:52:38.979 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:52:38.980 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-22:52:39.044 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-22:52:39.044 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:52:39.045 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-22:52:39.503 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-22:52:39.504 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:52:39.505 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-22:52:39.582 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-22:52:39.582 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:52:39.583 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-22:52:39.626 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-22:52:39.627 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-22:52:39.628 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+14:51:27.433 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Starting BankingViewTests using Java 15.0.3 on zazengine with PID 26292 (started by ionathan in /home/ionathan/gitrepos/DDDHaskell/java)
+14:51:27.434 [Test worker] DEBUG a.f.se.banking.view.BankingViewTests - Running with Spring Boot v2.5.5, Spring v5.3.10
+14:51:27.437 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - No active profile set, falling back to default profiles: default
+14:51:28.307 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+14:51:28.333 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 JPA repository interfaces.
+14:51:29.604 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+14:51:30.106 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+14:51:30.508 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+14:51:30.651 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.32.Final
+14:51:30.766 [Test worker] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+14:51:31.058 [Test worker] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+14:51:31.538 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+14:51:31.554 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+14:51:31.995 [Test worker] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+14:51:32.448 [Test worker] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:collabnotes'
+14:51:33.054 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Started BankingViewTests in 6.385 seconds (JVM running for 8.493)
+14:51:33.113 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:33.113 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:33.114 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+14:51:34.721 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:34.722 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:34.722 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+14:51:34.827 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:34.827 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:34.828 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+14:51:34.890 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:34.890 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:34.892 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+14:51:34.966 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:34.966 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:34.968 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+14:51:35.067 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:35.067 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:35.068 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+14:51:35.492 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:35.492 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:35.493 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+14:51:35.520 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:35.521 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:35.522 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+14:51:35.587 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:35.587 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:35.589 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+14:51:35.616 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:35.616 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:35.617 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+14:51:35.670 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:35.670 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:35.672 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+14:51:35.739 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+14:51:35.739 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+14:51:35.740 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
 ]]></system-out>
   <system-err><![CDATA[java.lang.instrument.IllegalClassFormatException: Error while instrumenting javax/sql/DataSource.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
@@ -502,14 +526,14 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
 	... 131 more
-java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1580153182.
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1507485196.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
 	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:563)
 	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
 	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1016)
-	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$jrTclB1c.defineClass(Unknown Source)
+	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$FQ4HxrMN.defineClass(Unknown Source)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -641,7 +665,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/f
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
 	at java.base/java.lang.Thread.run(Thread.java:832)
-Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1580153182.
+Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1507485196.
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -654,14 +678,14 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
 	... 138 more
-java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1580153182$auxiliary$isjLWBuz.
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1507485196$auxiliary$gXbFjOVd.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
 	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:563)
 	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
 	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1016)
-	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$jrTclB1c.defineClass(Unknown Source)
+	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$FQ4HxrMN.defineClass(Unknown Source)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -793,7 +817,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/f
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
 	at java.base/java.lang.Thread.run(Thread.java:832)
-Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1580153182$auxiliary$isjLWBuz.
+Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1507485196$auxiliary$gXbFjOVd.
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -806,14 +830,14 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
 	... 138 more
-java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1580153182$auxiliary$FZYZ063P.
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1507485196$auxiliary$wvpxKYUX.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
 	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:563)
 	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
 	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1016)
-	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$jrTclB1c.defineClass(Unknown Source)
+	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$FQ4HxrMN.defineClass(Unknown Source)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -945,7 +969,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/f
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
 	at java.base/java.lang.Thread.run(Thread.java:832)
-Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1580153182$auxiliary$FZYZ063P.
+Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/CustomerService$MockitoMock$1507485196$auxiliary$wvpxKYUX.
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -958,14 +982,14 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
 	... 138 more
-java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1529517018.
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1792435495.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
 	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:563)
 	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
 	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1016)
-	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$jrTclB1c.defineClass(Unknown Source)
+	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$FQ4HxrMN.defineClass(Unknown Source)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -1097,7 +1121,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/f
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
 	at java.base/java.lang.Thread.run(Thread.java:832)
-Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1529517018.
+Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1792435495.
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -1110,14 +1134,14 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
 	... 138 more
-java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1529517018$auxiliary$gHqxqI1p.
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1792435495$auxiliary$aViGC9e0.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
 	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:563)
 	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
 	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1016)
-	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$jrTclB1c.defineClass(Unknown Source)
+	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$FQ4HxrMN.defineClass(Unknown Source)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -1249,7 +1273,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/f
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
 	at java.base/java.lang.Thread.run(Thread.java:832)
-Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1529517018$auxiliary$gHqxqI1p.
+Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1792435495$auxiliary$aViGC9e0.
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -1262,14 +1286,14 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
 	... 138 more
-java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1529517018$auxiliary$gJ6uMdQV.
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1792435495$auxiliary$xOclRf1P.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
 	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
 	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:563)
 	at java.base/java.lang.ClassLoader.defineClass1(Native Method)
 	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1016)
-	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$jrTclB1c.defineClass(Unknown Source)
+	at java.base/java.lang.ClassLoader$ByteBuddyAccessor$FQ4HxrMN.defineClass(Unknown Source)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -1401,7 +1425,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting at/f
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
 	at java.base/java.lang.Thread.run(Thread.java:832)
-Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1529517018$auxiliary$gJ6uMdQV.
+Caused by: java.io.IOException: Error while instrumenting at/fhv/se/banking/application/api/AccountService$MockitoMock$1792435495$auxiliary$xOclRf1P.
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
@@ -8117,7 +8141,7 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/
 	at com.gargoylesoftware.htmlunit.WebClient.<init>(WebClient.java:261)
 	at com.gargoylesoftware.htmlunit.WebClient.<init>(WebClient.java:253)
 	at org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder.build(MockMvcWebClientBuilder.java:128)
-	at at.fhv.se.banking.view.BankingViewTests.setup(BankingViewTests.java:63)
+	at at.fhv.se.banking.view.BankingViewTests.setup(BankingViewTests.java:66)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -8280,7 +8304,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -8375,7 +8400,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/util/resources/pro
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 146 more
+	... 147 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -8383,7 +8408,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 147 more
+	... 148 more
 java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/nio/cs/ext/ExtendedCharsets.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
@@ -8434,7 +8459,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -8529,7 +8555,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/nio/cs/ext/Extende
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 139 more
+	... 140 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -8537,7 +8563,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 140 more
+	... 141 more
 java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/nio/cs/ext/AbstractCharsetProvider.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
@@ -8596,7 +8622,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -8691,7 +8718,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/nio/cs/ext/Abstrac
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 147 more
+	... 148 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -8699,7 +8726,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 148 more
+	... 149 more
 java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/nio/cs/ext/ISO2022_JP.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
@@ -8745,7 +8772,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -8840,7 +8868,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/nio/cs/ext/ISO2022
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 134 more
+	... 135 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -8848,7 +8876,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 135 more
+	... 136 more
 java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/nio/cs/ext/ISO2022_JP$Decoder.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
@@ -8894,7 +8922,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -8989,7 +9018,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/nio/cs/ext/ISO2022
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 134 more
+	... 135 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -8997,7 +9026,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 135 more
+	... 136 more
 java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/nio/cs/ext/ISO2022_JP$Encoder.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
@@ -9043,7 +9072,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -9138,7 +9168,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/nio/cs/ext/ISO2022
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 134 more
+	... 135 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -9146,7 +9176,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 135 more
+	... 136 more
 java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/nio/cs/ext/MS1255.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
@@ -9192,7 +9222,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -9287,7 +9318,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/nio/cs/ext/MS1255.
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 134 more
+	... 135 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -9295,7 +9326,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 135 more
+	... 136 more
 java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/nio/cs/ext/MS1256.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
@@ -9341,7 +9372,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -9436,7 +9468,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/nio/cs/ext/MS1256.
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 134 more
+	... 135 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -9444,7 +9476,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 135 more
+	... 136 more
 java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/nio/cs/ext/MS1258.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
@@ -9490,7 +9522,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -9585,7 +9618,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/nio/cs/ext/MS1258.
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 134 more
+	... 135 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -9593,7 +9626,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 135 more
+	... 136 more
 java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/nio/cs/ext/MS874.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
@@ -9639,7 +9672,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -9734,7 +9768,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/nio/cs/ext/MS874.
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 134 more
+	... 135 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -9742,7 +9776,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 135 more
+	... 136 more
 java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/nio/cs/ext/MacCyrillic.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
@@ -9788,7 +9822,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -9883,7 +9918,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/nio/cs/ext/MacCyri
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 134 more
+	... 135 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -9891,7 +9926,7 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 135 more
+	... 136 more
 java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/nio/cs/ext/MacRoman.
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
 	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:246)
@@ -9937,7 +9972,8 @@ java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:413)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:548)
 	at com.gargoylesoftware.htmlunit.WebClient.getPage(WebClient.java:529)
-	at at.fhv.se.banking.view.BankingViewTests.given_account_when_deposit_thendisplaynewbalance(BankingViewTests.java:218)
+	at at.fhv.se.banking.view.BankingViewTests.fetchAccountPage(BankingViewTests.java:570)
+	at at.fhv.se.banking.view.BankingViewTests.given_account_when_transfer_and_noaccount_thenshowerror(BankingViewTests.java:499)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -10032,7 +10068,7 @@ Caused by: java.io.IOException: Error while instrumenting sun/nio/cs/ext/MacRoma
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
 	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
-	... 134 more
+	... 135 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 59
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
 	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
@@ -10040,6 +10076,6 @@ Caused by: java.lang.IllegalArgumentException: Unsupported class file major vers
 	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
 	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
-	... 135 more
+	... 136 more
 ]]></system-err>
 </testsuite>

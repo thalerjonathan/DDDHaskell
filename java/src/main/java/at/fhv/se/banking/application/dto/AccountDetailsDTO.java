@@ -5,7 +5,7 @@ import java.util.Objects;
 import at.fhv.se.banking.domain.model.AccountType;
 import at.fhv.se.banking.domain.model.Iban;
 
-public class AccountInfoDTO {
+public class AccountDetailsDTO {
     private String iban;
     private double balance;
     private String type;
@@ -26,14 +26,14 @@ public class AccountInfoDTO {
         return this.balance;
     }
 
-    private AccountInfoDTO() {
+    private AccountDetailsDTO() {
     }
 
     public static class Builder {
-        private AccountInfoDTO instance;
+        private AccountDetailsDTO instance;
 
         private Builder() {
-            this.instance = new AccountInfoDTO();
+            this.instance = new AccountDetailsDTO();
         }
 
         public Builder withIban(Iban iban) {
@@ -51,7 +51,7 @@ public class AccountInfoDTO {
             return this;
         }
 
-        public AccountInfoDTO build() {
+        public AccountDetailsDTO build() {
             Objects.requireNonNull(this.instance.type, "type must be set in AccountDTO");
 
             return this.instance;
@@ -78,7 +78,7 @@ public class AccountInfoDTO {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AccountInfoDTO other = (AccountInfoDTO) obj;
+        AccountDetailsDTO other = (AccountDetailsDTO) obj;
         if (Double.doubleToLongBits(balance) != Double.doubleToLongBits(other.balance))
             return false;
         if (iban == null) {

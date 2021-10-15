@@ -2,21 +2,17 @@ package at.fhv.se.banking.view.forms;
 
 public class AccountForm {
     private double amount;
-    private String customer;
+    private String customerId;
+    private String customerName;
     private String iban;
 
     // required by spring/thymeleaf
     public AccountForm() {
     }
 
-    public AccountForm(String customer, String iban) {
-        this.customer = customer;
-        this.iban = iban;
-    }
-
-    public AccountForm(double amount, String customer, String iban) {
-        this.amount = amount;
-        this.customer = customer;
+    public AccountForm(String customerId, String customerName, String iban) {
+        this.customerId = customerId;
+        this.customerName = customerName;
         this.iban = iban;
     }
 
@@ -28,12 +24,20 @@ public class AccountForm {
         this.amount = amount;
     }
 
-    public String getCustomer() {
-        return customer;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getIban() {

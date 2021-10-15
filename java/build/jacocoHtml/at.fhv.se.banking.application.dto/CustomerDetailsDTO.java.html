@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerDetailsDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">banking</a> &gt; <a href="index.source.html" class="el_package">at.fhv.se.banking.application.dto</a> &gt; <span class="el_source">CustomerDetailsDTO.java</span></div><h1>CustomerDetailsDTO.java</h1><pre class="source lang-java linenums">package at.fhv.se.banking.application.dto;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+public class CustomerDetailsDTO {
+    private CustomerDTO details;
+    private final List&lt;AccountDetailsDTO&gt; accounts;
+
+    public static Builder create() {
+<span class="fc" id="L13">        return new Builder();</span>
+    }
+
+    public CustomerDTO details() {
+<span class="fc" id="L17">        return this.details;</span>
+    }
+
+    public List&lt;AccountDetailsDTO&gt; accounts() {
+<span class="fc" id="L21">        return Collections.unmodifiableList(this.accounts);</span>
+    }
+
+<span class="fc" id="L24">    private CustomerDetailsDTO() {</span>
+<span class="fc" id="L25">        this.accounts = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L26">    }</span>
+
+    public static class Builder {
+        private final CustomerDetailsDTO instance;
+
+<span class="fc" id="L31">        private Builder() {</span>
+<span class="fc" id="L32">            this.instance = new CustomerDetailsDTO();</span>
+<span class="fc" id="L33">        }</span>
+
+        public Builder withCustomer(CustomerDTO details) {
+<span class="fc" id="L36">            this.instance.details = details;</span>
+<span class="fc" id="L37">            return this;</span>
+        }
+
+        public Builder addAccount(AccountDetailsDTO ai) {
+<span class="fc" id="L41">            this.instance.accounts.add(ai);</span>
+<span class="fc" id="L42">            return this;</span>
+        }
+
+        public CustomerDetailsDTO build() {
+<span class="fc" id="L46">            Objects.requireNonNull(this.instance.details, &quot;customer must be set in CustomerInfoDTO&quot;);</span>
+
+<span class="fc" id="L48">            return this.instance;</span>
+        }
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L54">        final int prime = 31;</span>
+<span class="nc" id="L55">        int result = 1;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        result = prime * result + ((accounts == null) ? 0 : accounts.hashCode());</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        result = prime * result + ((details == null) ? 0 : details.hashCode());</span>
+<span class="nc" id="L58">        return result;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (this == obj)</span>
+<span class="nc" id="L64">            return true;</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        if (obj == null)</span>
+<span class="nc" id="L66">            return false;</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (getClass() != obj.getClass())</span>
+<span class="nc" id="L68">            return false;</span>
+<span class="fc" id="L69">        CustomerDetailsDTO other = (CustomerDetailsDTO) obj;</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (accounts == null) {</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            if (other.accounts != null)</span>
+<span class="nc" id="L72">                return false;</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        } else if (!accounts.equals(other.accounts))</span>
+<span class="nc" id="L74">            return false;</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (details == null) {</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">            if (other.details != null)</span>
+<span class="nc" id="L77">                return false;</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        } else if (!details.equals(other.details))</span>
+<span class="nc" id="L79">            return false;</span>
+<span class="fc" id="L80">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

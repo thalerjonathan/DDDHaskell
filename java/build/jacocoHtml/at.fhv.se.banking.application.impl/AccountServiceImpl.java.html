@@ -1,36 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">banking</a> &gt; <a href="index.source.html" class="el_package">at.fhv.se.banking.application.impl</a> &gt; <span class="el_source">AccountServiceImpl.java</span></div><h1>AccountServiceImpl.java</h1><pre class="source lang-java linenums">package at.fhv.se.banking.application.impl;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import at.fhv.se.banking.application.api.AccountService;
+import at.fhv.se.banking.application.api.exceptions.AccountNotFoundException;
+import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.AccountDTO;
+import at.fhv.se.banking.application.dto.AccountDetailsDTO;
+import at.fhv.se.banking.application.dto.TXLineDTO;
+import at.fhv.se.banking.domain.model.Account;
+import at.fhv.se.banking.domain.model.Customer;
+import at.fhv.se.banking.domain.model.Iban;
+import at.fhv.se.banking.domain.model.TXLine;
+import at.fhv.se.banking.domain.repositories.AccountRepository;
+import at.fhv.se.banking.domain.repositories.CustomerRepository;
 
 @Component
-<span class="fc" id="L9">public class AccountServiceImpl implements AccountService {</span>
+<span class="fc" id="L22">public class AccountServiceImpl implements AccountService {</span>
+
+    @Autowired
+    private AccountRepository accountRepo;
+
+    @Autowired
+    private CustomerRepository customerRepo;
 
     @Override
-    public AccountDTO accountByIban(String iban) {
-        // TODO Auto-generated method stub
-<span class="nc" id="L14">        return null;</span>
+    public AccountDTO accountByIban(String ibanStr) throws AccountNotFoundException {
+<span class="fc" id="L32">        Iban iban = new Iban(ibanStr);</span>
+<span class="fc" id="L33">        Optional&lt;Account&gt; accountOpt = accountRepo.byIban(iban);</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (accountOpt.isEmpty()) {</span>
+<span class="fc" id="L35">            throw new AccountNotFoundException(&quot;Couldn't fine account for IBAN &quot; + ibanStr);</span>
+        }
+
+<span class="fc" id="L38">        Account account = accountOpt.get();</span>
+
+<span class="fc" id="L40">        AccountDTO.Builder builder = AccountDTO.create()</span>
+<span class="fc" id="L41">            .withDeails(AccountDetailsDTO.create()</span>
+<span class="fc" id="L42">                .withBalance(account.balance())</span>
+<span class="fc" id="L43">                .withIban(account.iban())</span>
+<span class="fc" id="L44">                .withType(account.type())</span>
+<span class="fc" id="L45">                .build());</span>
+
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        for (TXLine tx : account.txLines()) {</span>
+<span class="fc" id="L48">            builder.addTXLine(TXLineDTO.create()</span>
+<span class="fc" id="L49">                .ofAmount(tx.amount())</span>
+<span class="fc" id="L50">                .atTime(tx.time())</span>
+<span class="fc" id="L51">                .withIban(tx.iban())</span>
+<span class="fc" id="L52">                .withName(tx.name())</span>
+<span class="fc" id="L53">                .withReference(tx.reference())</span>
+<span class="fc" id="L54">                .build());</span>
+<span class="fc" id="L55">        }</span>
+
+<span class="fc" id="L57">        return builder.build();</span>
     }
 
     @Override
-    public void deposit(String iban, double amount) {
-        // TODO Auto-generated method stub
-        
-<span class="nc" id="L21">    }</span>
+    public void deposit(String ibanStr, double amount) throws AccountNotFoundException {
+<span class="fc" id="L62">        Iban iban = new Iban(ibanStr);</span>
+<span class="fc" id="L63">        Optional&lt;Account&gt; accountOpt = accountRepo.byIban(iban);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (accountOpt.isEmpty()) {</span>
+<span class="fc" id="L65">            throw new AccountNotFoundException(&quot;Couldn't find account of deposit IBAN &quot; + ibanStr);</span>
+        }
+
+<span class="fc" id="L68">        Account account = accountOpt.get();</span>
+<span class="fc" id="L69">        account.deposit(amount);</span>
+<span class="fc" id="L70">    }</span>
 
     @Override
-    public void withdraw(String iban, double amount) {
-        // TODO Auto-generated method stub
-        
-<span class="nc" id="L27">    }</span>
+    public void withdraw(String ibanStr, double amount) throws AccountNotFoundException {
+<span class="fc" id="L74">        Iban iban = new Iban(ibanStr);</span>
+<span class="fc" id="L75">        Optional&lt;Account&gt; accountOpt = accountRepo.byIban(iban);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (accountOpt.isEmpty()) {</span>
+<span class="fc" id="L77">            throw new AccountNotFoundException(&quot;Couldn't find account of withdraw IBAN &quot; + ibanStr);</span>
+        }
+
+<span class="fc" id="L80">        Account account = accountOpt.get();</span>
+<span class="fc" id="L81">        account.withdraw(amount);</span>
+<span class="fc" id="L82">    }</span>
 
     @Override
-    public void transfer(String fromIban, String receivingIban, double amount, String reference) {
-        // TODO Auto-generated method stub
-        
-<span class="nc" id="L33">    }</span>
-    
+    public void transfer(String sendingIbanStr, String receivingIbanStr, double amount, String reference) throws AccountNotFoundException, CustomerNotFoundException {
+<span class="fc" id="L86">        Iban sendingIban = new Iban(sendingIbanStr);</span>
+<span class="fc" id="L87">        Iban receivingIban = new Iban(receivingIbanStr);</span>
+
+<span class="fc" id="L89">        Optional&lt;Account&gt; sendingAccountOpt = accountRepo.byIban(sendingIban);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (sendingAccountOpt.isEmpty()) {</span>
+<span class="fc" id="L91">            throw new AccountNotFoundException(&quot;Couldn't find account of sending IBAN &quot; + sendingIbanStr);</span>
+        }
+
+<span class="fc" id="L94">        Optional&lt;Account&gt; receivingAccountOpt = accountRepo.byIban(receivingIban);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (receivingAccountOpt.isEmpty()) {</span>
+<span class="fc" id="L96">            throw new AccountNotFoundException(&quot;Couldn't find account of receiving IBAN &quot; + receivingIbanStr);</span>
+        }
+
+<span class="fc" id="L99">        Optional&lt;Customer&gt; sendingCustomerOpt = customerRepo.byIban(sendingIban);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (sendingCustomerOpt.isEmpty()) {</span>
+<span class="fc" id="L101">            throw new CustomerNotFoundException(&quot;Couldn't find a customer for sending IBAN &quot; + sendingIbanStr);</span>
+        }
+
+<span class="fc" id="L104">        Optional&lt;Customer&gt; receivingCustomerOpt = customerRepo.byIban(receivingIban);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (receivingCustomerOpt.isEmpty()) {</span>
+<span class="fc" id="L106">            throw new CustomerNotFoundException(&quot;Couldn't find a customer for receiving IBAN &quot; + receivingIbanStr);</span>
+        }
+
+<span class="fc" id="L109">        Customer sendingCustomer = sendingCustomerOpt.get();</span>
+<span class="fc" id="L110">        Customer receivingCustomer = receivingCustomerOpt.get();</span>
+
+<span class="fc" id="L112">        Account sendingAccount = sendingAccountOpt.get();</span>
+<span class="fc" id="L113">        Account receivingAccount = receivingAccountOpt.get();</span>
+
+<span class="fc" id="L115">        sendingAccount.transferTo(receivingIban, amount, receivingCustomer.name(), reference);</span>
+<span class="fc" id="L116">        receivingAccount.receiveFrom(sendingIban, amount, sendingCustomer.name(), reference);</span>
+<span class="fc" id="L117">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

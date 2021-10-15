@@ -16,11 +16,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import at.fhv.se.banking.application.api.CustomerService;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
-import at.fhv.se.banking.application.dto.AccountInfoDTO;
+import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.CustomerDTO;
-import at.fhv.se.banking.application.dto.CustomerInfoDTO;
+import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
 import at.fhv.se.banking.domain.model.Account;
-import at.fhv.se.banking.domain.model.AccountId;
 import at.fhv.se.banking.domain.model.AccountType;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
@@ -48,7 +47,11 @@ public class CustomerServiceTests {
                 new Customer(new CustomerId("2"), "Thomas")
             );
 
-        List<CustomerDTO> expectedCustomerDTOs = customers.stream().map(c -> CustomerDTO.create().withName(c.name()).build()).collect(Collectors.toList());
+        List<CustomerDTO> expectedCustomerDTOs = customers.stream().map(c -> 
+            CustomerDTO.create()
+                .withId(c.customerId())
+                .withName(c.name())
+                .build()).collect(Collectors.toList());
 
         Mockito.when(customerRepo.all()).thenReturn(customers);
         
@@ -66,9 +69,12 @@ public class CustomerServiceTests {
         CustomerId customerId = new CustomerId("42");
         Customer customer = new Customer(customerId, customerName);
 
-        CustomerInfoDTO expectedInfoDTO = CustomerInfoDTO.create()
-            .withCustomer(CustomerDTO.create().withName(customerName).build())
-            .addAccountInfo(AccountInfoDTO.create()
+        CustomerDetailsDTO expectedInfoDTO = CustomerDetailsDTO.create()
+            .withCustomer(CustomerDTO.create()
+                .withId(customerId)
+                .withName(customerName)
+                .build())
+            .addAccount(AccountDetailsDTO.create()
                 .withBalance(1234)
                 .withIban(new Iban("AT12 3456 7890 1234"))
                 .withType(AccountType.GIRO)
@@ -76,14 +82,14 @@ public class CustomerServiceTests {
             ).build();
 
         List<Account> accounts = Arrays.asList(
-            new Account(new AccountId("1"), new Iban("AT12 3456 7890 1234"), AccountType.GIRO, 1234)
+            new Account(new Iban("AT12 3456 7890 1234"), AccountType.GIRO, 1234)
         );
 
         Mockito.when(customerRepo.byId(customerId)).thenReturn(Optional.of(customer));
         Mockito.when(accountRepo.forCustomer(customerId)).thenReturn(accounts);
 
         // when
-        CustomerInfoDTO actualInfoDTO = customerService.informationFor(customerId.id());
+        CustomerDetailsDTO actualInfoDTO = customerService.detailsFor(customerId.id());
 
         // then
         assertEquals(expectedInfoDTO, actualInfoDTO);
@@ -96,6 +102,6 @@ public class CustomerServiceTests {
         Mockito.when(customerRepo.byId(customerId)).thenReturn(Optional.empty());
        
         // when ... then
-        assertThrows(CustomerNotFoundException.class, () -> customerService.informationFor(customerId.id()));
+        assertThrows(CustomerNotFoundException.class, () -> customerService.detailsFor(customerId.id()));
     }
 }

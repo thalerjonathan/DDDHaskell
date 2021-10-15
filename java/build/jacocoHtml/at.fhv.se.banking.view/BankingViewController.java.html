@@ -13,18 +13,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import at.fhv.se.banking.application.api.AccountService;
 import at.fhv.se.banking.application.api.CustomerService;
+import at.fhv.se.banking.application.api.exceptions.AccountNotFoundException;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.AccountDTO;
 import at.fhv.se.banking.application.dto.CustomerDTO;
-import at.fhv.se.banking.application.dto.CustomerInfoDTO;
+import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
 import at.fhv.se.banking.view.forms.AccountForm;
 
 @Controller
-<span class="fc" id="L23">public class BankingViewController {</span>
+<span class="fc" id="L24">public class BankingViewController {</span>
     
-    private static final String GET_ALL_CUSTOMERS_URL = &quot;/&quot;;
-    private static final String GET_CUSTOMER_INFO_URL = &quot;/customer&quot;;
-    private static final String GET_ACCOUNT_URL = &quot;/account&quot;;
+    private static final String ALL_CUSTOMERS_URL = &quot;/&quot;;
+    private static final String CUSTOMER_URL = &quot;/customer&quot;;
+    private static final String ACCOUNT_URL = &quot;/account&quot;;
+    private static final String ERROR_URL = &quot;/displayerror&quot;;
 
     private static final String POST_DEPOSIT_URL = &quot;/account/deposit&quot;;
     private static final String POST_WITHDRAW_URL = &quot;/account/withdraw&quot;;
@@ -33,6 +35,7 @@ import at.fhv.se.banking.view.forms.AccountForm;
     private static final String ALL_CUSTOMERS_VIEW = &quot;allCustomers&quot;;
     private static final String CUSTOMER_INFO_VIEW = &quot;customerInfo&quot;;
     private static final String ACCOUNT_VIEW = &quot;account&quot;;
+    private static final String ERROR_VIEW = &quot;errorView&quot;;
 
     @Autowired
     private CustomerService customerService;
@@ -40,60 +43,70 @@ import at.fhv.se.banking.view.forms.AccountForm;
     @Autowired
     private AccountService accountService;
 
-    @GetMapping(GET_ALL_CUSTOMERS_URL)
+    @GetMapping(ALL_CUSTOMERS_URL)
     public String allCustomers(Model model) {
-<span class="fc" id="L45">        final List&lt;CustomerDTO&gt; customers = this.customerService.listAll();</span>
-<span class="fc" id="L46">        model.addAttribute(&quot;customers&quot;, customers);</span>
+<span class="fc" id="L48">        final List&lt;CustomerDTO&gt; customers = this.customerService.listAll();</span>
+<span class="fc" id="L49">        model.addAttribute(&quot;customers&quot;, customers);</span>
 
-<span class="fc" id="L48">        return ALL_CUSTOMERS_VIEW;</span>
+<span class="fc" id="L51">        return ALL_CUSTOMERS_VIEW;</span>
     }
 
-    @GetMapping(GET_CUSTOMER_INFO_URL)
-    public String customerInfo(@RequestParam(&quot;name&quot;) String customerName, Model model) {
+    @GetMapping(CUSTOMER_URL)
+    public ModelAndView customer(
+            @RequestParam(&quot;id&quot;) String customerId, 
+            Model model) {
         try {
-<span class="fc" id="L54">            CustomerInfoDTO customerInfo = this.customerService.informationFor(customerName);</span>
-<span class="fc" id="L55">            model.addAttribute(&quot;info&quot;, customerInfo);</span>
-<span class="nc" id="L56">        } catch (CustomerNotFoundException e) {</span>
-            // TODO Auto-generated catch block
-<span class="nc" id="L58">            e.printStackTrace();</span>
-<span class="fc" id="L59">        }</span>
-
-<span class="fc" id="L61">        return CUSTOMER_INFO_VIEW;</span>
+<span class="fc" id="L59">            CustomerDetailsDTO customerDetails = this.customerService.detailsFor(customerId);</span>
+<span class="fc" id="L60">            model.addAttribute(&quot;customer&quot;, customerDetails);</span>
+<span class="fc" id="L61">            return new ModelAndView(CUSTOMER_INFO_VIEW);</span>
+<span class="fc" id="L62">        } catch (CustomerNotFoundException e) {</span>
+<span class="fc" id="L63">            return redirectError(&quot;Customer not found!&quot;);</span>
+        }
     }
 
-    @GetMapping(GET_ACCOUNT_URL)
-    public String accountInfo(@RequestParam(&quot;iban&quot;) String iban, @RequestParam(&quot;customer&quot;) String customer, Model model) {
-<span class="fc" id="L66">        final AccountDTO accountInfo = this.accountService.accountByIban(iban);</span>
-<span class="fc" id="L67">        final AccountForm form = new AccountForm(customer, iban);</span>
+    @GetMapping(ACCOUNT_URL)
+    public ModelAndView accountInfo(
+            @RequestParam(&quot;iban&quot;) String iban, 
+            @RequestParam(&quot;id&quot;) String customerId, 
+            @RequestParam(&quot;name&quot;) String customerName, 
+            Model model) {
 
-<span class="fc" id="L69">        model.addAttribute(&quot;account&quot;, accountInfo);</span>
-<span class="fc" id="L70">        model.addAttribute(&quot;form&quot;, form);</span>
-        
-<span class="fc" id="L72">        return ACCOUNT_VIEW;</span>
+        try {
+<span class="fc" id="L75">            AccountDTO account = this.accountService.accountByIban(iban);</span>
+<span class="fc" id="L76">            final AccountForm form = new AccountForm(customerId, customerName, iban);</span>
+
+<span class="fc" id="L78">            model.addAttribute(&quot;account&quot;, account);</span>
+<span class="fc" id="L79">            model.addAttribute(&quot;form&quot;, form);</span>
+<span class="fc" id="L80">            return new ModelAndView(ACCOUNT_VIEW);</span>
+<span class="fc" id="L81">        } catch (AccountNotFoundException e) {</span>
+<span class="fc" id="L82">            return redirectError(&quot;Account not found!&quot;);</span>
+        }
     }
 
     @PostMapping(POST_DEPOSIT_URL)
-    public ModelAndView depositAccount(@ModelAttribute AccountForm form, Model model) {
-<span class="fc" id="L77">        this.accountService.deposit(form.getIban(), form.getAmount());</span>
+    public ModelAndView depositAccount(
+            @ModelAttribute AccountForm form, 
+            Model model) {
 
-<span class="fc" id="L79">        return new ModelAndView(&quot;redirect:&quot; + </span>
-            GET_ACCOUNT_URL + 
-            &quot;?iban=&quot; + 
-<span class="fc" id="L82">            form.getIban() + </span>
-            &quot;&amp;customer=&quot; + 
-<span class="fc" id="L84">            form.getCustomer());</span>
+        try {
+<span class="fc" id="L92">            this.accountService.deposit(form.getIban(), form.getAmount());</span>
+<span class="fc" id="L93">            return redirectToAccount(form);</span>
+<span class="fc" id="L94">        } catch (AccountNotFoundException e) {</span>
+<span class="fc" id="L95">            return redirectError(&quot;Account not found!&quot;);</span>
+        }
     }
 
     @PostMapping(POST_WITHDRAW_URL)
-    public ModelAndView withdrawAccount(@ModelAttribute AccountForm form, Model model) {
-<span class="fc" id="L89">        this.accountService.withdraw(form.getIban(), form.getAmount());</span>
+    public ModelAndView withdrawAccount(
+            @ModelAttribute AccountForm form, 
+            Model model) {
 
-<span class="fc" id="L91">        return new ModelAndView(&quot;redirect:&quot; + </span>
-            GET_ACCOUNT_URL + 
-            &quot;?iban=&quot; + 
-<span class="fc" id="L94">            form.getIban() + </span>
-            &quot;&amp;customer=&quot; + 
-<span class="fc" id="L96">            form.getCustomer());</span>
+        try {
+<span class="fc" id="L105">            this.accountService.withdraw(form.getIban(), form.getAmount());</span>
+<span class="fc" id="L106">            return redirectToAccount(form);</span>
+<span class="fc" id="L107">        } catch (AccountNotFoundException e) {</span>
+<span class="fc" id="L108">            return redirectError(&quot;Account not found!&quot;);</span>
+        }
     }
 
     @PostMapping(POST_TRANSFER_URL)
@@ -101,14 +114,36 @@ import at.fhv.se.banking.view.forms.AccountForm;
             @RequestParam(&quot;receivingIban&quot;) String receivingIban, 
             @RequestParam(&quot;reference&quot;) String reference, 
             Model model) {
-<span class="fc" id="L104">        this.accountService.transfer(form.getIban(), receivingIban, form.getAmount(), reference);</span>
 
-<span class="fc" id="L106">        return new ModelAndView(&quot;redirect:&quot; + </span>
-            GET_ACCOUNT_URL + 
-            &quot;?iban=&quot; + 
-<span class="fc" id="L109">            form.getIban() + </span>
-            &quot;&amp;customer=&quot; + 
-<span class="fc" id="L111">            form.getCustomer());</span>
+        try {
+<span class="fc" id="L119">            this.accountService.transfer(form.getIban(), receivingIban, form.getAmount(), reference);</span>
+<span class="fc" id="L120">            return redirectToAccount(form);</span>
+<span class="fc" id="L121">        } catch (AccountNotFoundException e) {</span>
+<span class="fc" id="L122">            return redirectError(&quot;Account not found!&quot;);</span>
+<span class="fc" id="L123">        } catch (CustomerNotFoundException e) {</span>
+<span class="fc" id="L124">            return redirectError(&quot;Customer not found!&quot;);</span>
+        }
+    }
+
+    @GetMapping(ERROR_URL)
+    public String displayError(@RequestParam(&quot;msg&quot;) String msg, Model model) {
+<span class="fc" id="L130">        model.addAttribute(&quot;msg&quot;, msg);</span>
+<span class="fc" id="L131">        return ERROR_VIEW;</span>
+    }
+
+    private static ModelAndView redirectError(String msg) {
+<span class="fc" id="L135">        return new ModelAndView(&quot;redirect:&quot; + ERROR_URL + &quot;?msg=&quot; + msg);</span>
     } 
+
+    private static ModelAndView redirectToAccount(final AccountForm form) {
+<span class="fc" id="L139">        return new ModelAndView(&quot;redirect:&quot; + </span>
+            ACCOUNT_URL + 
+            &quot;?iban=&quot; + 
+<span class="fc" id="L142">            form.getIban() + </span>
+            &quot;&amp;id=&quot; + 
+<span class="fc" id="L144">            form.getCustomerId() + </span>
+            &quot;&amp;name=&quot; + 
+<span class="fc" id="L146">            form.getCustomerName());</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
