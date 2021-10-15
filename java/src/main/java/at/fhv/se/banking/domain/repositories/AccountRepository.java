@@ -9,7 +9,7 @@ import at.fhv.se.banking.domain.model.Iban;
 
 public interface AccountRepository {
 
+    void add(Account account);
     List<Account> forCustomer(CustomerId customerId);
-
     Optional<Account> byIban(Iban iban);
 }

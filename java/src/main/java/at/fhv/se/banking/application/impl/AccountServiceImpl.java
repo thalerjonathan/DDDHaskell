@@ -44,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
                 .withType(account.type())
                 .build());
 
-        for (TXLine tx : account.txLines()) {
+        for (TXLine tx : account.transactions()) {
             builder.addTXLine(TXLineDTO.create()
                 .ofAmount(tx.amount())
                 .atTime(tx.time())
@@ -96,21 +96,21 @@ public class AccountServiceImpl implements AccountService {
             throw new AccountNotFoundException("Couldn't find account of receiving IBAN " + receivingIbanStr);
         }
 
-        Optional<Customer> sendingCustomerOpt = customerRepo.byIban(sendingIban);
+        Account sendingAccount = sendingAccountOpt.get();
+        Account receivingAccount = receivingAccountOpt.get();
+
+        Optional<Customer> sendingCustomerOpt = customerRepo.byId(sendingAccount.owner());
         if (sendingCustomerOpt.isEmpty()) {
             throw new CustomerNotFoundException("Couldn't find a customer for sending IBAN " + sendingIbanStr);
         }
 
-        Optional<Customer> receivingCustomerOpt = customerRepo.byIban(receivingIban);
+        Optional<Customer> receivingCustomerOpt = customerRepo.byId(receivingAccount.owner());
         if (receivingCustomerOpt.isEmpty()) {
             throw new CustomerNotFoundException("Couldn't find a customer for receiving IBAN " + receivingIbanStr);
         }
 
         Customer sendingCustomer = sendingCustomerOpt.get();
         Customer receivingCustomer = receivingCustomerOpt.get();
-
-        Account sendingAccount = sendingAccountOpt.get();
-        Account receivingAccount = receivingAccountOpt.get();
 
         sendingAccount.transferTo(receivingIban, amount, receivingCustomer.name(), reference);
         receivingAccount.receiveFrom(sendingIban, amount, sendingCustomer.name(), reference);

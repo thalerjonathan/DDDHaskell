@@ -82,7 +82,7 @@ public class CustomerServiceTests {
             ).build();
 
         List<Account> accounts = Arrays.asList(
-            new Account(new Iban("AT12 3456 7890 1234"), AccountType.GIRO, 1234)
+            new Account(customerId, new Iban("AT12 3456 7890 1234"), AccountType.GIRO, 1234)
         );
 
         Mockito.when(customerRepo.byId(customerId)).thenReturn(Optional.of(customer));

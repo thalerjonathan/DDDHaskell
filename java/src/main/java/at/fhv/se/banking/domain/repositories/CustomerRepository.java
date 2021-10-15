@@ -5,14 +5,11 @@ import java.util.Optional;
 
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
-import at.fhv.se.banking.domain.model.Iban;
 
 public interface CustomerRepository {
 
+    void add(Customer customer);
+    CustomerId nextCustomerId();
     Optional<Customer> byId(CustomerId customerId);
-    
     List<Customer> all();
-
-    Optional<Customer> byIban(Iban iban);
-    
 }

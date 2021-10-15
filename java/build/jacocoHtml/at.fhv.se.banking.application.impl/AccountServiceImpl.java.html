@@ -44,7 +44,7 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
 <span class="fc" id="L44">                .withType(account.type())</span>
 <span class="fc" id="L45">                .build());</span>
 
-<span class="fc bfc" id="L47" title="All 2 branches covered.">        for (TXLine tx : account.txLines()) {</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        for (TXLine tx : account.transactions()) {</span>
 <span class="fc" id="L48">            builder.addTXLine(TXLineDTO.create()</span>
 <span class="fc" id="L49">                .ofAmount(tx.amount())</span>
 <span class="fc" id="L50">                .atTime(tx.time())</span>
@@ -96,24 +96,24 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
 <span class="fc" id="L96">            throw new AccountNotFoundException(&quot;Couldn't find account of receiving IBAN &quot; + receivingIbanStr);</span>
         }
 
-<span class="fc" id="L99">        Optional&lt;Customer&gt; sendingCustomerOpt = customerRepo.byIban(sendingIban);</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (sendingCustomerOpt.isEmpty()) {</span>
-<span class="fc" id="L101">            throw new CustomerNotFoundException(&quot;Couldn't find a customer for sending IBAN &quot; + sendingIbanStr);</span>
+<span class="fc" id="L99">        Account sendingAccount = sendingAccountOpt.get();</span>
+<span class="fc" id="L100">        Account receivingAccount = receivingAccountOpt.get();</span>
+
+<span class="fc" id="L102">        Optional&lt;Customer&gt; sendingCustomerOpt = customerRepo.byId(sendingAccount.owner());</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (sendingCustomerOpt.isEmpty()) {</span>
+<span class="fc" id="L104">            throw new CustomerNotFoundException(&quot;Couldn't find a customer for sending IBAN &quot; + sendingIbanStr);</span>
         }
 
-<span class="fc" id="L104">        Optional&lt;Customer&gt; receivingCustomerOpt = customerRepo.byIban(receivingIban);</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (receivingCustomerOpt.isEmpty()) {</span>
-<span class="fc" id="L106">            throw new CustomerNotFoundException(&quot;Couldn't find a customer for receiving IBAN &quot; + receivingIbanStr);</span>
+<span class="fc" id="L107">        Optional&lt;Customer&gt; receivingCustomerOpt = customerRepo.byId(receivingAccount.owner());</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (receivingCustomerOpt.isEmpty()) {</span>
+<span class="fc" id="L109">            throw new CustomerNotFoundException(&quot;Couldn't find a customer for receiving IBAN &quot; + receivingIbanStr);</span>
         }
 
-<span class="fc" id="L109">        Customer sendingCustomer = sendingCustomerOpt.get();</span>
-<span class="fc" id="L110">        Customer receivingCustomer = receivingCustomerOpt.get();</span>
-
-<span class="fc" id="L112">        Account sendingAccount = sendingAccountOpt.get();</span>
-<span class="fc" id="L113">        Account receivingAccount = receivingAccountOpt.get();</span>
+<span class="fc" id="L112">        Customer sendingCustomer = sendingCustomerOpt.get();</span>
+<span class="fc" id="L113">        Customer receivingCustomer = receivingCustomerOpt.get();</span>
 
 <span class="fc" id="L115">        sendingAccount.transferTo(receivingIban, amount, receivingCustomer.name(), reference);</span>
 <span class="fc" id="L116">        receivingAccount.receiveFrom(sendingIban, amount, sendingCustomer.name(), reference);</span>
 <span class="fc" id="L117">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

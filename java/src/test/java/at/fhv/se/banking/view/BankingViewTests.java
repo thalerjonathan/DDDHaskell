@@ -210,7 +210,7 @@ public class BankingViewTests {
 
         assertEquals(customerName, customerHeading.getTextContent());
         assertEquals(iban.toString(), accountIbanHeading.getTextContent());
-        assertEquals("" + accountInfo.details().balance(), accountBalanceHeading.getTextContent());
+        assertEquals("Balance: " + accountInfo.details().balance(), accountBalanceHeading.getTextContent());
 
         TestingUtils.assertEqualsCollections(txItems, accountInfo.txLines(), (li, txLine) -> {
             final List<HtmlParagraph> ps = li.getByXPath("p");
@@ -285,7 +285,7 @@ public class BankingViewTests {
         // then
         final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) accountPageAfter.getByXPath("//h3").get(0);
         Mockito.verify(accountService, times(1)).deposit(iban.toString(), depositAmount);
-        assertEquals("" + (balance + depositAmount), accountBalanceHeading.getTextContent());
+        assertEquals("Balance: " + (balance + depositAmount), accountBalanceHeading.getTextContent());
     }
 
     @Test
@@ -413,10 +413,9 @@ public class BankingViewTests {
         // then
         final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) accountPageAfter.getByXPath("//h3").get(0);
         Mockito.verify(accountService, times(1)).withdraw(iban.toString(), withdrawAmount);
-        assertEquals("" + (balance - withdrawAmount), accountBalanceHeading.getTextContent());
+        assertEquals("Balance: " + (balance - withdrawAmount), accountBalanceHeading.getTextContent());
     }
 
-    // TODO: refactor, combine
     @Test
     public void given_account_when_transfer_thendisplaynewbalance() throws Exception {
         // given
@@ -467,10 +466,9 @@ public class BankingViewTests {
         // then
         final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) accountPageAfter.getByXPath("//h3").get(0);
         Mockito.verify(accountService, times(1)).transfer(iban.toString(), receivingIban.toString(), transferAmount, reference);
-        assertEquals("" + (balance - transferAmount), accountBalanceHeading.getTextContent());
+        assertEquals("Balance: " + (balance - transferAmount), accountBalanceHeading.getTextContent());
     }
 
-    // TODO: refactor, combine
     @Test
     public void given_account_when_transfer_and_noaccount_thenshowerror() throws Exception {
         // given
@@ -518,7 +516,6 @@ public class BankingViewTests {
         assertEquals(expectedErrorMessage, errorMessage.getTextContent());
     }
 
-    // TODO: refactor, combine
     @Test
     public void given_account_when_transfer_and_nocustomer_thenshowerror() throws Exception {
         // given

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TestData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">banking</a> &gt; <a href="index.source.html" class="el_package">at.fhv.se.banking</a> &gt; <span class="el_source">TestData.java</span></div><h1>TestData.java</h1><pre class="source lang-java linenums">package at.fhv.se.banking;
+
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
+
+import at.fhv.se.banking.domain.model.Account;
+import at.fhv.se.banking.domain.model.AccountType;
+import at.fhv.se.banking.domain.model.Customer;
+import at.fhv.se.banking.domain.model.CustomerId;
+import at.fhv.se.banking.domain.model.Iban;
+import at.fhv.se.banking.domain.model.TXLine;
+import at.fhv.se.banking.domain.repositories.AccountRepository;
+import at.fhv.se.banking.domain.repositories.CustomerRepository;
+
+@Component
+<span class="fc" id="L20">public class TestData implements ApplicationRunner {</span>
+    
+    @Autowired
+    private CustomerRepository customerRepo;
+
+    @Autowired
+    private AccountRepository accountRepo;
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+<span class="fc" id="L30">        CustomerId cId1 = customerRepo.nextCustomerId();</span>
+<span class="fc" id="L31">        CustomerId cId2 = customerRepo.nextCustomerId();</span>
+<span class="fc" id="L32">        Customer customer1 = new Customer(cId1, &quot;Jonathan Thaler&quot;);</span>
+<span class="fc" id="L33">        Customer customer2 = new Customer(cId2, &quot;Thomas Scharz&quot;);</span>
+
+<span class="fc" id="L35">        Account account1Customer1 = new Account(cId1, new Iban(&quot;AT11 1111 1111 1111&quot;), AccountType.GIRO, 1234);</span>
+<span class="fc" id="L36">        account1Customer1.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
+<span class="fc" id="L37">        account1Customer1.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
+<span class="fc" id="L38">        Account account2Customer1 = new Account(cId1, new Iban(&quot;AT22 2222 2222 2222&quot;), AccountType.SAVINGS, 2345);</span>
+<span class="fc" id="L39">        account2Customer1.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
+<span class="fc" id="L40">        account2Customer1.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
+
+<span class="fc" id="L42">        Account account1Customer2 = new Account(cId2, new Iban(&quot;AT33 3333 3333 3333&quot;), AccountType.GIRO, 3456);</span>
+<span class="fc" id="L43">        account1Customer2.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
+<span class="fc" id="L44">        account1Customer2.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
+<span class="fc" id="L45">        Account account2Customer2 = new Account(cId2, new Iban(&quot;AT44 4444 4444 4444&quot;), AccountType.SAVINGS, 4567);</span>
+<span class="fc" id="L46">        account2Customer2.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
+<span class="fc" id="L47">        account2Customer2.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
+
+<span class="fc" id="L49">        accountRepo.add(account1Customer1);</span>
+<span class="fc" id="L50">        accountRepo.add(account2Customer1);</span>
+<span class="fc" id="L51">        accountRepo.add(account1Customer2);</span>
+<span class="fc" id="L52">        accountRepo.add(account2Customer2);</span>
+
+<span class="fc" id="L54">        customerRepo.add(customer1);</span>
+<span class="fc" id="L55">        customerRepo.add(customer2);</span>
+<span class="fc" id="L56">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

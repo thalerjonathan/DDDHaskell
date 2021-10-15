@@ -6,16 +6,22 @@ import java.util.Collections;
 import java.util.List;
 
 public class Account {
+    private CustomerId owner;
     private double balance;
     private Iban iban;
     private AccountType type;
     private List<TXLine> txLines;
     
-    public Account(Iban iban, AccountType type, double balance) {
+    public Account(CustomerId owner, Iban iban, AccountType type, double balance) {
+        this.owner = owner;
         this.iban = iban;
         this.balance = balance;
         this.type = type;
         this.txLines = new ArrayList<>();
+    }
+
+    public CustomerId owner() {
+        return this.owner;
     }
 
     public Iban iban() {
@@ -30,22 +36,18 @@ public class Account {
         return this.type;
     }
 
+    public List<TXLine> transactions() {
+        return Collections.unmodifiableList(this.txLines);
+    }
+
+    // TODO: proper domain model, add TXLine
     public void deposit(double amount) {
         this.balance += amount;
     }
 
+    // TODO: proper domain model, add TXLine
     public void withdraw(double amount) {
         this.balance -= amount;
-    }
-
-    // TODO: do we really require in proper Domain Model?
-    public List<TXLine> txLines() {
-        return Collections.unmodifiableList(this.txLines);
-    }
-
-    // TODO: remove in proper Domain Model
-    public void addTXLine(TXLine txLine) {
-        this.txLines.add(txLine);
     }
 
     public void transferTo(Iban to, double amount, String name, String reference) {
@@ -56,6 +58,11 @@ public class Account {
     public void receiveFrom(Iban from, double amount, String name, String reference) {
         this.balance += amount;
         this.txLines.add(new TXLine(from, amount, name, reference, LocalDateTime.now()));
+    }
+
+    // TODO: remove in proper Domain Model
+    public void addTXLine(TXLine txLine) {
+        this.txLines.add(txLine);
     }
 
     @Override

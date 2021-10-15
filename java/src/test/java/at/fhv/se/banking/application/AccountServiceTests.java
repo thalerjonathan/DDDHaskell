@@ -45,7 +45,7 @@ public class AccountServiceTests {
         LocalDateTime txLineTime = LocalDateTime.now();
         double balance = 1234.0;
         Iban iban = new Iban("AT12 3456 7890 1234");
-        Account account = new Account(iban, AccountType.GIRO, balance);
+        Account account = new Account(new CustomerId("1"), iban, AccountType.GIRO, balance);
         account.addTXLine(new TXLine(new Iban("AT98 7654 3210 9876"), 100.0, "Max Mustermann", "Rent", txLineTime));
 
         AccountDTO expectedAccountDTO = AccountDTO.create()
@@ -88,7 +88,7 @@ public class AccountServiceTests {
         double depositAmount = 1000;
         double balance = 1234.0;
         Iban iban = new Iban("AT12 3456 7890 1234");
-        Account account = Mockito.spy(new Account(iban, AccountType.GIRO, balance));
+        Account account = Mockito.spy(new Account(new CustomerId("1"), iban, AccountType.GIRO, balance));
 
         Mockito.when(accountRepo.byIban(iban)).thenReturn(Optional.of(account));
 
@@ -118,7 +118,7 @@ public class AccountServiceTests {
         double withdrawAmount = 1000;
         double balance = 1234.0;
         Iban iban = new Iban("AT12 3456 7890 1234");
-        Account account = Mockito.spy(new Account(iban, AccountType.GIRO, balance));
+        Account account = Mockito.spy(new Account(new CustomerId("1"), iban, AccountType.GIRO, balance));
 
         Mockito.when(accountRepo.byIban(iban)).thenReturn(Optional.of(account));
 
@@ -158,14 +158,16 @@ public class AccountServiceTests {
         Customer sendingCustomer = new Customer(new CustomerId("1"), sendingName);
         Customer receivingCustomer = new Customer(new CustomerId("2"), receivingName);
 
-        Account sendingAccount = Mockito.spy(new Account(sendingIban, AccountType.GIRO, sendingAccountBalance));
-        Account receivingAccount = Mockito.spy(new Account(receivingIban, AccountType.GIRO, receivingAccountBalance));
+        Account sendingAccount = Mockito.spy(
+            new Account(sendingCustomer.customerId(), sendingIban, AccountType.GIRO, sendingAccountBalance));
+        Account receivingAccount = Mockito.spy(
+            new Account(receivingCustomer.customerId(), receivingIban, AccountType.GIRO, receivingAccountBalance));
 
         Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
         Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
 
-        Mockito.when(customerRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingCustomer));
-        Mockito.when(customerRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingCustomer));
+        Mockito.when(customerRepo.byId(sendingCustomer.customerId())).thenReturn(Optional.of(sendingCustomer));
+        Mockito.when(customerRepo.byId(receivingCustomer.customerId())).thenReturn(Optional.of(receivingCustomer));
 
         // when
         this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference);
@@ -199,7 +201,7 @@ public class AccountServiceTests {
         Iban sendingIban = new Iban("AT12 3456 7890 1234");
         Iban receivingIban = new Iban("AT98 7654 3210 9876");
 
-        Account sendingAccount = new Account(sendingIban, AccountType.GIRO, 1234);
+        Account sendingAccount = new Account(new CustomerId("1"), sendingIban, AccountType.GIRO, 1234);
 
         Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
         Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.empty());
@@ -216,13 +218,16 @@ public class AccountServiceTests {
         Iban sendingIban = new Iban("AT12 3456 7890 1234");
         Iban receivingIban = new Iban("AT98 7654 3210 9876");
 
-        Account sendingAccount = new Account(sendingIban, AccountType.GIRO, 1234);
-        Account receivingAccount = new Account(receivingIban, AccountType.GIRO, 2345);
+        CustomerId sendingCustomerId = new CustomerId("1");
+        CustomerId receivingCustomerId = new CustomerId("2");
+
+        Account sendingAccount = new Account(sendingCustomerId, sendingIban, AccountType.GIRO, 1234);
+        Account receivingAccount = new Account(receivingCustomerId, receivingIban, AccountType.GIRO, 2345);
 
         Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
         Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
 
-        Mockito.when(customerRepo.byIban(sendingIban)).thenReturn(Optional.empty());
+        Mockito.when(customerRepo.byId(sendingCustomerId)).thenReturn(Optional.empty());
 
         // when ... then
         assertThrows(CustomerNotFoundException.class, () -> this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference));
@@ -236,16 +241,19 @@ public class AccountServiceTests {
         Iban sendingIban = new Iban("AT12 3456 7890 1234");
         Iban receivingIban = new Iban("AT98 7654 3210 9876");
 
-        Account sendingAccount = new Account(sendingIban, AccountType.GIRO, 1234);
-        Account receivingAccount = new Account(receivingIban, AccountType.GIRO, 2345);
+        CustomerId sendingCustomerId = new CustomerId("1");
+        CustomerId receivingCustomerId = new CustomerId("2");
+
+        Account sendingAccount = new Account(sendingCustomerId, sendingIban, AccountType.GIRO, 1234);
+        Account receivingAccount = new Account(receivingCustomerId, receivingIban, AccountType.GIRO, 2345);
 
         Customer sendingCustomer = new Customer(new CustomerId("1"), "Jonathan");
 
         Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
         Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
 
-        Mockito.when(customerRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingCustomer));
-        Mockito.when(customerRepo.byIban(receivingIban)).thenReturn(Optional.empty());
+        Mockito.when(customerRepo.byId(sendingCustomerId)).thenReturn(Optional.of(sendingCustomer));
+        Mockito.when(customerRepo.byId(receivingCustomerId)).thenReturn(Optional.empty());
 
         // when ... then
         assertThrows(CustomerNotFoundException.class, () -> this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference));
