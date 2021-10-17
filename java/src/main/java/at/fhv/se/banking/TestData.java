@@ -30,7 +30,7 @@ public class TestData implements ApplicationRunner {
         CustomerId cId1 = customerRepo.nextCustomerId();
         CustomerId cId2 = customerRepo.nextCustomerId();
         Customer customer1 = new Customer(cId1, "Jonathan Thaler");
-        Customer customer2 = new Customer(cId2, "Thomas Scharz");
+        Customer customer2 = new Customer(cId2, "Thomas Schwarz");
 
         Account account1Customer1 = new Account(cId1, new Iban("AT11 1111 1111 1111"), AccountType.GIRO, 1234);
         account1Customer1.addTXLine(new TXLine(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", LocalDateTime.now()));
