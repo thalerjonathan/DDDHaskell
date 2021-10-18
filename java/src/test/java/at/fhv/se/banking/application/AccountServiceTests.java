@@ -48,13 +48,13 @@ public class AccountServiceTests {
         Account account = new Account(new CustomerId("1"), iban, AccountType.GIRO, balance);
         account.addTXLine(new TXLine(new Iban("AT98 7654 3210 9876"), 100.0, "Max Mustermann", "Rent", txLineTime));
 
-        AccountDTO expectedAccountDTO = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO expectedAccountDTO = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withBalance(balance)
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .build())
-            .addTXLine(TXLineDTO.create()
+            .addTXLine(TXLineDTO.builder()
                 .ofAmount(100)
                 .atTime(txLineTime)
                 .withIban(new Iban("AT98 7654 3210 9876"))

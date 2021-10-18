@@ -1,6 +1,6 @@
 package at.fhv.se.banking.domain.model;
 
-public class Customer {
+public final class Customer {
     private CustomerId customerId;
     private String name;
 

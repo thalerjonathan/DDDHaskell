@@ -19,8 +19,6 @@ public class HibernateAccountRepository implements AccountRepository {
 
     HibernateAccountRepository() {
         this.accounts = new ArrayList<>();
-
-        
     }
     
     @Override

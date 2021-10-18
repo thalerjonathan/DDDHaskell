@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class AccountDTO {
+public final class AccountDTO {
     private AccountDetailsDTO details;
     private final List<TXLineDTO> txLines;
     
-    public static Builder create() {
+    public static Builder builder() {
         return new Builder();
     }
 

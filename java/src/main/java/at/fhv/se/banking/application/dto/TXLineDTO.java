@@ -5,14 +5,14 @@ import java.util.Objects;
 
 import at.fhv.se.banking.domain.model.Iban;
 
-public class TXLineDTO {
+public final class TXLineDTO {
     private String iban;
     private String name;
     private String reference;
     private double amount;
     private LocalDateTime time;
 
-    public static Builder create() {
+    public static Builder builder() {
         return new Builder();
     }
 

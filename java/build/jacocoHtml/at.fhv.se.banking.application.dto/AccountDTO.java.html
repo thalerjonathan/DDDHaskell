@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class AccountDTO {
+public final class AccountDTO {
     private AccountDetailsDTO details;
     private final List&lt;TXLineDTO&gt; txLines;
     
-    public static Builder create() {
+    public static Builder builder() {
 <span class="fc" id="L13">        return new Builder();</span>
     }
 

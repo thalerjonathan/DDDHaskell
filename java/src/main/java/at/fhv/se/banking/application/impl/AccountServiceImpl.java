@@ -37,15 +37,15 @@ public class AccountServiceImpl implements AccountService {
 
         Account account = accountOpt.get();
 
-        AccountDTO.Builder builder = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO.Builder builder = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withBalance(account.balance())
                 .withIban(account.iban())
                 .withType(account.type())
                 .build());
 
         for (TXLine tx : account.transactions()) {
-            builder.addTXLine(TXLineDTO.create()
+            builder.addTXLine(TXLineDTO.builder()
                 .ofAmount(tx.amount())
                 .atTime(tx.time())
                 .withIban(tx.iban())

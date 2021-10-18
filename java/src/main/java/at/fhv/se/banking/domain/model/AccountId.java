@@ -1,6 +1,6 @@
 package at.fhv.se.banking.domain.model;
 
-public class AccountId {
+public final class AccountId {
     private final String id;
 
     public AccountId(String id) {

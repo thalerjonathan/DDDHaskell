@@ -30,7 +30,7 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
     @Override
     public List&lt;CustomerDTO&gt; listAll() {
 <span class="fc" id="L32">        List&lt;Customer&gt; customers = this.customerRepo.all();</span>
-<span class="fc" id="L33">        return customers.stream().map(c -&gt; CustomerDTO.create()</span>
+<span class="fc" id="L33">        return customers.stream().map(c -&gt; CustomerDTO.builder()</span>
 <span class="fc" id="L34">            .withId(c.customerId())</span>
 <span class="fc" id="L35">            .withName(c.name())</span>
 <span class="fc" id="L36">            .build()).collect(Collectors.toList());</span>
@@ -47,14 +47,14 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
 <span class="fc" id="L47">        Customer customer = customerOpt.get();</span>
 <span class="fc" id="L48">        List&lt;Account&gt; accounts = accountRepo.forCustomer(customerId);</span>
 
-<span class="fc" id="L50">        CustomerDetailsDTO.Builder builder = CustomerDetailsDTO.create();</span>
-<span class="fc" id="L51">        builder.withCustomer(CustomerDTO.create()</span>
+<span class="fc" id="L50">        CustomerDetailsDTO.Builder builder = CustomerDetailsDTO.builder();</span>
+<span class="fc" id="L51">        builder.withCustomer(CustomerDTO.builder()</span>
 <span class="fc" id="L52">            .withId(customerId)</span>
 <span class="fc" id="L53">            .withName(customer.name())</span>
 <span class="fc" id="L54">            .build());</span>
 
 <span class="fc bfc" id="L56" title="All 2 branches covered.">        for (Account a : accounts) {</span>
-<span class="fc" id="L57">            builder.addAccount(AccountDetailsDTO.create()</span>
+<span class="fc" id="L57">            builder.addAccount(AccountDetailsDTO.builder()</span>
 <span class="fc" id="L58">                .withBalance(a.balance())</span>
 <span class="fc" id="L59">                .withIban(a.iban())</span>
 <span class="fc" id="L60">                .withType(a.type())</span>

@@ -30,7 +30,7 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
 <span class="fc" id="L30">        CustomerId cId1 = customerRepo.nextCustomerId();</span>
 <span class="fc" id="L31">        CustomerId cId2 = customerRepo.nextCustomerId();</span>
 <span class="fc" id="L32">        Customer customer1 = new Customer(cId1, &quot;Jonathan Thaler&quot;);</span>
-<span class="fc" id="L33">        Customer customer2 = new Customer(cId2, &quot;Thomas Scharz&quot;);</span>
+<span class="fc" id="L33">        Customer customer2 = new Customer(cId2, &quot;Thomas Schwarz&quot;);</span>
 
 <span class="fc" id="L35">        Account account1Customer1 = new Account(cId1, new Iban(&quot;AT11 1111 1111 1111&quot;), AccountType.GIRO, 1234);</span>
 <span class="fc" id="L36">        account1Customer1.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>

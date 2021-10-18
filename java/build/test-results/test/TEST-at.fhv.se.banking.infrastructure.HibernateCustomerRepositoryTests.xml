@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="at.fhv.se.banking.infrastructure.HibernateCustomerRepositoryTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-10-15T15:21:26" hostname="zazengine" time="0.029">
+<testsuite name="at.fhv.se.banking.infrastructure.HibernateCustomerRepositoryTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-10-18T08:46:54" hostname="zazengine" time="0.003">
   <properties/>
-  <testcase name="given_customer_when_added_then_fetched()" classname="at.fhv.se.banking.infrastructure.HibernateCustomerRepositoryTests" time="0.027"/>
-  <testcase name="given_customers_when_addedandall_then_fetched()" classname="at.fhv.se.banking.infrastructure.HibernateCustomerRepositoryTests" time="0.001"/>
+  <testcase name="given_customer_when_added_then_fetched()" classname="at.fhv.se.banking.infrastructure.HibernateCustomerRepositoryTests" time="0.001"/>
+  <testcase name="given_customers_when_addedandall_then_fetched()" classname="at.fhv.se.banking.infrastructure.HibernateCustomerRepositoryTests" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

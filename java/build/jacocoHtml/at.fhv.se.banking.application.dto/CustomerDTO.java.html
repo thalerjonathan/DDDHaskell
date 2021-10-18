@@ -4,11 +4,11 @@ import java.util.Objects;
 
 import at.fhv.se.banking.domain.model.CustomerId;
 
-public class CustomerDTO {
+public final class CustomerDTO {
     private String id;
     private String name;
 
-    public static Builder create() {
+    public static Builder builder() {
 <span class="fc" id="L12">        return new Builder();</span>
     }
 

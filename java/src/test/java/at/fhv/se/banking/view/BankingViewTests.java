@@ -17,6 +17,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlListItem;
 import com.gargoylesoftware.htmlunit.html.HtmlNumberInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlParagraph;
+import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
@@ -64,6 +65,7 @@ public class BankingViewTests {
         this.webClient = MockMvcWebClientBuilder
                             .webAppContextSetup(context)
                             .build();
+        this.webClient.getOptions().setThrowExceptionOnScriptError(false);
     }
 
     @AfterEach
@@ -75,11 +77,11 @@ public class BankingViewTests {
     public void given_customers_when_welcomepage_displaycustomers() throws Exception {
         // given
         List<CustomerDTO> customers = Arrays.asList(
-            CustomerDTO.create()
+            CustomerDTO.builder()
                 .withName("Alice")
                 .withId(new CustomerId("1"))
                 .build(),
-            CustomerDTO.create()
+            CustomerDTO.builder()
                 .withName("Bob")
                 .withId(new CustomerId("2"))
                 .build()
@@ -106,16 +108,16 @@ public class BankingViewTests {
         // given
         String customerName = "Jonathan";
         CustomerId customerId = new CustomerId("1");
-        CustomerDetailsDTO customerInfo = CustomerDetailsDTO.create()
-            .withCustomer(CustomerDTO.create()
+        CustomerDetailsDTO customerInfo = CustomerDetailsDTO.builder()
+            .withCustomer(CustomerDTO.builder()
                 .withName(customerName)
                 .withId(customerId)
                 .build())
-            .addAccount(AccountDetailsDTO.create()
+            .addAccount(AccountDetailsDTO.builder()
                 .withIban(new Iban("AT12 3456 7890 1234"))
                 .withType(AccountType.GIRO)
                 .withBalance(1234.5).build())
-            .addAccount(AccountDetailsDTO.create()
+            .addAccount(AccountDetailsDTO.builder()
                 .withIban(new Iban("AT98 7654 3210 9876"))
                 .withType(AccountType.SAVINGS)
                 .withBalance(1234.5).build())
@@ -128,23 +130,24 @@ public class BankingViewTests {
 
         // then
         final HtmlHeading1 heading = (HtmlHeading1) page.getByXPath("//h1").get(0);
-        final List<HtmlAnchor> accountButtons = page.getByXPath("//ul//a");
+        final List<HtmlListItem> items = page.getByXPath("//ul//li");
 
         assertEquals("Banking", page.getTitleText());
         assertEquals(customerName, heading.getTextContent());
 
-        TestingUtils.assertEqualsCollections(accountButtons, customerInfo.accounts(), (ab, dto) -> {
-            String href = ab.getHrefAttribute();
+        TestingUtils.assertEqualsCollections(items, customerInfo.accounts(), (li, dto) -> {
+            final HtmlAnchor a = (HtmlAnchor) li.getFirstByXPath(".//a");
+            final HtmlSpan span = (HtmlSpan) li.getFirstByXPath(".//span");
+
+            String href = a.getHrefAttribute();
             String expectedHref = "/account?iban=" +
                 dto.getIban().replace(" ", "%20") + "&id=" + 
                 customerId.id() + "&name=" + 
                 customerName;
 
-            String accountLinkText = ab.asNormalizedText();
-            String expectedLinkText = dto.getIban() + " " + dto.balance();
-            
             assertEquals(expectedHref, href);
-            assertEquals(expectedLinkText, accountLinkText);
+            assertEquals(dto.getIban().toString(), a.asNormalizedText());
+            assertEquals("" + dto.balance(), span.asNormalizedText());
         });
     }
 
@@ -172,20 +175,20 @@ public class BankingViewTests {
         String customerName = "Jonathan";
         Iban iban = new Iban("AT12 3456 7890 1234");
 
-        AccountDTO accountInfo = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO accountInfo = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(1234.5)
                 .build())
-            .addTXLine(TXLineDTO.create()
+            .addTXLine(TXLineDTO.builder()
                 .withIban(new Iban("AT98 7654 3210 9876"))
                 .withName("Hans Huber")
                 .ofAmount(-100.0)
                 .atTime(LocalDateTime.now())
                 .withReference("Lunch")
                 .build())
-            .addTXLine(TXLineDTO.create()
+            .addTXLine(TXLineDTO.builder()
                 .withIban(new Iban("AT11 2222 3333 4444"))
                 .withName("Max Mustermann")
                 .ofAmount(200.0)
@@ -251,16 +254,16 @@ public class BankingViewTests {
         double depositAmount = 1000.0;
         Iban iban = new Iban("AT12 3456 7890 1234");
 
-        AccountDTO accountInfo = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO accountInfo = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance)
                 .build())
             .build();
 
-        AccountDTO newAccountInfo = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO newAccountInfo = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance + depositAmount)
@@ -299,8 +302,8 @@ public class BankingViewTests {
         double depositAmount = 1000.0;
         Iban iban = new Iban("AT12 3456 7890 1234");
 
-        AccountDTO accountInfo = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO accountInfo = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance)
@@ -340,8 +343,8 @@ public class BankingViewTests {
         double withdrawAmount = 1000.0;
         Iban iban = new Iban("AT12 3456 7890 1234");
 
-        AccountDTO accountInfo = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO accountInfo = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance)
@@ -379,16 +382,16 @@ public class BankingViewTests {
         double withdrawAmount = 1000.0;
         Iban iban = new Iban("AT12 3456 7890 1234");
 
-        AccountDTO accountInfo = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO accountInfo = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance)
                 .build())
             .build();
 
-        AccountDTO newAccountInfo = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO newAccountInfo = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance - withdrawAmount)
@@ -428,16 +431,16 @@ public class BankingViewTests {
         double transferAmount = 1000.0;
         Iban receivingIban = new Iban("AT98 7654 3210 9876");
         
-        AccountDTO accountInfo = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO accountInfo = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance)
                 .build())
             .build();
 
-        AccountDTO newAccountInfo = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO newAccountInfo = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance - transferAmount)
@@ -483,8 +486,8 @@ public class BankingViewTests {
         double transferAmount = 1000.0;
         Iban receivingIban = new Iban("AT98 7654 3210 9876");
         
-        AccountDTO accountInfo = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO accountInfo = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance)
@@ -530,8 +533,8 @@ public class BankingViewTests {
         double transferAmount = 1000.0;
         Iban receivingIban = new Iban("AT98 7654 3210 9876");
         
-        AccountDTO accountInfo = AccountDTO.create()
-            .withDeails(AccountDetailsDTO.create()
+        AccountDTO accountInfo = AccountDTO.builder()
+            .withDeails(AccountDetailsDTO.builder()
                 .withIban(iban)
                 .withType(AccountType.GIRO)
                 .withBalance(balance)

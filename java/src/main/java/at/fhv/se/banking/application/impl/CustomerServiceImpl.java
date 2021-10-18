@@ -30,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDTO> listAll() {
         List<Customer> customers = this.customerRepo.all();
-        return customers.stream().map(c -> CustomerDTO.create()
+        return customers.stream().map(c -> CustomerDTO.builder()
             .withId(c.customerId())
             .withName(c.name())
             .build()).collect(Collectors.toList());
@@ -47,14 +47,14 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerOpt.get();
         List<Account> accounts = accountRepo.forCustomer(customerId);
 
-        CustomerDetailsDTO.Builder builder = CustomerDetailsDTO.create();
-        builder.withCustomer(CustomerDTO.create()
+        CustomerDetailsDTO.Builder builder = CustomerDetailsDTO.builder();
+        builder.withCustomer(CustomerDTO.builder()
             .withId(customerId)
             .withName(customer.name())
             .build());
 
         for (Account a : accounts) {
-            builder.addAccount(AccountDetailsDTO.create()
+            builder.addAccount(AccountDetailsDTO.builder()
                 .withBalance(a.balance())
                 .withIban(a.iban())
                 .withType(a.type())

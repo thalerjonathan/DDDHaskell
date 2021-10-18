@@ -48,7 +48,7 @@ public class CustomerServiceTests {
             );
 
         List<CustomerDTO> expectedCustomerDTOs = customers.stream().map(c -> 
-            CustomerDTO.create()
+            CustomerDTO.builder()
                 .withId(c.customerId())
                 .withName(c.name())
                 .build()).collect(Collectors.toList());
@@ -69,12 +69,12 @@ public class CustomerServiceTests {
         CustomerId customerId = new CustomerId("42");
         Customer customer = new Customer(customerId, customerName);
 
-        CustomerDetailsDTO expectedInfoDTO = CustomerDetailsDTO.create()
-            .withCustomer(CustomerDTO.create()
+        CustomerDetailsDTO expectedInfoDTO = CustomerDetailsDTO.builder()
+            .withCustomer(CustomerDTO.builder()
                 .withId(customerId)
                 .withName(customerName)
                 .build())
-            .addAccount(AccountDetailsDTO.create()
+            .addAccount(AccountDetailsDTO.builder()
                 .withBalance(1234)
                 .withIban(new Iban("AT12 3456 7890 1234"))
                 .withType(AccountType.GIRO)

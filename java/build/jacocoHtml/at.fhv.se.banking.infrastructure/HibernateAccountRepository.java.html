@@ -19,23 +19,21 @@ public class HibernateAccountRepository implements AccountRepository {
 
 <span class="fc" id="L20">    HibernateAccountRepository() {</span>
 <span class="fc" id="L21">        this.accounts = new ArrayList&lt;&gt;();</span>
-
-        
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L22">    }</span>
     
     @Override
     public List&lt;Account&gt; forCustomer(CustomerId customerId) {
-<span class="fc" id="L28">        return this.accounts.stream().filter(a -&gt; a.owner().equals(customerId)).collect(Collectors.toList());</span>
+<span class="fc" id="L26">        return this.accounts.stream().filter(a -&gt; a.owner().equals(customerId)).collect(Collectors.toList());</span>
     }
 
     @Override
     public Optional&lt;Account&gt; byIban(Iban iban) {
-<span class="fc" id="L33">        return this.accounts.stream().filter(a -&gt; a.iban().equals(iban)).findFirst();</span>
+<span class="fc" id="L31">        return this.accounts.stream().filter(a -&gt; a.iban().equals(iban)).findFirst();</span>
     }
 
     @Override
     public void add(Account a) {
-<span class="fc" id="L38">        this.accounts.add(a);</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L36">        this.accounts.add(a);</span>
+<span class="fc" id="L37">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

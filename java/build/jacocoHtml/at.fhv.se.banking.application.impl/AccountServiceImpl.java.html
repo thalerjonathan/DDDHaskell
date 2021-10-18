@@ -37,15 +37,15 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
 
 <span class="fc" id="L38">        Account account = accountOpt.get();</span>
 
-<span class="fc" id="L40">        AccountDTO.Builder builder = AccountDTO.create()</span>
-<span class="fc" id="L41">            .withDeails(AccountDetailsDTO.create()</span>
+<span class="fc" id="L40">        AccountDTO.Builder builder = AccountDTO.builder()</span>
+<span class="fc" id="L41">            .withDeails(AccountDetailsDTO.builder()</span>
 <span class="fc" id="L42">                .withBalance(account.balance())</span>
 <span class="fc" id="L43">                .withIban(account.iban())</span>
 <span class="fc" id="L44">                .withType(account.type())</span>
 <span class="fc" id="L45">                .build());</span>
 
 <span class="fc bfc" id="L47" title="All 2 branches covered.">        for (TXLine tx : account.transactions()) {</span>
-<span class="fc" id="L48">            builder.addTXLine(TXLineDTO.create()</span>
+<span class="fc" id="L48">            builder.addTXLine(TXLineDTO.builder()</span>
 <span class="fc" id="L49">                .ofAmount(tx.amount())</span>
 <span class="fc" id="L50">                .atTime(tx.time())</span>
 <span class="fc" id="L51">                .withIban(tx.iban())</span>

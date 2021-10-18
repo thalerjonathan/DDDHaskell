@@ -5,12 +5,12 @@ import java.util.Objects;
 import at.fhv.se.banking.domain.model.AccountType;
 import at.fhv.se.banking.domain.model.Iban;
 
-public class AccountDetailsDTO {
+public final class AccountDetailsDTO {
     private String iban;
     private double balance;
     private String type;
 
-    public static Builder create() {
+    public static Builder builder() {
         return new Builder();
     }
 

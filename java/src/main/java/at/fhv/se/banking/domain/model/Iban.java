@@ -1,6 +1,6 @@
 package at.fhv.se.banking.domain.model;
 
-public class Iban {
+public final class Iban {
     private final String iban;
 
     public Iban(String iban) {

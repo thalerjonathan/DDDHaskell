@@ -1,6 +1,6 @@
 package at.fhv.se.banking.view.forms;
 
-public class AccountForm {
+public final class AccountForm {
     private double amount;
     private String customerId;
     private String customerName;
