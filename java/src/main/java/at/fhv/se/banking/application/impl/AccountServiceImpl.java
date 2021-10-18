@@ -32,13 +32,13 @@ public class AccountServiceImpl implements AccountService {
         Iban iban = new Iban(ibanStr);
         Optional<Account> accountOpt = accountRepo.byIban(iban);
         if (accountOpt.isEmpty()) {
-            throw new AccountNotFoundException("Couldn't fine account for IBAN " + ibanStr);
+            throw new AccountNotFoundException("Couldn't find account for IBAN " + ibanStr);
         }
 
         Account account = accountOpt.get();
 
         AccountDTO.Builder builder = AccountDTO.builder()
-            .withDeails(AccountDetailsDTO.builder()
+            .withDetails(AccountDetailsDTO.builder()
                 .withBalance(account.balance())
                 .withIban(account.iban())
                 .withType(account.type())

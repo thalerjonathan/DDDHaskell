@@ -33,7 +33,7 @@ import at.fhv.se.banking.view.forms.AccountForm;
     private static final String POST_TRANSFER_URL = &quot;/account/transfer&quot;;
 
     private static final String ALL_CUSTOMERS_VIEW = &quot;allCustomers&quot;;
-    private static final String CUSTOMER_INFO_VIEW = &quot;customerInfo&quot;;
+    private static final String CUSTOMER_VIEW = &quot;customer&quot;;
     private static final String ACCOUNT_VIEW = &quot;account&quot;;
     private static final String ERROR_VIEW = &quot;errorView&quot;;
 
@@ -56,9 +56,9 @@ import at.fhv.se.banking.view.forms.AccountForm;
             @RequestParam(&quot;id&quot;) String customerId, 
             Model model) {
         try {
-<span class="fc" id="L59">            CustomerDetailsDTO customerDetails = this.customerService.detailsFor(customerId);</span>
+<span class="fc" id="L59">            final CustomerDetailsDTO customerDetails = this.customerService.detailsFor(customerId);</span>
 <span class="fc" id="L60">            model.addAttribute(&quot;customer&quot;, customerDetails);</span>
-<span class="fc" id="L61">            return new ModelAndView(CUSTOMER_INFO_VIEW);</span>
+<span class="fc" id="L61">            return new ModelAndView(CUSTOMER_VIEW);</span>
 <span class="fc" id="L62">        } catch (CustomerNotFoundException e) {</span>
 <span class="fc" id="L63">            return redirectError(&quot;Customer not found!&quot;);</span>
         }
@@ -72,7 +72,7 @@ import at.fhv.se.banking.view.forms.AccountForm;
             Model model) {
 
         try {
-<span class="fc" id="L75">            AccountDTO account = this.accountService.accountByIban(iban);</span>
+<span class="fc" id="L75">            final AccountDTO account = this.accountService.accountByIban(iban);</span>
 <span class="fc" id="L76">            final AccountForm form = new AccountForm(customerId, customerName, iban);</span>
 
 <span class="fc" id="L78">            model.addAttribute(&quot;account&quot;, account);</span>

@@ -75,6 +75,7 @@ public final class TXLineDTO {
             Objects.requireNonNull(this.instance.iban, "iban must be set in TXLineDTO");
             Objects.requireNonNull(this.instance.name, "name must be set in TXLineDTO");
             Objects.requireNonNull(this.instance.time, "time must be set in TXLineDTO");
+            Objects.requireNonNull(this.instance.reference, "reference must be set in TXLineDTO");
 
             return this.instance;
         }

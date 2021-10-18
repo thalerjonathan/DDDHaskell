@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">11.777s</div>
+<div class="counter">10.443s</div>
 <p>duration</p>
 </div>
 </td>
@@ -82,62 +82,62 @@
 </thead>
 <tr>
 <td class="success">given_account_when_deposit_and_noaccount_thenshowerror()</td>
-<td class="success">1.224s</td>
+<td class="success">0.709s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_account_when_deposit_thendisplaynewbalance()</td>
-<td class="success">0.633s</td>
+<td class="success">0.662s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_account_when_transfer_and_noaccount_thenshowerror()</td>
-<td class="success">3.155s</td>
+<td class="success">3.912s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_account_when_transfer_and_nocustomer_thenshowerror()</td>
-<td class="success">0.591s</td>
+<td class="success">0.781s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_account_when_transfer_thendisplaynewbalance()</td>
-<td class="success">0.419s</td>
+<td class="success">0.761s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_account_when_view_displayinfoandalltransactions()</td>
-<td class="success">0.622s</td>
+<td class="success">0.418s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_account_when_withdraw_andnoaccount_thendisplaynewbalance()</td>
-<td class="success">0.547s</td>
+<td class="success">0.676s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_account_when_withdraw_thendisplaynewbalance()</td>
-<td class="success">1.011s</td>
+<td class="success">0.574s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_customer_when_view_displaydetailsandaccounts()</td>
-<td class="success">1.157s</td>
+<td class="success">0.758s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_customernotfound_when_view_displaydetailsandaccounts_thenerrorpage()</td>
-<td class="success">0.892s</td>
+<td class="success">0.520s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_customers_when_welcomepage_displaycustomers()</td>
-<td class="success">0.634s</td>
+<td class="success">0.374s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_noaccount_when_viewdisplayinfoandalltransactions_then_showerrorpage()</td>
-<td class="success">0.892s</td>
+<td class="success">0.298s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -145,21 +145,21 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>10:46:37.692 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
-10:46:37.719 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
-10:46:37.801 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [at.fhv.se.banking.view.BankingViewTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
-10:46:37.826 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [at.fhv.se.banking.view.BankingViewTests]: class path resource [at/fhv/se/banking/view/BankingViewTests-context.xml] does not exist
-10:46:37.826 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [at.fhv.se.banking.view.BankingViewTests]: class path resource [at/fhv/se/banking/view/BankingViewTestsContext.groovy] does not exist
-10:46:37.827 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [at.fhv.se.banking.view.BankingViewTests]: no resource found for suffixes {-context.xml, Context.groovy}.
-10:46:37.828 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [at.fhv.se.banking.view.BankingViewTests]: BankingViewTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-10:46:37.914 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [at.fhv.se.banking.view.BankingViewTests]
-10:46:38.018 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/home/ionathan/gitrepos/DDDHaskell/java/build/classes/java/main/at/fhv/se/banking/BankingApplication.class]
-10:46:38.020 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration at.fhv.se.banking.BankingApplication for test class at.fhv.se.banking.view.BankingViewTests
-10:46:38.158 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [at.fhv.se.banking.view.BankingViewTests]: using defaults.
-10:46:38.158 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-10:46:38.182 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@11ee5af9, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@64b9bd76, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@5f59f87a, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@19f7035, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@6245db6d, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4bbe985e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@5bb4237b, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@2150fee0, org.springframework.test.context.event.EventPublishingTestExecutionListener@6d02d714, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@52c1de82, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@2814805a, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@e15dc46, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@755400e7, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@293df501, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@25a7b62c]
-10:46:38.187 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@4cdb5af testClass = BankingViewTests, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6e57ce91 testClass = BankingViewTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@57c7935a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@73101a17, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@48a80dc4, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6ef190bd, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@bfb65b20, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@55fbc354, org.springframework.test.context.web.socket.MockServerContainerContextCustomizer@7d12cf6d, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@5ccf8550], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
-10:46:38.234 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}
+<pre>12:56:48.876 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+12:56:48.949 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+12:56:49.128 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [at.fhv.se.banking.view.BankingViewTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+12:56:49.192 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [at.fhv.se.banking.view.BankingViewTests]: class path resource [at/fhv/se/banking/view/BankingViewTests-context.xml] does not exist
+12:56:49.194 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [at.fhv.se.banking.view.BankingViewTests]: class path resource [at/fhv/se/banking/view/BankingViewTestsContext.groovy] does not exist
+12:56:49.195 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [at.fhv.se.banking.view.BankingViewTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+12:56:49.197 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [at.fhv.se.banking.view.BankingViewTests]: BankingViewTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:56:49.412 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [at.fhv.se.banking.view.BankingViewTests]
+12:56:49.627 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/home/ionathan/gitrepos/DDDHaskell/java/build/classes/java/main/at/fhv/se/banking/BankingApplication.class]
+12:56:49.629 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration at.fhv.se.banking.BankingApplication for test class at.fhv.se.banking.view.BankingViewTests
+12:56:49.847 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [at.fhv.se.banking.view.BankingViewTests]: using defaults.
+12:56:49.848 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+12:56:49.885 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@11ee5af9, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@64b9bd76, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@5f59f87a, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@19f7035, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@6245db6d, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4bbe985e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@5bb4237b, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@2150fee0, org.springframework.test.context.event.EventPublishingTestExecutionListener@6d02d714, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@52c1de82, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@2814805a, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@e15dc46, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@755400e7, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@293df501, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@25a7b62c]
+12:56:49.893 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@4cdb5af testClass = BankingViewTests, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6e57ce91 testClass = BankingViewTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@57c7935a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@73101a17, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@48a80dc4, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6ef190bd, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@bfb65b20, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@55fbc354, org.springframework.test.context.web.socket.MockServerContainerContextCustomizer@7d12cf6d, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@5ccf8550], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
+12:56:49.974 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -169,26 +169,26 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v2.5.5)
 
-10:46:38.772 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Starting BankingViewTests using Java 15.0.3 on zazengine with PID 15602 (started by ionathan in /home/ionathan/gitrepos/DDDHaskell/java)
-10:46:38.773 [Test worker] DEBUG a.f.se.banking.view.BankingViewTests - Running with Spring Boot v2.5.5, Spring v5.3.10
-10:46:38.776 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - No active profile set, falling back to default profiles: default
-10:46:39.617 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-10:46:39.633 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
-10:46:40.594 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-10:46:40.872 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-10:46:41.068 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-10:46:41.144 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.32.Final
-10:46:41.217 [Test worker] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-10:46:41.373 [Test worker] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-10:46:41.689 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-10:46:41.700 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-10:46:41.950 [Test worker] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-10:46:42.276 [Test worker] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:collabnotes'
-10:46:42.700 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Started BankingViewTests in 4.457 seconds (JVM running for 6.255)
-10:46:42.757 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:42.757 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:42.758 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:46:45.395 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:56:50.781 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Starting BankingViewTests using Java 15.0.3 on zazengine with PID 44804 (started by ionathan in /home/ionathan/gitrepos/DDDHaskell/java)
+12:56:50.783 [Test worker] DEBUG a.f.se.banking.view.BankingViewTests - Running with Spring Boot v2.5.5, Spring v5.3.10
+12:56:50.789 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - No active profile set, falling back to default profiles: default
+12:56:51.944 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+12:56:51.977 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 JPA repository interfaces.
+12:56:53.470 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+12:56:53.878 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+12:56:54.162 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+12:56:54.251 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.32.Final
+12:56:54.329 [Test worker] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+12:56:54.561 [Test worker] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+12:56:55.020 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+12:56:55.042 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+12:56:55.455 [Test worker] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+12:56:55.868 [Test worker] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:collabnotes'
+12:56:56.384 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Started BankingViewTests in 6.396 seconds (JVM running for 9.494)
+12:56:56.451 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:56:56.451 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:56:56.452 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+12:56:59.746 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -398,7 +398,7 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 127 common frames omitted
-10:46:45.776 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:00.173 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -610,10 +610,10 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 129 common frames omitted
-10:46:45.887 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:45.887 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:45.888 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:46:46.171 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:00.340 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:57:00.340 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:57:00.342 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+12:57:00.644 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -823,7 +823,7 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 127 common frames omitted
-10:46:46.489 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:00.963 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -1035,10 +1035,10 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 129 common frames omitted
-10:46:46.522 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:46.522 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:46.523 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:46:46.777 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:01.003 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:57:01.003 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:57:01.005 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+12:57:01.346 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -1248,7 +1248,7 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 127 common frames omitted
-10:46:47.062 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:01.668 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -1460,10 +1460,10 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 129 common frames omitted
-10:46:47.071 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:47.071 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:47.072 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:46:47.638 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:01.681 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:57:01.681 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:57:01.683 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+12:57:02.032 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -1673,10 +1673,10 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 127 common frames omitted
-10:46:47.695 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:47.695 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:47.696 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:46:48.578 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:02.102 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:57:02.102 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:57:02.104 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+12:57:02.613 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -1885,10 +1885,10 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 126 common frames omitted
-10:46:48.589 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:48.590 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:48.590 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-10:46:49.395 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:02.623 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:57:02.623 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:57:02.624 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+12:57:02.934 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -2097,10 +2097,10 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 126 common frames omitted
-10:46:49.749 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:49.750 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:49.751 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:46:50.634 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:03.385 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:57:03.385 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:57:03.386 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+12:57:03.673 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -2310,10 +2310,10 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 127 common frames omitted
-10:46:50.641 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:50.641 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:50.642 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:46:51.244 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:03.686 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:57:03.686 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:57:03.688 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+12:57:03.995 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -2523,7 +2523,7 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 127 common frames omitted
-10:46:51.641 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:04.242 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -2735,10 +2735,10 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 129 common frames omitted
-10:46:51.653 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:51.653 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:51.654 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:46:52.259 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:04.261 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:57:04.262 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:57:04.263 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+12:57:04.607 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -2947,10 +2947,10 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 126 common frames omitted
-10:46:52.289 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:52.289 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:52.290 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:46:53.101 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:04.637 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:57:04.637 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:57:04.638 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+12:57:04.991 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -3160,7 +3160,7 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 127 common frames omitted
-10:46:53.498 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:05.336 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -3372,10 +3372,10 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 129 common frames omitted
-10:46:53.516 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:53.517 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:53.518 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:46:53.861 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:05.349 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:57:05.350 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:57:05.351 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+12:57:05.629 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -3585,7 +3585,7 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 127 common frames omitted
-10:46:54.098 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:06.115 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -3797,10 +3797,10 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 129 common frames omitted
-10:46:54.108 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:46:54.108 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:46:54.109 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:46:54.357 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:06.133 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:57:06.133 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:57:06.134 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+12:57:06.437 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -4010,7 +4010,7 @@ Caused by: net.sourceforge.htmlunit.corejs.javascript.EvaluatorException: missin
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$1.doRun(JavaScriptEngine.java:779)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:942)
 	... 127 common frames omitted
-10:46:54.518 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
+12:57:06.871 [Test worker] ERROR c.g.h.j.DefaultJavaScriptErrorListener - Error during JavaScript execution
 com.gargoylesoftware.htmlunit.ScriptException: missing formal parameter (https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js#6)
 	at com.gargoylesoftware.htmlunit.javascript.JavaScriptEngine$HtmlUnitContextAction.run(JavaScriptEngine.java:960)
 	at net.sourceforge.htmlunit.corejs.javascript.Context.call(Context.java:581)
@@ -4522,7 +4522,7 @@ Caused by: org.jacoco.agent.rt.internal_3570298.asm.MethodTooLargeException: Met
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.0.2</a> at Oct 18, 2021, 10:46:56 AM</p>
+<a href="http://www.gradle.org">Gradle 7.0.2</a> at Oct 18, 2021, 12:57:09 PM</p>
 </div>
 </div>
 </body>

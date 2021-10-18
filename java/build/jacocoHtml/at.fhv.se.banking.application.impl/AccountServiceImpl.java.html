@@ -38,7 +38,7 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
 <span class="fc" id="L38">        Account account = accountOpt.get();</span>
 
 <span class="fc" id="L40">        AccountDTO.Builder builder = AccountDTO.builder()</span>
-<span class="fc" id="L41">            .withDeails(AccountDetailsDTO.builder()</span>
+<span class="fc" id="L41">            .withDetails(AccountDetailsDTO.builder()</span>
 <span class="fc" id="L42">                .withBalance(account.balance())</span>
 <span class="fc" id="L43">                .withIban(account.iban())</span>
 <span class="fc" id="L44">                .withType(account.type())</span>

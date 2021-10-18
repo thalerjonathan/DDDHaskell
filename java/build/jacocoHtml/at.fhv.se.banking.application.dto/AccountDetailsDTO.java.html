@@ -19,7 +19,7 @@ public final class AccountDetailsDTO {
     }
 
     public String type() {
-<span class="nc" id="L22">        return this.type;</span>
+<span class="fc" id="L22">        return this.type;</span>
     }
 
     public double balance() {
@@ -52,46 +52,47 @@ public final class AccountDetailsDTO {
         }
 
         public AccountDetailsDTO build() {
-<span class="fc" id="L55">            Objects.requireNonNull(this.instance.type, &quot;type must be set in AccountDTO&quot;);</span>
+<span class="fc" id="L55">            Objects.requireNonNull(this.instance.iban, &quot;iban must be set in AccountDetailsDTO&quot;);</span>
+<span class="fc" id="L56">            Objects.requireNonNull(this.instance.type, &quot;type must be set in AccountDetailsDTO&quot;);</span>
 
-<span class="fc" id="L57">            return this.instance;</span>
+<span class="fc" id="L58">            return this.instance;</span>
         }
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L63">        final int prime = 31;</span>
-<span class="nc" id="L64">        int result = 1;</span>
+<span class="nc" id="L64">        final int prime = 31;</span>
+<span class="nc" id="L65">        int result = 1;</span>
         long temp;
-<span class="nc" id="L66">        temp = Double.doubleToLongBits(balance);</span>
-<span class="nc" id="L67">        result = prime * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        result = prime * result + ((iban == null) ? 0 : iban.hashCode());</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        result = prime * result + ((type == null) ? 0 : type.hashCode());</span>
-<span class="nc" id="L70">        return result;</span>
+<span class="nc" id="L67">        temp = Double.doubleToLongBits(balance);</span>
+<span class="nc" id="L68">        result = prime * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        result = prime * result + ((iban == null) ? 0 : iban.hashCode());</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        result = prime * result + ((type == null) ? 0 : type.hashCode());</span>
+<span class="nc" id="L71">        return result;</span>
     }
 
     @Override
     public boolean equals(Object obj) {
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (this == obj)</span>
-<span class="nc" id="L76">            return true;</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if (obj == null)</span>
-<span class="nc" id="L78">            return false;</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        if (getClass() != obj.getClass())</span>
-<span class="nc" id="L80">            return false;</span>
-<span class="fc" id="L81">        AccountDetailsDTO other = (AccountDetailsDTO) obj;</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        if (Double.doubleToLongBits(balance) != Double.doubleToLongBits(other.balance))</span>
-<span class="nc" id="L83">            return false;</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (iban == null) {</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">            if (other.iban != null)</span>
-<span class="nc" id="L86">                return false;</span>
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        } else if (!iban.equals(other.iban))</span>
-<span class="nc" id="L88">            return false;</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (type == null) {</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">            if (other.type != null)</span>
-<span class="nc" id="L91">                return false;</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        } else if (!type.equals(other.type))</span>
-<span class="nc" id="L93">            return false;</span>
-<span class="fc" id="L94">        return true;</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (this == obj)</span>
+<span class="nc" id="L77">            return true;</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (obj == null)</span>
+<span class="nc" id="L79">            return false;</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        if (getClass() != obj.getClass())</span>
+<span class="nc" id="L81">            return false;</span>
+<span class="fc" id="L82">        AccountDetailsDTO other = (AccountDetailsDTO) obj;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (Double.doubleToLongBits(balance) != Double.doubleToLongBits(other.balance))</span>
+<span class="nc" id="L84">            return false;</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        if (iban == null) {</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (other.iban != null)</span>
+<span class="nc" id="L87">                return false;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        } else if (!iban.equals(other.iban))</span>
+<span class="nc" id="L89">            return false;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (type == null) {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">            if (other.type != null)</span>
+<span class="nc" id="L92">                return false;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        } else if (!type.equals(other.type))</span>
+<span class="nc" id="L94">            return false;</span>
+<span class="fc" id="L95">        return true;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

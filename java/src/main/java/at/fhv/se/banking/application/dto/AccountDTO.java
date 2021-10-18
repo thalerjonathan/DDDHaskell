@@ -32,7 +32,7 @@ public final class AccountDTO {
             this.instance = new AccountDTO();
         }
 
-        public Builder withDeails(AccountDetailsDTO details) {
+        public Builder withDetails(AccountDetailsDTO details) {
             this.instance.details = details;
             return this;
         }

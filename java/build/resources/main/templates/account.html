@@ -18,7 +18,7 @@
             crossorigin="anonymous"></script>
 
         <h1 th:text="${form.customerName}"></h1>
-        <h2 th:text="${account.details.iban}"></h2>
+        <h2 th:text="${account.details.iban} + ' (' + ${account.details.type} + ')'"></h2>
         <h3 th:text="'Balance: ' + ${account.details.balance}"></h3>
 
         <a class="btn btn-outline-primary" th:href="@{/customer(id=${form.customerId})}">Back</a>

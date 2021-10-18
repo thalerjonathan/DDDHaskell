@@ -52,7 +52,8 @@ public final class AccountDetailsDTO {
         }
 
         public AccountDetailsDTO build() {
-            Objects.requireNonNull(this.instance.type, "type must be set in AccountDTO");
+            Objects.requireNonNull(this.instance.iban, "iban must be set in AccountDetailsDTO");
+            Objects.requireNonNull(this.instance.type, "type must be set in AccountDetailsDTO");
 
             return this.instance;
         }

@@ -30,7 +30,7 @@
                 <a th:href="@{/account(
                     iban=${a.iban},
                     id=${customer.details.id},
-                    name=${customer.details.name})}" th:text="${a.iban}"></a>
+                    name=${customer.details.name})}" th:text="${a.iban} + ' (' + ${a.type} + ')'"></a>
 
                 <span class="badge bg-primary rounded-pill" th:text="${a.balance}"></span>
             </li>

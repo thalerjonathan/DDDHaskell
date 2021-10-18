@@ -75,57 +75,58 @@ public final class TXLineDTO {
 <span class="fc" id="L75">            Objects.requireNonNull(this.instance.iban, &quot;iban must be set in TXLineDTO&quot;);</span>
 <span class="fc" id="L76">            Objects.requireNonNull(this.instance.name, &quot;name must be set in TXLineDTO&quot;);</span>
 <span class="fc" id="L77">            Objects.requireNonNull(this.instance.time, &quot;time must be set in TXLineDTO&quot;);</span>
+<span class="fc" id="L78">            Objects.requireNonNull(this.instance.reference, &quot;reference must be set in TXLineDTO&quot;);</span>
 
-<span class="fc" id="L79">            return this.instance;</span>
+<span class="fc" id="L80">            return this.instance;</span>
         }
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L85">        final int prime = 31;</span>
-<span class="nc" id="L86">        int result = 1;</span>
+<span class="nc" id="L86">        final int prime = 31;</span>
+<span class="nc" id="L87">        int result = 1;</span>
         long temp;
-<span class="nc" id="L88">        temp = Double.doubleToLongBits(amount);</span>
-<span class="nc" id="L89">        result = prime * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">        result = prime * result + ((iban == null) ? 0 : iban.hashCode());</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        result = prime * result + ((name == null) ? 0 : name.hashCode());</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">        result = prime * result + ((reference == null) ? 0 : reference.hashCode());</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">        result = prime * result + ((time == null) ? 0 : time.hashCode());</span>
-<span class="nc" id="L94">        return result;</span>
+<span class="nc" id="L89">        temp = Double.doubleToLongBits(amount);</span>
+<span class="nc" id="L90">        result = prime * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        result = prime * result + ((iban == null) ? 0 : iban.hashCode());</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        result = prime * result + ((name == null) ? 0 : name.hashCode());</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        result = prime * result + ((reference == null) ? 0 : reference.hashCode());</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        result = prime * result + ((time == null) ? 0 : time.hashCode());</span>
+<span class="nc" id="L95">        return result;</span>
     }
 
     @Override
     public boolean equals(Object obj) {
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (this == obj)</span>
-<span class="nc" id="L100">            return true;</span>
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (obj == null)</span>
-<span class="nc" id="L102">            return false;</span>
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        if (getClass() != obj.getClass())</span>
-<span class="nc" id="L104">            return false;</span>
-<span class="fc" id="L105">        TXLineDTO other = (TXLineDTO) obj;</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">        if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))</span>
-<span class="nc" id="L107">            return false;</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (iban == null) {</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">            if (other.iban != null)</span>
-<span class="nc" id="L110">                return false;</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        } else if (!iban.equals(other.iban))</span>
-<span class="nc" id="L112">            return false;</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">        if (name == null) {</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">            if (other.name != null)</span>
-<span class="nc" id="L115">                return false;</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        } else if (!name.equals(other.name))</span>
-<span class="nc" id="L117">            return false;</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">        if (reference == null) {</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">            if (other.reference != null)</span>
-<span class="nc" id="L120">                return false;</span>
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        } else if (!reference.equals(other.reference))</span>
-<span class="nc" id="L122">            return false;</span>
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if (time == null) {</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">            if (other.time != null)</span>
-<span class="nc" id="L125">                return false;</span>
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        } else if (!time.equals(other.time))</span>
-<span class="nc" id="L127">            return false;</span>
-<span class="fc" id="L128">        return true;</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (this == obj)</span>
+<span class="nc" id="L101">            return true;</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (obj == null)</span>
+<span class="nc" id="L103">            return false;</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (getClass() != obj.getClass())</span>
+<span class="nc" id="L105">            return false;</span>
+<span class="fc" id="L106">        TXLineDTO other = (TXLineDTO) obj;</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))</span>
+<span class="nc" id="L108">            return false;</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">        if (iban == null) {</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">            if (other.iban != null)</span>
+<span class="nc" id="L111">                return false;</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">        } else if (!iban.equals(other.iban))</span>
+<span class="nc" id="L113">            return false;</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">        if (name == null) {</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">            if (other.name != null)</span>
+<span class="nc" id="L116">                return false;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        } else if (!name.equals(other.name))</span>
+<span class="nc" id="L118">            return false;</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        if (reference == null) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">            if (other.reference != null)</span>
+<span class="nc" id="L121">                return false;</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        } else if (!reference.equals(other.reference))</span>
+<span class="nc" id="L123">            return false;</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if (time == null) {</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">            if (other.time != null)</span>
+<span class="nc" id="L126">                return false;</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        } else if (!time.equals(other.time))</span>
+<span class="nc" id="L128">            return false;</span>
+<span class="fc" id="L129">        return true;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

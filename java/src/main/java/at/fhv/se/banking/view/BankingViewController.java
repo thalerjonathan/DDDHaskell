@@ -33,7 +33,7 @@ public class BankingViewController {
     private static final String POST_TRANSFER_URL = "/account/transfer";
 
     private static final String ALL_CUSTOMERS_VIEW = "allCustomers";
-    private static final String CUSTOMER_INFO_VIEW = "customerInfo";
+    private static final String CUSTOMER_VIEW = "customer";
     private static final String ACCOUNT_VIEW = "account";
     private static final String ERROR_VIEW = "errorView";
 
@@ -56,9 +56,9 @@ public class BankingViewController {
             @RequestParam("id") String customerId, 
             Model model) {
         try {
-            CustomerDetailsDTO customerDetails = this.customerService.detailsFor(customerId);
+            final CustomerDetailsDTO customerDetails = this.customerService.detailsFor(customerId);
             model.addAttribute("customer", customerDetails);
-            return new ModelAndView(CUSTOMER_INFO_VIEW);
+            return new ModelAndView(CUSTOMER_VIEW);
         } catch (CustomerNotFoundException e) {
             return redirectError("Customer not found!");
         }
@@ -72,7 +72,7 @@ public class BankingViewController {
             Model model) {
 
         try {
-            AccountDTO account = this.accountService.accountByIban(iban);
+            final AccountDTO account = this.accountService.accountByIban(iban);
             final AccountForm form = new AccountForm(customerId, customerName, iban);
 
             model.addAttribute("account", account);

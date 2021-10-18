@@ -49,7 +49,7 @@ public class AccountServiceTests {
         account.addTXLine(new TXLine(new Iban("AT98 7654 3210 9876"), 100.0, "Max Mustermann", "Rent", txLineTime));
 
         AccountDTO expectedAccountDTO = AccountDTO.builder()
-            .withDeails(AccountDetailsDTO.builder()
+            .withDetails(AccountDetailsDTO.builder()
                 .withBalance(balance)
                 .withIban(iban)
                 .withType(AccountType.GIRO)
