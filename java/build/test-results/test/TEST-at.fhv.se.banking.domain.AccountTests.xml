@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="at.fhv.se.banking.domain.AccountTests" tests="6" skipped="0" failures="0" errors="0" timestamp="2021-10-19T07:29:25" hostname="zazengine" time="0.008">
+  <properties/>
+  <testcase name="given_newaccount_when_transferto_then_reflectsbalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.001"/>
+  <testcase name="given_newaccount_when_receiveFrom_then_reflectsbalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.001"/>
+  <testcase name="given_params_when_newaccount_then_reflectsparameters_balancezero()" classname="at.fhv.se.banking.domain.AccountTests" time="0.002"/>
+  <testcase name="given_newaccount_when_withdrawafterdeposit_then_reflectsbalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
+  <testcase name="given_newaccount_when_withdraw_then_reflectsnegativebalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
+  <testcase name="given_newaccount_when_deposit_then_reflectsbalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

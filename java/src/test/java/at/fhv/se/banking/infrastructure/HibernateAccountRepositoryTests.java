@@ -13,7 +13,6 @@ import at.fhv.se.banking.domain.model.Account;
 import at.fhv.se.banking.domain.model.AccountType;
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.Iban;
-import at.fhv.se.banking.domain.model.TXLine;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 
 public class HibernateAccountRepositoryTests {
@@ -29,8 +28,9 @@ public class HibernateAccountRepositoryTests {
     public void given_account_when_add_then_fetch() {
         // given
         Iban iban = new Iban("AT12 3456 7890 1234");
-        Account account = new Account(new CustomerId("1"), iban, AccountType.GIRO, 1234);
-        account.addTXLine(new TXLine(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", LocalDateTime.now()));
+        Account account = new Account(new CustomerId("1"), iban, AccountType.GIRO);
+        account.deposit(1234);
+        account.receiveFrom(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", LocalDateTime.now());
     
         // when
         repo.add(account);
@@ -46,12 +46,15 @@ public class HibernateAccountRepositoryTests {
         CustomerId cId1 = new CustomerId("1");
         CustomerId cId2 = new CustomerId("2");
 
-        Account account1 = new Account(cId1, new Iban("AT12 3456 7890 1234"), AccountType.GIRO, 1234);
-        account1.addTXLine(new TXLine(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", LocalDateTime.now()));
-        Account account2 = new Account(cId1, new Iban("AT23 4567 8901 2345"), AccountType.GIRO, 3456);
-        account2.addTXLine(new TXLine(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", LocalDateTime.now()));
-        Account account3 = new Account(cId2, new Iban("AT34 5678 9012 3456"), AccountType.GIRO, 3456);
-        account2.addTXLine(new TXLine(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", LocalDateTime.now()));
+        Account account1 = new Account(cId1, new Iban("AT12 3456 7890 1234"), AccountType.GIRO);
+        account1.deposit(1234);
+        account1.receiveFrom(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", LocalDateTime.now());
+        Account account2 = new Account(cId1, new Iban("AT23 4567 8901 2345"), AccountType.GIRO);
+        account2.deposit(3456);
+        account2.receiveFrom(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", LocalDateTime.now());
+        Account account3 = new Account(cId2, new Iban("AT34 5678 9012 3456"), AccountType.GIRO);
+        account3.deposit(3456);
+        account3.receiveFrom(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", LocalDateTime.now());
     
         // when
         repo.add(account1);

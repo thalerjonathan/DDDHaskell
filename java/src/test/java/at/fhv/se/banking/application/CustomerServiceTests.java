@@ -81,9 +81,9 @@ public class CustomerServiceTests {
                 .build()
             ).build();
 
-        List<Account> accounts = Arrays.asList(
-            new Account(customerId, new Iban("AT12 3456 7890 1234"), AccountType.GIRO, 1234)
-        );
+        Account a = new Account(customerId, new Iban("AT12 3456 7890 1234"), AccountType.GIRO);
+        a.deposit(1234);
+        List<Account> accounts = Arrays.asList(a);
 
         Mockito.when(customerRepo.byId(customerId)).thenReturn(Optional.of(customer));
         Mockito.when(accountRepo.forCustomer(customerId)).thenReturn(accounts);

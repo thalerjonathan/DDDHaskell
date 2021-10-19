@@ -7,15 +7,13 @@ import java.util.List;
 
 public class Account {
     private CustomerId owner;
-    private double balance;
     private Iban iban;
     private AccountType type;
     private List<TXLine> txLines;
     
-    public Account(CustomerId owner, Iban iban, AccountType type, double balance) {
+    public Account(CustomerId owner, Iban iban, AccountType type) {
         this.owner = owner;
         this.iban = iban;
-        this.balance = balance;
         this.type = type;
         this.txLines = new ArrayList<>();
     }
@@ -28,10 +26,6 @@ public class Account {
         return iban;
     }
 
-    public double balance() {
-        return balance;
-    }
-
     public AccountType type() {
         return this.type;
     }
@@ -40,29 +34,27 @@ public class Account {
         return Collections.unmodifiableList(this.txLines);
     }
 
-    // TODO: proper domain model, add TXLine
+    public double balance() {
+        return this.txLines
+            .stream()
+            .mapToDouble(tx -> tx.amount())
+            .sum();
+    }
+
     public void deposit(double amount) {
-        this.balance += amount;
+        this.txLines.add(new TXLine(this.iban, amount, "Deposit", "Deposit", LocalDateTime.now()));
     }
 
-    // TODO: proper domain model, add TXLine
     public void withdraw(double amount) {
-        this.balance -= amount;
+        this.txLines.add(new TXLine(this.iban, -amount, "Deposit", "Deposit", LocalDateTime.now()));
     }
 
-    public void transferTo(Iban to, double amount, String name, String reference) {
-        this.balance -= amount;
-        this.txLines.add(new TXLine(to, amount, name, reference, LocalDateTime.now()));
+    public void transferTo(Iban to, double amount, String name, String reference, LocalDateTime time) {
+        this.txLines.add(new TXLine(to, -amount, name, reference, time));
     }
 
-    public void receiveFrom(Iban from, double amount, String name, String reference) {
-        this.balance += amount;
-        this.txLines.add(new TXLine(from, amount, name, reference, LocalDateTime.now()));
-    }
-
-    // TODO: remove in proper Domain Model
-    public void addTXLine(TXLine txLine) {
-        this.txLines.add(txLine);
+    public void receiveFrom(Iban from, double amount, String name, String reference, LocalDateTime time) {
+        this.txLines.add(new TXLine(from, amount, name, reference, time));
     }
 
     @Override

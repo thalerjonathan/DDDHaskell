@@ -1,5 +1,7 @@
 package at.fhv.se.banking.application.impl;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
 
 @Component
 public class AccountServiceImpl implements AccountService {
+
+    @Autowired
+    private Clock clock;
 
     @Autowired
     private AccountRepository accountRepo;
@@ -112,7 +117,7 @@ public class AccountServiceImpl implements AccountService {
         Customer sendingCustomer = sendingCustomerOpt.get();
         Customer receivingCustomer = receivingCustomerOpt.get();
 
-        sendingAccount.transferTo(receivingIban, amount, receivingCustomer.name(), reference);
-        receivingAccount.receiveFrom(sendingIban, amount, sendingCustomer.name(), reference);
+        sendingAccount.transferTo(receivingIban, amount, receivingCustomer.name(), reference, LocalDateTime.now(clock));
+        receivingAccount.receiveFrom(sendingIban, amount, sendingCustomer.name(), reference, LocalDateTime.now(clock));
     }
 }
