@@ -3,7 +3,7 @@ package at.fhv.se.banking.application.dto;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import at.fhv.se.banking.domain.model.Iban;
+import at.fhv.se.banking.domain.model.account.Iban;
 
 public final class TXLineDTO {
     private String iban;

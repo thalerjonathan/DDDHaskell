@@ -19,11 +19,11 @@ import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
-import at.fhv.se.banking.domain.model.Account;
-import at.fhv.se.banking.domain.model.AccountType;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
-import at.fhv.se.banking.domain.model.Iban;
+import at.fhv.se.banking.domain.model.account.Account;
+import at.fhv.se.banking.domain.model.account.GiroAccount;
+import at.fhv.se.banking.domain.model.account.Iban;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
 
@@ -77,12 +77,11 @@ public class CustomerServiceTests {
             .addAccount(AccountDetailsDTO.builder()
                 .withBalance(1234)
                 .withIban(new Iban("AT12 3456 7890 1234"))
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .build()
             ).build();
 
-        Account a = new Account(customerId, new Iban("AT12 3456 7890 1234"), AccountType.GIRO);
-        a.deposit(1234);
+        Account a = new GiroAccount(customerId, new Iban("AT12 3456 7890 1234"));
         List<Account> accounts = Arrays.asList(a);
 
         Mockito.when(customerRepo.byId(customerId)).thenReturn(Optional.of(customer));

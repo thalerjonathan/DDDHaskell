@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="at.fhv.se.banking.infrastructure.HibernateAccountRepositoryTests" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-10-19T07:29:15" hostname="zazengine" time="0.003">
-  <properties/>
-  <testcase name="given_account_when_add_then_fetch()" classname="at.fhv.se.banking.infrastructure.HibernateAccountRepositoryTests" time="0.001"/>
-  <testcase name="given_accounts_when_add_and_forcustomer_then_fetch()" classname="at.fhv.se.banking.infrastructure.HibernateAccountRepositoryTests" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

@@ -1,17 +1,21 @@
 package at.fhv.se.banking.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import at.fhv.se.banking.domain.model.Account;
-import at.fhv.se.banking.domain.model.AccountType;
 import at.fhv.se.banking.domain.model.CustomerId;
-import at.fhv.se.banking.domain.model.Iban;
-import at.fhv.se.banking.domain.model.TXLine;
+import at.fhv.se.banking.domain.model.account.Account;
+import at.fhv.se.banking.domain.model.account.GiroAccount;
+import at.fhv.se.banking.domain.model.account.Iban;
+import at.fhv.se.banking.domain.model.account.TXLine;
+import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 
 public class AccountTests {
     
@@ -20,85 +24,85 @@ public class AccountTests {
         // given
         CustomerId cId = new CustomerId("1");
         Iban iban = new Iban("AT12 12345 01234567890");
-        AccountType type = AccountType.GIRO;
 
         // when
-        Account a = new Account(cId, iban, type);
+        Account a = new GiroAccount(cId, iban);
 
         // then
         assertEquals(cId, a.owner());
         assertEquals(iban, a.iban());
         assertEquals(0, a.balance());
-        assertEquals(type, a.type());
+        assertEquals("GIRO", a.type());
         assertTrue(a.transactions().isEmpty());
     }
 
     @Test
-    public void given_newaccount_when_deposit_then_reflectsbalance() {
+    public void given_newaccount_when_deposit_then_reflectsbalance() throws AccountException {
         // given
-        CustomerId cId = new CustomerId("1");
-        Iban iban = new Iban("AT12 12345 01234567890");
-        AccountType type = AccountType.GIRO;
-        Account a = new Account(cId, iban, type);
-        double depositAmount = 1234;
+        Account a = AccountData.createGiro();
+        LocalDateTime now = LocalDateTime.now();
 
-        // TODO: check for TXLines
-        //TXLine tx = new TXLine();
+        double depositAmount = 1234;
+    
+        List<TXLine> tx = Arrays.asList(
+            new TXLine(a.iban(), depositAmount, "Deposit", "Deposit", now)
+        );
 
         // when
-        a.deposit(depositAmount);
+        a.deposit(depositAmount, now);
 
         // then
         assertEquals(depositAmount, a.balance());
+        assertEquals(tx, a.transactions());
     }
 
     @Test
-    public void given_newaccount_when_withdraw_then_reflectsnegativebalance() {
+    public void given_newaccount_when_withdraw_then_reflectsnegativebalance() throws AccountException {
         // given
-        CustomerId cId = new CustomerId("1");
-        Iban iban = new Iban("AT12 12345 01234567890");
-        AccountType type = AccountType.GIRO;
-        Account a = new Account(cId, iban, type);
+        Account a = AccountData.createGiro();
+        LocalDateTime now = LocalDateTime.now();
+
         double withdrawAmount = 123;
 
-        // TODO: check for TXLines
-        //TXLine tx = new TXLine();
+        List<TXLine> tx = Arrays.asList(
+            new TXLine(a.iban(), -withdrawAmount, "Withdraw", "Withdraw", now)
+        );
 
         // when
-        a.withdraw(withdrawAmount);
+        a.withdraw(withdrawAmount, now);
 
         // then
         assertEquals(-withdrawAmount, a.balance());
+        assertEquals(tx, a.transactions());
     }
 
     @Test
-    public void given_newaccount_when_withdrawafterdeposit_then_reflectsbalance() {
+    public void given_newaccount_when_withdrawafterdeposit_then_reflectsbalance() throws AccountException {
         // given
-        CustomerId cId = new CustomerId("1");
-        Iban iban = new Iban("AT12 12345 01234567890");
-        AccountType type = AccountType.GIRO;
-        Account a = new Account(cId, iban, type);
+        Account a = AccountData.createGiro();
+        LocalDateTime now = LocalDateTime.now();
+
         double depositAmount = 1234;
         double withdrawAmount = 1000;
 
-        // TODO: check for TXLines
-        //TXLine tx = new TXLine();
+        List<TXLine> tx = Arrays.asList(
+            new TXLine(a.iban(), depositAmount, "Deposit", "Deposit", now),
+            new TXLine(a.iban(), -withdrawAmount, "Withdraw", "Withdraw", now)
+        );
 
         // when
-        a.deposit(depositAmount);
-        a.withdraw(withdrawAmount);
+        a.deposit(depositAmount, now);
+        a.withdraw(withdrawAmount, now);
 
         // then
         assertEquals(depositAmount - withdrawAmount, a.balance());
+        assertEquals(tx, a.transactions());
     }
 
     @Test
-    public void given_newaccount_when_transferto_then_reflectsbalance() {
+    public void given_newaccount_when_transferto_then_reflectsbalance() throws AccountException {
         // given
-        CustomerId cId = new CustomerId("1");
-        Iban iban = new Iban("AT12 12345 01234567890");
-        AccountType type = AccountType.GIRO;
-        Account a = new Account(cId, iban, type);
+        Account a = AccountData.createGiro();
 
         double amount = 123;
         String name = "Max Mustermann";
@@ -119,10 +123,7 @@ public class AccountTests {
     @Test
     public void given_newaccount_when_receiveFrom_then_reflectsbalance() {
         // given
-        CustomerId cId = new CustomerId("1");
-        Iban iban = new Iban("AT12 12345 01234567890");
-        AccountType type = AccountType.GIRO;
-        Account a = new Account(cId, iban, type);
+        Account a = AccountData.createGiro();
 
         double amount = 123;
         String name = "Max Mustermann";
@@ -138,5 +139,48 @@ public class AccountTests {
         assertEquals(amount, a.balance());
         assertEquals(1, a.transactions().size());
         assertEquals(tx, a.transactions().get(0));
+    }
+
+    @Test
+    public void given_giroaccount_when_overdraftover1000_then_exception() {
+        // given
+        Account a = AccountData.createGiro();
+        double overdraftLimit = 1000;
+        double withdrawAmount = overdraftLimit + 1;
+
+        // when
+        assertThrows(AccountException.class, () -> a.withdraw(withdrawAmount, LocalDateTime.now()));
+    }
+
+    @Test
+    public void given_savingsaccountwithbalance_when_overdraftthroughtransfer_then_exception() {
+        // given
+        Iban sendingIban = new Iban("AT12 12345 23456789012");
+        Account a = AccountData.createSavings();
+        a.receiveFrom(sendingIban, 1000, "Savings Deposit", "Savings Deposit", LocalDateTime.now());
+        
+        double withdrawAmount = 1001;
+
+        // when
+        assertThrows(AccountException.class, () -> a.transferTo(sendingIban, withdrawAmount, "Savings Withdraw", "Savings Withdraw", LocalDateTime.now()));
+    }
+
+    @Test
+    public void given_savingsaccountwithbalance_when_withdraw_then_exception() {
+        // given
+        Account a = AccountData.createSavings();
+        a.receiveFrom(a.iban(), 1000, "Savings Transfer", "Savings Transfer", LocalDateTime.now());
+
+        // when
+        assertThrows(AccountException.class, () -> a.withdraw(100, LocalDateTime.now()));
+    }
+
+    @Test
+    public void given_savingsaccount_when_deposit_then_exception() {
+        // given
+        Account a = AccountData.createSavings();
+        
+        // when
+        assertThrows(AccountException.class, () -> a.deposit(100, LocalDateTime.now()));
     }
 }

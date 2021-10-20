@@ -41,9 +41,8 @@ import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
 import at.fhv.se.banking.application.dto.TXLineDTO;
-import at.fhv.se.banking.domain.model.AccountType;
 import at.fhv.se.banking.domain.model.CustomerId;
-import at.fhv.se.banking.domain.model.Iban;
+import at.fhv.se.banking.domain.model.account.Iban;
 import at.fhv.se.banking.utils.TestingUtils;
 
 
@@ -115,11 +114,11 @@ public class BankingViewTests {
                 .build())
             .addAccount(AccountDetailsDTO.builder()
                 .withIban(new Iban("AT12 3456 7890 1234"))
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(1234.5).build())
             .addAccount(AccountDetailsDTO.builder()
                 .withIban(new Iban("AT98 7654 3210 9876"))
-                .withType(AccountType.SAVINGS)
+                .withType("SAVINGS")
                 .withBalance(1234.5).build())
             .build();
 
@@ -178,7 +177,7 @@ public class BankingViewTests {
         AccountDTO accountInfo = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(1234.5)
                 .build())
             .addTXLine(TXLineDTO.builder()
@@ -257,7 +256,7 @@ public class BankingViewTests {
         AccountDTO accountInfo = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(balance)
                 .build())
             .build();
@@ -265,7 +264,7 @@ public class BankingViewTests {
         AccountDTO newAccountInfo = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(balance + depositAmount)
                 .build())
             .build();
@@ -305,7 +304,7 @@ public class BankingViewTests {
         AccountDTO accountInfo = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(balance)
                 .build())
             .build();
@@ -346,7 +345,7 @@ public class BankingViewTests {
         AccountDTO accountInfo = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(balance)
                 .build())
             .build();
@@ -385,7 +384,7 @@ public class BankingViewTests {
         AccountDTO accountInfo = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(balance)
                 .build())
             .build();
@@ -393,7 +392,7 @@ public class BankingViewTests {
         AccountDTO newAccountInfo = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(balance - withdrawAmount)
                 .build())
             .build();
@@ -434,7 +433,7 @@ public class BankingViewTests {
         AccountDTO accountInfo = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(balance)
                 .build())
             .build();
@@ -442,7 +441,7 @@ public class BankingViewTests {
         AccountDTO newAccountInfo = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(balance - transferAmount)
                 .build())
             .build();
@@ -489,7 +488,7 @@ public class BankingViewTests {
         AccountDTO accountInfo = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(balance)
                 .build())
             .build();
@@ -536,7 +535,7 @@ public class BankingViewTests {
         AccountDTO accountInfo = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType("GIRO")
                 .withBalance(balance)
                 .build())
             .build();

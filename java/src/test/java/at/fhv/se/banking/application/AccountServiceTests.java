@@ -3,7 +3,6 @@ package at.fhv.se.banking.application;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -14,16 +13,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import at.fhv.se.banking.application.api.AccountService;
+import at.fhv.se.banking.application.api.TimeService;
 import at.fhv.se.banking.application.api.exceptions.AccountNotFoundException;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
+import at.fhv.se.banking.application.api.exceptions.InvalidOperationException;
 import at.fhv.se.banking.application.dto.AccountDTO;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.TXLineDTO;
-import at.fhv.se.banking.domain.model.Account;
-import at.fhv.se.banking.domain.model.AccountType;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
-import at.fhv.se.banking.domain.model.Iban;
+import at.fhv.se.banking.domain.model.account.Account;
+import at.fhv.se.banking.domain.model.account.GiroAccount;
+import at.fhv.se.banking.domain.model.account.Iban;
+import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
 
@@ -40,35 +42,65 @@ public class AccountServiceTests {
     private CustomerRepository customerRepo;
 
     @MockBean
-    private Clock clock;
+    private TimeService timeService;
 
     @Test
-    public void given_accountinrepo_when_byIban_thenreturn() throws AccountNotFoundException {
+    public void given_accountinrepo_when_byIban_thenreturn() throws AccountNotFoundException, AccountException {
         // given
-        LocalDateTime txLineTime = LocalDateTime.now();
-        double balance = 1234.0;
+        LocalDateTime now = LocalDateTime.now();
+        double deposit = 1234;
+        double receive = 100;
+        double withdraw = 500;
+        double transfer = 100;
+        double balance = deposit + receive - withdraw - transfer;
         Iban iban = new Iban("AT12 3456 7890 1234");
-        Account account = new Account(new CustomerId("1"), iban, AccountType.GIRO);
-        account.deposit(balance);
-        account.receiveFrom(new Iban("AT98 7654 3210 9876"), 100.0, "Max Mustermann", "Rent", txLineTime);
+        Iban receiveIban = new Iban("AT98 7654 3210 9876");
+        Iban transferIban = new Iban("AT98 7654 3210 9876");
+
+        Account account = new GiroAccount(new CustomerId("1"), iban);
+        account.deposit(deposit, now);
+        account.receiveFrom(receiveIban, 100.0, "Max Mustermann", "Rent", now);
+        account.withdraw(withdraw, now);
+        account.transferTo(transferIban, 100.0, "Max Mustermann", "Rent", now);
 
         AccountDTO expectedAccountDTO = AccountDTO.builder()
             .withDetails(AccountDetailsDTO.builder()
                 .withBalance(balance)
                 .withIban(iban)
-                .withType(AccountType.GIRO)
+                .withType(account.type())
                 .build())
             .addTXLine(TXLineDTO.builder()
-                .ofAmount(100)
-                .atTime(txLineTime)
-                .withIban(new Iban("AT98 7654 3210 9876"))
+                .ofAmount(deposit)
+                .atTime(now)
+                .withIban(iban)
+                .withName("Deposit")
+                .withReference("Deposit")
+                .build())
+            .addTXLine(TXLineDTO.builder()
+                .ofAmount(receive)
+                .atTime(now)
+                .withIban(receiveIban)
+                .withName("Max Mustermann")
+                .withReference("Rent")
+                .build())
+            .addTXLine(TXLineDTO.builder()
+                .ofAmount(-withdraw)
+                .atTime(now)
+                .withIban(iban)
+                .withName("Withdraw")
+                .withReference("Withdraw")
+                .build())
+            .addTXLine(TXLineDTO.builder()
+                .ofAmount(-transfer)
+                .atTime(now)
+                .withIban(transferIban)
                 .withName("Max Mustermann")
                 .withReference("Rent")
                 .build())
             .build();
 
-        
         Mockito.when(accountRepo.byIban(iban)).thenReturn(Optional.of(account));
+        Mockito.when(timeService.utcNow()).thenReturn(now);
 
         // when
         AccountDTO actualAccountDTO = this.accountSerivce.accountByIban(iban.toString());
@@ -88,22 +120,22 @@ public class AccountServiceTests {
     }
 
     @Test
-    public void given_accountinrepo_when_deposit_thenincreasebalance() throws AccountNotFoundException {
+    public void given_accountinrepo_when_deposit_thenincreasebalance() throws AccountNotFoundException, InvalidOperationException, AccountException {
         // given
+        LocalDateTime now = LocalDateTime.now();
         double depositAmount = 1000;
-        double balance = 1234.0;
         Iban iban = new Iban("AT12 3456 7890 1234");
-        Account account = Mockito.spy(new Account(new CustomerId("1"), iban, AccountType.GIRO));
-        account.deposit(balance);
+        Account account = Mockito.spy(new GiroAccount(new CustomerId("1"), iban));
 
         Mockito.when(accountRepo.byIban(iban)).thenReturn(Optional.of(account));
+        Mockito.when(timeService.utcNow()).thenReturn(now);
 
         // when
         this.accountSerivce.deposit(iban.toString(), depositAmount);
 
         // then
-        Mockito.verify(account).deposit(depositAmount);
-        assertEquals(balance + depositAmount, account.balance());
+        Mockito.verify(account).deposit(depositAmount, now);
+        assertEquals(depositAmount, account.balance());
     }
 
     @Test
@@ -119,22 +151,22 @@ public class AccountServiceTests {
     }
 
     @Test
-    public void given_accountinrepo_when_withdraw_thendecreasebalance() throws AccountNotFoundException {
+    public void given_accountinrepo_when_withdraw_thendecreasebalance() throws AccountNotFoundException, AccountException, InvalidOperationException {
         // given
-        double withdrawAmount = 1000;
-        double balance = 1234.0;
+        double withdrawAmount = 123;
         Iban iban = new Iban("AT12 3456 7890 1234");
-        Account account = Mockito.spy(new Account(new CustomerId("1"), iban, AccountType.GIRO));
-        account.deposit(balance);
+        Account account = Mockito.spy(new GiroAccount(new CustomerId("1"), iban));
+        LocalDateTime now = LocalDateTime.now();
 
         Mockito.when(accountRepo.byIban(iban)).thenReturn(Optional.of(account));
+        Mockito.when(timeService.utcNow()).thenReturn(now);
 
         // when
         this.accountSerivce.withdraw(iban.toString(), withdrawAmount);
 
         // then
-        Mockito.verify(account).withdraw(withdrawAmount);
-        assertEquals(balance - withdrawAmount, account.balance());
+        Mockito.verify(account).withdraw(withdrawAmount, now);
+        assertEquals(-withdrawAmount, account.balance());
     }
 
     @Test
@@ -150,15 +182,13 @@ public class AccountServiceTests {
     }
 
     @Test
-    public void given_accountinrepo_when_transfer_thenexchangedbalances() throws AccountNotFoundException, CustomerNotFoundException {
+    public void given_accountinrepo_when_transfer_thenexchangedbalances() throws AccountNotFoundException, CustomerNotFoundException, AccountException, InvalidOperationException {
         // given
-        double transferAmount = 1000;
+        double transferAmount = 500;
         String reference = "Rent";
 
         String sendingName = "Jonathan";
         String receivingName = "Thomas";
-        double sendingAccountBalance = 1234.0;
-        double receivingAccountBalance = 2345.0;
         Iban sendingIban = new Iban("AT12 3456 7890 1234");
         Iban receivingIban = new Iban("AT98 7654 3210 9876");
 
@@ -166,12 +196,13 @@ public class AccountServiceTests {
         Customer receivingCustomer = new Customer(new CustomerId("2"), receivingName);
 
         Account sendingAccount = Mockito.spy(
-            new Account(sendingCustomer.customerId(), sendingIban, AccountType.GIRO));
+            new GiroAccount(sendingCustomer.customerId(), sendingIban));
         Account receivingAccount = Mockito.spy(
-            new Account(receivingCustomer.customerId(), receivingIban, AccountType.GIRO));
+            new GiroAccount(receivingCustomer.customerId(), receivingIban));
 
-        sendingAccount.deposit(sendingAccountBalance);
-        receivingAccount.deposit(receivingAccountBalance);
+        LocalDateTime now = LocalDateTime.now();
+
+        Mockito.when(timeService.utcNow()).thenReturn(now);
 
         Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
         Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
@@ -183,10 +214,10 @@ public class AccountServiceTests {
         this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference);
 
         // then
-        Mockito.verify(sendingAccount).transferTo(receivingIban, transferAmount, receivingName, reference, LocalDateTime.now());
-        Mockito.verify(receivingAccount).receiveFrom(sendingIban, transferAmount, sendingName, reference, LocalDateTime.now());
-        assertEquals(sendingAccountBalance - transferAmount, sendingAccount.balance());
-        assertEquals(receivingAccountBalance + transferAmount, receivingAccount.balance());
+        Mockito.verify(sendingAccount).transferTo(receivingIban, transferAmount, receivingName, reference, now);
+        Mockito.verify(receivingAccount).receiveFrom(sendingIban, transferAmount, sendingName, reference, now);
+        assertEquals(-transferAmount, sendingAccount.balance());
+        assertEquals(transferAmount, receivingAccount.balance());
     }
 
     @Test
@@ -204,15 +235,16 @@ public class AccountServiceTests {
     }
 
     @Test
-    public void given_receivingaccountnotinrepo_when_transfer_thenthrows() throws AccountNotFoundException {
+    public void given_receivingaccountnotinrepo_when_transfer_thenthrows() throws AccountNotFoundException, AccountException {
         // given
+        LocalDateTime now = LocalDateTime.now();
         double transferAmount = 1000;
         String reference = "Rent";
         Iban sendingIban = new Iban("AT12 3456 7890 1234");
         Iban receivingIban = new Iban("AT98 7654 3210 9876");
 
-        Account sendingAccount = new Account(new CustomerId("1"), sendingIban, AccountType.GIRO);
-        sendingAccount.deposit(1234);
+        Account sendingAccount = new GiroAccount(new CustomerId("1"), sendingIban);
+        sendingAccount.deposit(1234, now);
 
         Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
         Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.empty());
@@ -232,11 +264,8 @@ public class AccountServiceTests {
         CustomerId sendingCustomerId = new CustomerId("1");
         CustomerId receivingCustomerId = new CustomerId("2");
 
-        Account sendingAccount = new Account(sendingCustomerId, sendingIban, AccountType.GIRO);
-        Account receivingAccount = new Account(receivingCustomerId, receivingIban, AccountType.GIRO);
-
-        sendingAccount.deposit(1234);
-        receivingAccount.deposit(2345);
+        Account sendingAccount = new GiroAccount(sendingCustomerId, sendingIban);
+        Account receivingAccount = new GiroAccount(receivingCustomerId, receivingIban);
 
         Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
         Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
@@ -258,13 +287,10 @@ public class AccountServiceTests {
         CustomerId sendingCustomerId = new CustomerId("1");
         CustomerId receivingCustomerId = new CustomerId("2");
 
-        Account sendingAccount = new Account(sendingCustomerId, sendingIban, AccountType.GIRO);
-        Account receivingAccount = new Account(receivingCustomerId, receivingIban, AccountType.GIRO);
+        Account sendingAccount = new GiroAccount(sendingCustomerId, sendingIban);
+        Account receivingAccount = new GiroAccount(receivingCustomerId, receivingIban);
 
         Customer sendingCustomer = new Customer(new CustomerId("1"), "Jonathan");
-
-        sendingAccount.deposit(1234);
-        receivingAccount.deposit(2345);
 
         Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
         Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
@@ -275,4 +301,6 @@ public class AccountServiceTests {
         // when ... then
         assertThrows(CustomerNotFoundException.class, () -> this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference));
     }
+
+    // TODO: test violations of business rules which throw exceptions
 }

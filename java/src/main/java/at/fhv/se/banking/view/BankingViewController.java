@@ -15,6 +15,7 @@ import at.fhv.se.banking.application.api.AccountService;
 import at.fhv.se.banking.application.api.CustomerService;
 import at.fhv.se.banking.application.api.exceptions.AccountNotFoundException;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
+import at.fhv.se.banking.application.api.exceptions.InvalidOperationException;
 import at.fhv.se.banking.application.dto.AccountDTO;
 import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
@@ -93,6 +94,8 @@ public class BankingViewController {
             return redirectToAccount(form);
         } catch (AccountNotFoundException e) {
             return redirectError("Account not found!");
+        } catch (InvalidOperationException e) {
+            return redirectError(e.getMessage());
         }
     }
 
@@ -106,6 +109,8 @@ public class BankingViewController {
             return redirectToAccount(form);
         } catch (AccountNotFoundException e) {
             return redirectError("Account not found!");
+        } catch (InvalidOperationException e) {
+            return redirectError(e.getMessage());
         }
     }
 
@@ -122,6 +127,8 @@ public class BankingViewController {
             return redirectError("Account not found!");
         } catch (CustomerNotFoundException e) {
             return redirectError("Customer not found!");
+        } catch (InvalidOperationException e) {
+            return redirectError(e.getMessage());
         }
     }
 

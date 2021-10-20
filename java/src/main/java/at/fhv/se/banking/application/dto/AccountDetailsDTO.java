@@ -2,8 +2,7 @@ package at.fhv.se.banking.application.dto;
 
 import java.util.Objects;
 
-import at.fhv.se.banking.domain.model.AccountType;
-import at.fhv.se.banking.domain.model.Iban;
+import at.fhv.se.banking.domain.model.account.Iban;
 
 public final class AccountDetailsDTO {
     private String iban;
@@ -41,8 +40,8 @@ public final class AccountDetailsDTO {
             return this;
         }
 
-        public Builder withType(AccountType type) {
-            this.instance.type = type.name();
+        public Builder withType(String type) {
+            this.instance.type = type;
             return this;
         }
 
