@@ -37,6 +37,7 @@ Research Questions
 - How can we implement it as Microservices?
 - How can we represent stateful aggregates, reacting to different "commands"? Aggregate: has different functions which are called depending on what happens: arrival of a command, arrival of a domain event. therefore with these "callbacks" we can implement a pure aggregate
 - can we achieve typing across microservices with the type safe REST API Definition of servant?
+- parse feature at compile time to make sure that the arguments are correct?
 
 Hypotheses
 - Haskell has to be the perfect fit for DDD: strong static types and free monads for a ubiquitous language and modeling, with purity to keep aggregates free from technology and implement them as stateful but pure computations. 
