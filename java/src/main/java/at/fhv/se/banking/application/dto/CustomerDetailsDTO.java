@@ -1,49 +1,48 @@
 package at.fhv.se.banking.application.dto;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
+import at.fhv.se.banking.domain.model.CustomerId;
+
 public final class CustomerDetailsDTO {
-    private CustomerDTO details;
-    private final List<AccountDetailsDTO> accounts;
+    private String id;
+    private String name;
 
     public static Builder builder() {
         return new Builder();
     }
 
-    public CustomerDTO details() {
-        return this.details;
+    public String name() {
+        return this.name;
     }
 
-    public List<AccountDetailsDTO> accounts() {
-        return Collections.unmodifiableList(this.accounts);
+    public String id() {
+        return this.id;
     }
 
     private CustomerDetailsDTO() {
-        this.accounts = new ArrayList<>();
     }
 
     public static class Builder {
-        private final CustomerDetailsDTO instance;
+        private CustomerDetailsDTO instance;
 
         private Builder() {
             this.instance = new CustomerDetailsDTO();
         }
 
-        public Builder withCustomer(CustomerDTO details) {
-            this.instance.details = details;
+        public Builder withId(CustomerId id) {
+            this.instance.id = id.id();
             return this;
         }
 
-        public Builder addAccount(AccountDetailsDTO ai) {
-            this.instance.accounts.add(ai);
+        public Builder withName(String name) {
+            this.instance.name = name;
             return this;
-        }
+        } 
 
         public CustomerDetailsDTO build() {
-            Objects.requireNonNull(this.instance.details, "customer must be set in CustomerInfoDTO");
+            Objects.requireNonNull(this.instance.name, "name must be set in CustomerDetailsDTO");
+            Objects.requireNonNull(this.instance.id, "id must be set in CustomerDetailsDTO");
 
             return this.instance;
         }
@@ -53,8 +52,8 @@ public final class CustomerDetailsDTO {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((accounts == null) ? 0 : accounts.hashCode());
-        result = prime * result + ((details == null) ? 0 : details.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
 
@@ -67,15 +66,15 @@ public final class CustomerDetailsDTO {
         if (getClass() != obj.getClass())
             return false;
         CustomerDetailsDTO other = (CustomerDetailsDTO) obj;
-        if (accounts == null) {
-            if (other.accounts != null)
+        if (id == null) {
+            if (other.id != null)
                 return false;
-        } else if (!accounts.equals(other.accounts))
+        } else if (!id.equals(other.id))
             return false;
-        if (details == null) {
-            if (other.details != null)
+        if (name == null) {
+            if (other.name != null)
                 return false;
-        } else if (!details.equals(other.details))
+        } else if (!name.equals(other.name))
             return false;
         return true;
     }

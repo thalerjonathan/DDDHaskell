@@ -18,8 +18,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import at.fhv.se.banking.application.api.CustomerService;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
-import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
+import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Account;
@@ -54,8 +54,8 @@ public class CustomerServiceTests {
                 new Customer(new CustomerId("2"), "Thomas")
             );
 
-        List<CustomerDTO> expectedCustomerDTOs = customers.stream().map(c -> 
-            CustomerDTO.builder()
+        List<CustomerDetailsDTO> expectedCustomerDTOs = customers.stream().map(c -> 
+            CustomerDetailsDTO.builder()
                 .withId(c.customerId())
                 .withName(c.name())
                 .build()).collect(Collectors.toList());
@@ -63,7 +63,7 @@ public class CustomerServiceTests {
         Mockito.when(customerRepo.all()).thenReturn(customers);
         
         // then
-        List<CustomerDTO> actualCustomerDTOs = customerService.listAll();
+        List<CustomerDetailsDTO> actualCustomerDTOs = customerService.listAll();
 
         // then
         assertEquals(expectedCustomerDTOs, actualCustomerDTOs);
@@ -77,8 +77,8 @@ public class CustomerServiceTests {
         Customer customer = new Customer(customerId, customerName);
         double balance = 1234;
 
-        CustomerDetailsDTO expectedInfoDTO = CustomerDetailsDTO.builder()
-            .withCustomer(CustomerDTO.builder()
+        CustomerDTO expectedInfoDTO = CustomerDTO.builder()
+            .withCustomer(CustomerDetailsDTO.builder()
                 .withId(customerId)
                 .withName(customerName)
                 .build())
@@ -98,7 +98,7 @@ public class CustomerServiceTests {
         Mockito.when(accountRepo.forCustomer(customerId)).thenReturn(accounts);
 
         // when
-        CustomerDetailsDTO actualInfoDTO = customerService.detailsFor(customerId.id());
+        CustomerDTO actualInfoDTO = customerService.detailsFor(customerId.id());
 
         // then
         assertEquals(expectedInfoDTO, actualInfoDTO);

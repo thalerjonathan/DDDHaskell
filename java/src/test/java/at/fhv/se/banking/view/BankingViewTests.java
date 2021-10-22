@@ -38,8 +38,8 @@ import at.fhv.se.banking.application.api.exceptions.AccountNotFoundException;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.AccountDTO;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
-import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
+import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.TXLineDTO;
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Iban;
@@ -75,12 +75,12 @@ public class BankingViewTests {
     @Test
     public void given_customers_when_welcomepage_displaycustomers() throws Exception {
         // given
-        List<CustomerDTO> customers = Arrays.asList(
-            CustomerDTO.builder()
+        List<CustomerDetailsDTO> customers = Arrays.asList(
+            CustomerDetailsDTO.builder()
                 .withName("Alice")
                 .withId(new CustomerId("1"))
                 .build(),
-            CustomerDTO.builder()
+            CustomerDetailsDTO.builder()
                 .withName("Bob")
                 .withId(new CustomerId("2"))
                 .build()
@@ -107,8 +107,8 @@ public class BankingViewTests {
         // given
         String customerName = "Jonathan";
         CustomerId customerId = new CustomerId("1");
-        CustomerDetailsDTO customerInfo = CustomerDetailsDTO.builder()
-            .withCustomer(CustomerDTO.builder()
+        CustomerDTO customerInfo = CustomerDTO.builder()
+            .withCustomer(CustomerDetailsDTO.builder()
                 .withName(customerName)
                 .withId(customerId)
                 .build())

@@ -17,8 +17,8 @@ import at.fhv.se.banking.application.api.exceptions.AccountNotFoundException;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.api.exceptions.InvalidOperationException;
 import at.fhv.se.banking.application.dto.AccountDTO;
-import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
+import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.view.forms.AccountForm;
 
 @Controller
@@ -46,7 +46,7 @@ public class BankingViewController {
 
     @GetMapping(ALL_CUSTOMERS_URL)
     public String allCustomers(Model model) {
-        final List<CustomerDTO> customers = this.customerService.listAll();
+        final List<CustomerDetailsDTO> customers = this.customerService.listAll();
         model.addAttribute("customers", customers);
 
         return ALL_CUSTOMERS_VIEW;
@@ -57,7 +57,7 @@ public class BankingViewController {
             @RequestParam("id") String customerId, 
             Model model) {
         try {
-            final CustomerDetailsDTO customerDetails = this.customerService.detailsFor(customerId);
+            final CustomerDTO customerDetails = this.customerService.detailsFor(customerId);
             model.addAttribute("customer", customerDetails);
             return new ModelAndView(CUSTOMER_VIEW);
         } catch (CustomerNotFoundException e) {

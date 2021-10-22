@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import at.fhv.se.banking.application.api.CustomerService;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
-import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
+import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Account;
@@ -28,16 +28,16 @@ public class CustomerServiceImpl implements CustomerService {
     private AccountRepository accountRepo;
 
     @Override
-    public List<CustomerDTO> listAll() {
+    public List<CustomerDetailsDTO> listAll() {
         List<Customer> customers = this.customerRepo.all();
-        return customers.stream().map(c -> CustomerDTO.builder()
+        return customers.stream().map(c -> CustomerDetailsDTO.builder()
             .withId(c.customerId())
             .withName(c.name())
             .build()).collect(Collectors.toList());
     }
 
     @Override
-    public CustomerDetailsDTO detailsFor(String id) throws CustomerNotFoundException {
+    public CustomerDTO detailsFor(String id) throws CustomerNotFoundException {
         CustomerId customerId = new CustomerId(id);
         Optional<Customer> customerOpt = this.customerRepo.byId(customerId);
         if (customerOpt.isEmpty()) {
@@ -47,8 +47,8 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerOpt.get();
         List<Account> accounts = accountRepo.forCustomer(customerId);
 
-        CustomerDetailsDTO.Builder builder = CustomerDetailsDTO.builder();
-        builder.withCustomer(CustomerDTO.builder()
+        CustomerDTO.Builder builder = CustomerDTO.builder();
+        builder.withCustomer(CustomerDetailsDTO.builder()
             .withId(customerId)
             .withName(customer.name())
             .build());
