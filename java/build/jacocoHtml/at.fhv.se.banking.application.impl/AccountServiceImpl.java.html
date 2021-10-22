@@ -6,20 +6,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import at.fhv.se.banking.application.api.AccountService;
+import at.fhv.se.banking.application.api.TimeService;
 import at.fhv.se.banking.application.api.exceptions.AccountNotFoundException;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
+import at.fhv.se.banking.application.api.exceptions.InvalidOperationException;
 import at.fhv.se.banking.application.dto.AccountDTO;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.TXLineDTO;
-import at.fhv.se.banking.domain.model.Account;
 import at.fhv.se.banking.domain.model.Customer;
-import at.fhv.se.banking.domain.model.Iban;
-import at.fhv.se.banking.domain.model.TXLine;
+import at.fhv.se.banking.domain.model.account.Account;
+import at.fhv.se.banking.domain.model.account.Iban;
+import at.fhv.se.banking.domain.model.account.TXLine;
+import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
+import at.fhv.se.banking.domain.services.api.TransferService;
 
 @Component
-<span class="fc" id="L22">public class AccountServiceImpl implements AccountService {</span>
+<span class="fc" id="L26">public class AccountServiceImpl implements AccountService {</span>
+
+    @Autowired
+    private TimeService timeService;
 
     @Autowired
     private AccountRepository accountRepo;
@@ -27,93 +34,109 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
     @Autowired
     private CustomerRepository customerRepo;
 
+    @Autowired
+    private TransferService transferService;
+
     @Override
     public AccountDTO accountByIban(String ibanStr) throws AccountNotFoundException {
-<span class="fc" id="L32">        Iban iban = new Iban(ibanStr);</span>
-<span class="fc" id="L33">        Optional&lt;Account&gt; accountOpt = accountRepo.byIban(iban);</span>
-<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (accountOpt.isEmpty()) {</span>
-<span class="fc" id="L35">            throw new AccountNotFoundException(&quot;Couldn't fine account for IBAN &quot; + ibanStr);</span>
+<span class="fc" id="L42">        Iban iban = new Iban(ibanStr);</span>
+<span class="fc" id="L43">        Optional&lt;Account&gt; accountOpt = accountRepo.byIban(iban);</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (accountOpt.isEmpty()) {</span>
+<span class="fc" id="L45">            throw new AccountNotFoundException(&quot;Couldn't find account for IBAN &quot; + ibanStr);</span>
         }
 
-<span class="fc" id="L38">        Account account = accountOpt.get();</span>
+<span class="fc" id="L48">        Account account = accountOpt.get();</span>
 
-<span class="fc" id="L40">        AccountDTO.Builder builder = AccountDTO.builder()</span>
-<span class="fc" id="L41">            .withDetails(AccountDetailsDTO.builder()</span>
-<span class="fc" id="L42">                .withBalance(account.balance())</span>
-<span class="fc" id="L43">                .withIban(account.iban())</span>
-<span class="fc" id="L44">                .withType(account.type())</span>
-<span class="fc" id="L45">                .build());</span>
+<span class="fc" id="L50">        AccountDTO.Builder builder = AccountDTO.builder()</span>
+<span class="fc" id="L51">            .withDetails(AccountDetailsDTO.builder()</span>
+<span class="fc" id="L52">                .withBalance(account.balance())</span>
+<span class="fc" id="L53">                .withIban(account.iban())</span>
+<span class="fc" id="L54">                .withType(account.type())</span>
+<span class="fc" id="L55">                .build());</span>
 
-<span class="fc bfc" id="L47" title="All 2 branches covered.">        for (TXLine tx : account.transactions()) {</span>
-<span class="fc" id="L48">            builder.addTXLine(TXLineDTO.builder()</span>
-<span class="fc" id="L49">                .ofAmount(tx.amount())</span>
-<span class="fc" id="L50">                .atTime(tx.time())</span>
-<span class="fc" id="L51">                .withIban(tx.iban())</span>
-<span class="fc" id="L52">                .withName(tx.name())</span>
-<span class="fc" id="L53">                .withReference(tx.reference())</span>
-<span class="fc" id="L54">                .build());</span>
-<span class="fc" id="L55">        }</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        for (TXLine tx : account.transactions()) {</span>
+<span class="fc" id="L58">            builder.addTXLine(TXLineDTO.builder()</span>
+<span class="fc" id="L59">                .ofAmount(tx.amount())</span>
+<span class="fc" id="L60">                .atTime(tx.time())</span>
+<span class="fc" id="L61">                .withIban(tx.iban())</span>
+<span class="fc" id="L62">                .withName(tx.name())</span>
+<span class="fc" id="L63">                .withReference(tx.reference())</span>
+<span class="fc" id="L64">                .build());</span>
+<span class="fc" id="L65">        }</span>
 
-<span class="fc" id="L57">        return builder.build();</span>
+<span class="fc" id="L67">        return builder.build();</span>
     }
 
     @Override
-    public void deposit(String ibanStr, double amount) throws AccountNotFoundException {
-<span class="fc" id="L62">        Iban iban = new Iban(ibanStr);</span>
-<span class="fc" id="L63">        Optional&lt;Account&gt; accountOpt = accountRepo.byIban(iban);</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (accountOpt.isEmpty()) {</span>
-<span class="fc" id="L65">            throw new AccountNotFoundException(&quot;Couldn't find account of deposit IBAN &quot; + ibanStr);</span>
+    public void deposit(String ibanStr, double amount) throws AccountNotFoundException, InvalidOperationException {
+<span class="fc" id="L72">        Iban iban = new Iban(ibanStr);</span>
+<span class="fc" id="L73">        Optional&lt;Account&gt; accountOpt = accountRepo.byIban(iban);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (accountOpt.isEmpty()) {</span>
+<span class="fc" id="L75">            throw new AccountNotFoundException(&quot;Couldn't find account of deposit IBAN &quot; + ibanStr);</span>
         }
 
-<span class="fc" id="L68">        Account account = accountOpt.get();</span>
-<span class="fc" id="L69">        account.deposit(amount);</span>
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L78">        Account account = accountOpt.get();</span>
+
+        try {
+<span class="fc" id="L81">            account.deposit(amount, timeService.utcNow());</span>
+<span class="nc" id="L82">        } catch (AccountException e) {</span>
+<span class="nc" id="L83">            throw new InvalidOperationException(e.getMessage());</span>
+<span class="fc" id="L84">        }</span>
+<span class="fc" id="L85">    }</span>
 
     @Override
-    public void withdraw(String ibanStr, double amount) throws AccountNotFoundException {
-<span class="fc" id="L74">        Iban iban = new Iban(ibanStr);</span>
-<span class="fc" id="L75">        Optional&lt;Account&gt; accountOpt = accountRepo.byIban(iban);</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (accountOpt.isEmpty()) {</span>
-<span class="fc" id="L77">            throw new AccountNotFoundException(&quot;Couldn't find account of withdraw IBAN &quot; + ibanStr);</span>
+    public void withdraw(String ibanStr, double amount) throws AccountNotFoundException, InvalidOperationException {
+<span class="fc" id="L89">        Iban iban = new Iban(ibanStr);</span>
+<span class="fc" id="L90">        Optional&lt;Account&gt; accountOpt = accountRepo.byIban(iban);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (accountOpt.isEmpty()) {</span>
+<span class="fc" id="L92">            throw new AccountNotFoundException(&quot;Couldn't find account of withdraw IBAN &quot; + ibanStr);</span>
         }
 
-<span class="fc" id="L80">        Account account = accountOpt.get();</span>
-<span class="fc" id="L81">        account.withdraw(amount);</span>
-<span class="fc" id="L82">    }</span>
+<span class="fc" id="L95">        Account account = accountOpt.get();</span>
+
+        try {
+<span class="fc" id="L98">            account.withdraw(amount, timeService.utcNow());</span>
+<span class="nc" id="L99">        } catch (AccountException e) {</span>
+<span class="nc" id="L100">            throw new InvalidOperationException(e.getMessage());</span>
+<span class="fc" id="L101">        }</span>
+<span class="fc" id="L102">    }</span>
 
     @Override
-    public void transfer(String sendingIbanStr, String receivingIbanStr, double amount, String reference) throws AccountNotFoundException, CustomerNotFoundException {
-<span class="fc" id="L86">        Iban sendingIban = new Iban(sendingIbanStr);</span>
-<span class="fc" id="L87">        Iban receivingIban = new Iban(receivingIbanStr);</span>
+    public void transfer(String sendingIbanStr, String receivingIbanStr, double amount, String reference) throws AccountNotFoundException, CustomerNotFoundException, InvalidOperationException {
+<span class="fc" id="L106">        Iban sendingIban = new Iban(sendingIbanStr);</span>
+<span class="fc" id="L107">        Iban receivingIban = new Iban(receivingIbanStr);</span>
 
-<span class="fc" id="L89">        Optional&lt;Account&gt; sendingAccountOpt = accountRepo.byIban(sendingIban);</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (sendingAccountOpt.isEmpty()) {</span>
-<span class="fc" id="L91">            throw new AccountNotFoundException(&quot;Couldn't find account of sending IBAN &quot; + sendingIbanStr);</span>
+<span class="fc" id="L109">        Optional&lt;Account&gt; sendingAccountOpt = accountRepo.byIban(sendingIban);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (sendingAccountOpt.isEmpty()) {</span>
+<span class="fc" id="L111">            throw new AccountNotFoundException(&quot;Couldn't find account of sending IBAN &quot; + sendingIbanStr);</span>
         }
 
-<span class="fc" id="L94">        Optional&lt;Account&gt; receivingAccountOpt = accountRepo.byIban(receivingIban);</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (receivingAccountOpt.isEmpty()) {</span>
-<span class="fc" id="L96">            throw new AccountNotFoundException(&quot;Couldn't find account of receiving IBAN &quot; + receivingIbanStr);</span>
+<span class="fc" id="L114">        Optional&lt;Account&gt; receivingAccountOpt = accountRepo.byIban(receivingIban);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (receivingAccountOpt.isEmpty()) {</span>
+<span class="fc" id="L116">            throw new AccountNotFoundException(&quot;Couldn't find account of receiving IBAN &quot; + receivingIbanStr);</span>
         }
 
-<span class="fc" id="L99">        Account sendingAccount = sendingAccountOpt.get();</span>
-<span class="fc" id="L100">        Account receivingAccount = receivingAccountOpt.get();</span>
+<span class="fc" id="L119">        Account sendingAccount = sendingAccountOpt.get();</span>
+<span class="fc" id="L120">        Account receivingAccount = receivingAccountOpt.get();</span>
 
-<span class="fc" id="L102">        Optional&lt;Customer&gt; sendingCustomerOpt = customerRepo.byId(sendingAccount.owner());</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (sendingCustomerOpt.isEmpty()) {</span>
-<span class="fc" id="L104">            throw new CustomerNotFoundException(&quot;Couldn't find a customer for sending IBAN &quot; + sendingIbanStr);</span>
+<span class="fc" id="L122">        Optional&lt;Customer&gt; sendingCustomerOpt = customerRepo.byId(sendingAccount.owner());</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        if (sendingCustomerOpt.isEmpty()) {</span>
+<span class="fc" id="L124">            throw new CustomerNotFoundException(&quot;Couldn't find a customer for sending IBAN &quot; + sendingIbanStr);</span>
         }
 
-<span class="fc" id="L107">        Optional&lt;Customer&gt; receivingCustomerOpt = customerRepo.byId(receivingAccount.owner());</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (receivingCustomerOpt.isEmpty()) {</span>
-<span class="fc" id="L109">            throw new CustomerNotFoundException(&quot;Couldn't find a customer for receiving IBAN &quot; + receivingIbanStr);</span>
+<span class="fc" id="L127">        Optional&lt;Customer&gt; receivingCustomerOpt = customerRepo.byId(receivingAccount.owner());</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (receivingCustomerOpt.isEmpty()) {</span>
+<span class="fc" id="L129">            throw new CustomerNotFoundException(&quot;Couldn't find a customer for receiving IBAN &quot; + receivingIbanStr);</span>
         }
 
-<span class="fc" id="L112">        Customer sendingCustomer = sendingCustomerOpt.get();</span>
-<span class="fc" id="L113">        Customer receivingCustomer = receivingCustomerOpt.get();</span>
+<span class="fc" id="L132">        Customer sendingCustomer = sendingCustomerOpt.get();</span>
+<span class="fc" id="L133">        Customer receivingCustomer = receivingCustomerOpt.get();</span>
 
-<span class="fc" id="L115">        sendingAccount.transferTo(receivingIban, amount, receivingCustomer.name(), reference);</span>
-<span class="fc" id="L116">        receivingAccount.receiveFrom(sendingIban, amount, sendingCustomer.name(), reference);</span>
-<span class="fc" id="L117">    }</span>
+        try {
+<span class="fc" id="L136">            this.transferService.transfer(amount, reference, timeService.utcNow(), sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);</span>
+<span class="fc" id="L137">        } catch (AccountException e) {</span>
+<span class="fc" id="L138">            throw new InvalidOperationException(e.getMessage());</span>
+<span class="fc" id="L139">        }</span>
+<span class="fc" id="L140">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

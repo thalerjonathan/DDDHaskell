@@ -12,9 +12,9 @@ import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
-import at.fhv.se.banking.domain.model.Account;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
+import at.fhv.se.banking.domain.model.account.Account;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
 

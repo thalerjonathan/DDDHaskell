@@ -3,6 +3,7 @@ package at.fhv.se.banking.application;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -24,14 +25,20 @@ import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Account;
 import at.fhv.se.banking.domain.model.account.GiroAccount;
 import at.fhv.se.banking.domain.model.account.Iban;
+import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
+import at.fhv.se.banking.domain.services.api.TransferService;
 
 @SpringBootTest
 public class CustomerServiceTests {
     
     @Autowired
     private CustomerService customerService;
+
+    @SuppressWarnings("unused")
+    @Autowired
+    private TransferService transferService;
 
     @MockBean
     private CustomerRepository customerRepo;
@@ -63,11 +70,12 @@ public class CustomerServiceTests {
     }
 
     @Test
-    public void given_customerinrepo_when_informationFor_thenreturninfo() throws CustomerNotFoundException {
+    public void given_customerinrepo_when_informationFor_thenreturninfo() throws CustomerNotFoundException, AccountException {
         // given
         String customerName = "Jonathan";
         CustomerId customerId = new CustomerId("42");
         Customer customer = new Customer(customerId, customerName);
+        double balance = 1234;
 
         CustomerDetailsDTO expectedInfoDTO = CustomerDetailsDTO.builder()
             .withCustomer(CustomerDTO.builder()
@@ -75,13 +83,15 @@ public class CustomerServiceTests {
                 .withName(customerName)
                 .build())
             .addAccount(AccountDetailsDTO.builder()
-                .withBalance(1234)
+                .withBalance(balance)
                 .withIban(new Iban("AT12 3456 7890 1234"))
                 .withType("GIRO")
                 .build()
             ).build();
 
         Account a = new GiroAccount(customerId, new Iban("AT12 3456 7890 1234"));
+        a.deposit(balance, LocalDateTime.now());
+        
         List<Account> accounts = Arrays.asList(a);
 
         Mockito.when(customerRepo.byId(customerId)).thenReturn(Optional.of(customer));

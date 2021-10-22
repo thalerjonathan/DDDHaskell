@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GiroAccount.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">banking</a> &gt; <a href="index.source.html" class="el_package">at.fhv.se.banking.domain.model.account</a> &gt; <span class="el_source">GiroAccount.java</span></div><h1>GiroAccount.java</h1><pre class="source lang-java linenums">package at.fhv.se.banking.domain.model.account;
+
+import java.time.LocalDateTime;
+
+import at.fhv.se.banking.domain.model.CustomerId;
+import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
+
+public class GiroAccount extends Account {
+
+    private final static String ACCOUNT_TYPE = &quot;GIRO&quot;;
+    private final static double OVERDRAFT_LIMIT = -1000;
+
+    public GiroAccount(CustomerId owner, Iban iban) {
+<span class="fc" id="L14">        super(owner, iban);</span>
+<span class="fc" id="L15">    }</span>
+ 
+    @Override
+    public String type() {
+<span class="fc" id="L19">        return ACCOUNT_TYPE;</span>
+    }
+
+    @Override
+    public void deposit(double amount, LocalDateTime time) {
+<span class="fc" id="L24">        this.txLines.add(new TXLine(this.iban(), amount, &quot;Deposit&quot;, &quot;Deposit&quot;, time));</span>
+<span class="fc" id="L25">    }</span>
+
+    @Override
+    public void withdraw(double amount, LocalDateTime time) throws AccountException {
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if (this.balance() - amount &lt; OVERDRAFT_LIMIT) {</span>
+<span class="fc" id="L30">            throw new AccountException(&quot;Cannot overdraw Giro account by more than &quot; + OVERDRAFT_LIMIT + &quot;!&quot;);</span>
+        }
+
+<span class="fc" id="L33">        this.txLines.add(new TXLine(this.iban(), -amount, &quot;Withdraw&quot;, &quot;Withdraw&quot;, time));</span>
+<span class="fc" id="L34">    }</span>
+
+    @Override
+    public void receiveFrom(Iban from, double amount, String name, String reference, LocalDateTime time) {
+<span class="fc" id="L38">        this.txLines.add(new TXLine(from, amount, name, reference, time));</span>
+<span class="fc" id="L39">    }</span>
+
+    @Override
+    public void transferTo(Iban to, double amount, String name, String reference, LocalDateTime time) {
+<span class="fc" id="L43">        this.txLines.add(new TXLine(to, -amount, name, reference, time));</span>
+<span class="fc" id="L44">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

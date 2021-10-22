@@ -38,7 +38,7 @@ public class TestData implements ApplicationRunner {
         account1Customer1.receiveFrom(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", now);
         account1Customer1.receiveFrom(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", now);
         Account account2Customer1 = new SavingsAccount(cId1, new Iban("AT22 2222 2222 2222"));
-        account2Customer1.deposit(2345, now);
+        account2Customer1.receiveFrom(account1Customer1.iban(), 2345, "Deposit", "Deposit", now);
         account2Customer1.receiveFrom(new Iban("AT98 7654 3210 9876"), 345, "Max Mustermann", "Rent", now);
         account2Customer1.receiveFrom(new Iban("AT98 7654 3210 9876"), 345, "Max Mustermann", "Rent", now);
 
@@ -47,7 +47,7 @@ public class TestData implements ApplicationRunner {
         account1Customer2.receiveFrom(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", now);
         account1Customer2.receiveFrom(new Iban("AT98 7654 3210 9876"), 123, "Max Mustermann", "Rent", now);
         Account account2Customer2 = new SavingsAccount(cId2, new Iban("AT44 4444 4444 4444"));
-        account2Customer2.deposit(4567, now);
+        account2Customer2.receiveFrom(account1Customer2.iban(), 4567, "Deposit", "Deposit", now);
         account2Customer2.receiveFrom(new Iban("AT98 7654 3210 9876"), 345, "Max Mustermann", "Rent", now);
         account2Customer2.receiveFrom(new Iban("AT98 7654 3210 9876"), 345, "Max Mustermann", "Rent", now);
 

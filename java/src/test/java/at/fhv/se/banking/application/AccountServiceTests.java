@@ -28,6 +28,7 @@ import at.fhv.se.banking.domain.model.account.Iban;
 import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
+import at.fhv.se.banking.domain.services.api.TransferService;
 
 @SpringBootTest
 public class AccountServiceTests {
@@ -43,6 +44,9 @@ public class AccountServiceTests {
 
     @MockBean
     private TimeService timeService;
+
+    @MockBean
+    private TransferService transferSerivce;
 
     @Test
     public void given_accountinrepo_when_byIban_thenreturn() throws AccountNotFoundException, AccountException {
@@ -214,10 +218,7 @@ public class AccountServiceTests {
         this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference);
 
         // then
-        Mockito.verify(sendingAccount).transferTo(receivingIban, transferAmount, receivingName, reference, now);
-        Mockito.verify(receivingAccount).receiveFrom(sendingIban, transferAmount, sendingName, reference, now);
-        assertEquals(-transferAmount, sendingAccount.balance());
-        assertEquals(transferAmount, receivingAccount.balance());
+        Mockito.verify(transferSerivce).transfer(transferAmount, reference, now, sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);
     }
 
     @Test
@@ -302,5 +303,38 @@ public class AccountServiceTests {
         assertThrows(CustomerNotFoundException.class, () -> this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference));
     }
 
-    // TODO: test violations of business rules which throw exceptions
+    @Test
+    public void given_accountinrepo_when_transfer_andinvalidoperation_then_throws() throws AccountNotFoundException, CustomerNotFoundException, AccountException, InvalidOperationException {
+        // given
+        double transferAmount = 500;
+        String reference = "Rent";
+
+        String sendingName = "Jonathan";
+        String receivingName = "Thomas";
+        Iban sendingIban = new Iban("AT12 3456 7890 1234");
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+
+        Customer sendingCustomer = new Customer(new CustomerId("1"), sendingName);
+        Customer receivingCustomer = new Customer(new CustomerId("2"), receivingName);
+
+        Account sendingAccount = Mockito.spy(
+            new GiroAccount(sendingCustomer.customerId(), sendingIban));
+        Account receivingAccount = Mockito.spy(
+            new GiroAccount(receivingCustomer.customerId(), receivingIban));
+
+        LocalDateTime now = LocalDateTime.now();
+
+        Mockito.when(timeService.utcNow()).thenReturn(now);
+
+        Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
+        Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
+
+        Mockito.when(customerRepo.byId(sendingCustomer.customerId())).thenReturn(Optional.of(sendingCustomer));
+        Mockito.when(customerRepo.byId(receivingCustomer.customerId())).thenReturn(Optional.of(receivingCustomer));
+
+        Mockito.doThrow(new AccountException("Test")).when(transferSerivce).transfer(transferAmount, reference, now, sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);
+
+        // when ... then
+        assertThrows(InvalidOperationException.class, () -> this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference));
+    }
 }

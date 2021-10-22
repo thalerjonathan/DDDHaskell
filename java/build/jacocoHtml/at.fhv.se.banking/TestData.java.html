@@ -7,12 +7,12 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import at.fhv.se.banking.domain.model.Account;
-import at.fhv.se.banking.domain.model.AccountType;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
-import at.fhv.se.banking.domain.model.Iban;
-import at.fhv.se.banking.domain.model.TXLine;
+import at.fhv.se.banking.domain.model.account.Account;
+import at.fhv.se.banking.domain.model.account.GiroAccount;
+import at.fhv.se.banking.domain.model.account.Iban;
+import at.fhv.se.banking.domain.model.account.SavingsAccount;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
 
@@ -27,33 +27,38 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-<span class="fc" id="L30">        CustomerId cId1 = customerRepo.nextCustomerId();</span>
-<span class="fc" id="L31">        CustomerId cId2 = customerRepo.nextCustomerId();</span>
-<span class="fc" id="L32">        Customer customer1 = new Customer(cId1, &quot;Jonathan Thaler&quot;);</span>
-<span class="fc" id="L33">        Customer customer2 = new Customer(cId2, &quot;Thomas Schwarz&quot;);</span>
+<span class="fc" id="L30">        LocalDateTime now = LocalDateTime.now();</span>
+<span class="fc" id="L31">        CustomerId cId1 = customerRepo.nextCustomerId();</span>
+<span class="fc" id="L32">        CustomerId cId2 = customerRepo.nextCustomerId();</span>
+<span class="fc" id="L33">        Customer customer1 = new Customer(cId1, &quot;Jonathan Thaler&quot;);</span>
+<span class="fc" id="L34">        Customer customer2 = new Customer(cId2, &quot;Thomas Schwarz&quot;);</span>
+        
+<span class="fc" id="L36">        Account account1Customer1 = new GiroAccount(cId1, new Iban(&quot;AT11 1111 1111 1111&quot;));</span>
+<span class="fc" id="L37">        account1Customer1.deposit(1234, now);</span>
+<span class="fc" id="L38">        account1Customer1.receiveFrom(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, now);</span>
+<span class="fc" id="L39">        account1Customer1.receiveFrom(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, now);</span>
+<span class="fc" id="L40">        Account account2Customer1 = new SavingsAccount(cId1, new Iban(&quot;AT22 2222 2222 2222&quot;));</span>
+<span class="fc" id="L41">        account2Customer1.receiveFrom(account1Customer1.iban(), 2345, &quot;Deposit&quot;, &quot;Deposit&quot;, now);</span>
+<span class="fc" id="L42">        account2Customer1.receiveFrom(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, now);</span>
+<span class="fc" id="L43">        account2Customer1.receiveFrom(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, now);</span>
 
-<span class="fc" id="L35">        Account account1Customer1 = new Account(cId1, new Iban(&quot;AT11 1111 1111 1111&quot;), AccountType.GIRO, 1234);</span>
-<span class="fc" id="L36">        account1Customer1.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
-<span class="fc" id="L37">        account1Customer1.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
-<span class="fc" id="L38">        Account account2Customer1 = new Account(cId1, new Iban(&quot;AT22 2222 2222 2222&quot;), AccountType.SAVINGS, 2345);</span>
-<span class="fc" id="L39">        account2Customer1.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
-<span class="fc" id="L40">        account2Customer1.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
+<span class="fc" id="L45">        Account account1Customer2 = new GiroAccount(cId2, new Iban(&quot;AT33 3333 3333 3333&quot;));</span>
+<span class="fc" id="L46">        account1Customer2.deposit(3456, now);</span>
+<span class="fc" id="L47">        account1Customer2.receiveFrom(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, now);</span>
+<span class="fc" id="L48">        account1Customer2.receiveFrom(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, now);</span>
+<span class="fc" id="L49">        Account account2Customer2 = new SavingsAccount(cId2, new Iban(&quot;AT44 4444 4444 4444&quot;));</span>
+<span class="fc" id="L50">        account2Customer2.receiveFrom(account1Customer2.iban(), 4567, &quot;Deposit&quot;, &quot;Deposit&quot;, now);</span>
+<span class="fc" id="L51">        account2Customer2.receiveFrom(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, now);</span>
+<span class="fc" id="L52">        account2Customer2.receiveFrom(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, now);</span>
 
-<span class="fc" id="L42">        Account account1Customer2 = new Account(cId2, new Iban(&quot;AT33 3333 3333 3333&quot;), AccountType.GIRO, 3456);</span>
-<span class="fc" id="L43">        account1Customer2.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
-<span class="fc" id="L44">        account1Customer2.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 123, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
-<span class="fc" id="L45">        Account account2Customer2 = new Account(cId2, new Iban(&quot;AT44 4444 4444 4444&quot;), AccountType.SAVINGS, 4567);</span>
-<span class="fc" id="L46">        account2Customer2.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
-<span class="fc" id="L47">        account2Customer2.addTXLine(new TXLine(new Iban(&quot;AT98 7654 3210 9876&quot;), 345, &quot;Max Mustermann&quot;, &quot;Rent&quot;, LocalDateTime.now()));</span>
+<span class="fc" id="L54">        accountRepo.add(account1Customer1);</span>
+<span class="fc" id="L55">        accountRepo.add(account2Customer1);</span>
+<span class="fc" id="L56">        accountRepo.add(account1Customer2);</span>
+<span class="fc" id="L57">        accountRepo.add(account2Customer2);</span>
 
-<span class="fc" id="L49">        accountRepo.add(account1Customer1);</span>
-<span class="fc" id="L50">        accountRepo.add(account2Customer1);</span>
-<span class="fc" id="L51">        accountRepo.add(account1Customer2);</span>
-<span class="fc" id="L52">        accountRepo.add(account2Customer2);</span>
-
-<span class="fc" id="L54">        customerRepo.add(customer1);</span>
-<span class="fc" id="L55">        customerRepo.add(customer2);</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L59">        customerRepo.add(customer1);</span>
+<span class="fc" id="L60">        customerRepo.add(customer2);</span>
+<span class="fc" id="L61">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

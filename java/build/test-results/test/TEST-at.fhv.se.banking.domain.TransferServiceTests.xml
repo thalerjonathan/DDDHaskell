@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="at.fhv.se.banking.domain.TransferServiceTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-10-22T12:47:14" hostname="zazengine" time="0.045">
+  <properties/>
+  <testcase name="given_customers_and_accounts_when_transfer_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.045"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
