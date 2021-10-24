@@ -1,10 +1,12 @@
 package at.fhv.se.banking.infrastructure.db;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Component;
 
@@ -15,25 +17,26 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
 @Component
 public class HibernateCustomerRepository implements CustomerRepository {
 
-    private List<Customer> customers;
-
-    HibernateCustomerRepository() {
-        this.customers = new ArrayList<>();
-    }
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
-    public Optional<Customer> byId(CustomerId customerId) {
-        return this.customers.stream().filter(c -> c.customerId().equals(customerId)).findFirst();
+    public Optional<Customer> byId(CustomerId cId) {
+        TypedQuery<Customer> q = this.em.createQuery("FROM Customer c WHERE c.customerId = :cId", Customer.class);
+        q.setParameter("cId", cId);
+
+        return Utils.getOptionalResult(q);
     }
 
     @Override
     public List<Customer> all() {
-        return Collections.unmodifiableList(this.customers);
+        TypedQuery<Customer> q = this.em.createQuery("FROM Customer c", Customer.class);
+        return q.getResultList();
     }
 
     @Override
     public void add(Customer c) {
-        this.customers.add(c);
+        this.em.persist(c);
     }
 
     @Override

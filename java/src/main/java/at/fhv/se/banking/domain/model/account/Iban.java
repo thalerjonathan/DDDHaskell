@@ -1,7 +1,7 @@
 package at.fhv.se.banking.domain.model.account;
 
 public final class Iban {
-    private final String iban;
+    private String iban;
 
     public Iban(String iban) {
         this.iban = iban;
@@ -10,6 +10,10 @@ public final class Iban {
     @Override
     public String toString() {
         return iban;
+    }
+
+    @SuppressWarnings("unused")
+    private Iban() {
     }
 
     @Override

@@ -1,20 +1,31 @@
 package at.fhv.se.banking.domain.model.account;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 public final class TXLine {
-    private final double amount;
-    private final Iban iban;
-    private final String name;
-    private final String reference;
-    private final LocalDateTime time;
+    // required by Hibernate
+    @SuppressWarnings("unused")
+    private Long id;
+    @SuppressWarnings("unused")
+    private Iban account;
 
-    public TXLine(Iban iban, double amount, String name, String reference, LocalDateTime time) {
+    private double amount;
+    private Iban iban;
+    private String name;
+    private String reference;
+    private Date time; // using Date because Hibernate mapping f*** up when using LocalDateTime
+
+    public TXLine(Account account, Iban iban, double amount, String name, String reference, LocalDateTime timeToConvert) {
+        this.account = account.iban();
         this.amount = amount;
         this.iban = iban;
         this.name = name;
         this.reference = reference;
-        this.time = time;
+        this.time = java.util.Date
+            .from(timeToConvert.atZone(ZoneId.systemDefault())
+            .toInstant());
     }
 
     public double amount() {
@@ -34,7 +45,12 @@ public final class TXLine {
     }
 
     public LocalDateTime time() {
-        return time;
+        return LocalDateTime.ofInstant(time.toInstant(), ZoneId.systemDefault());
+    }
+
+    // required by Hibernate
+    @SuppressWarnings("unused")
+    private TXLine() {
     }
 
     @Override

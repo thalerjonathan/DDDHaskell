@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import at.fhv.se.banking.application.api.AccountService;
 import at.fhv.se.banking.application.api.TimeService;
@@ -37,6 +38,7 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private TransferService transferService;
 
+    @Transactional(readOnly = true)
     @Override
     public AccountDTO accountByIban(String ibanStr) throws AccountNotFoundException {
         Iban iban = new Iban(ibanStr);
@@ -67,6 +69,7 @@ public class AccountServiceImpl implements AccountService {
         return builder.build();
     }
 
+    @Transactional
     @Override
     public void deposit(String ibanStr, double amount) throws AccountNotFoundException, InvalidOperationException {
         Iban iban = new Iban(ibanStr);
@@ -84,6 +87,7 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Transactional
     @Override
     public void withdraw(String ibanStr, double amount) throws AccountNotFoundException, InvalidOperationException {
         Iban iban = new Iban(ibanStr);
@@ -101,6 +105,7 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Transactional
     @Override
     public void transfer(String sendingIbanStr, String receivingIbanStr, double amount, String reference) throws AccountNotFoundException, CustomerNotFoundException, InvalidOperationException {
         Iban sendingIban = new Iban(sendingIbanStr);

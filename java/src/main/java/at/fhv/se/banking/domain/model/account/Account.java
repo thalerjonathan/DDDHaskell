@@ -3,20 +3,28 @@ package at.fhv.se.banking.domain.model.account;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 
 public abstract class Account {
+    // required by Hibernate
+    @SuppressWarnings("unused")
+    private Long id;
+    @SuppressWarnings("unused")
+    private int version;
+
     private CustomerId owner;
     private Iban iban;
-    protected List<TXLine> txLines;
+    protected Set<TXLine> txLines;
     
     public Account(CustomerId owner, Iban iban) {
         this.owner = owner;
         this.iban = iban;
-        this.txLines = new ArrayList<>();
+        this.txLines = new LinkedHashSet<>();
     }
 
     public CustomerId owner() {
@@ -30,7 +38,7 @@ public abstract class Account {
     public abstract String type();
 
     public List<TXLine> transactions() {
-        return Collections.unmodifiableList(this.txLines);
+        return Collections.unmodifiableList(new ArrayList<TXLine>(this.txLines));
     }
 
     public double balance() {
@@ -44,6 +52,10 @@ public abstract class Account {
     public abstract void withdraw(double amount, LocalDateTime time) throws AccountException;
     public abstract void receiveFrom(Iban from, double amount, String name, String reference, LocalDateTime time);
     public abstract void transferTo(Iban to, double amount, String name, String reference, LocalDateTime time) throws AccountException;
+
+    // required by Hibernate
+    protected Account() {
+    }
 
     @Override
     public int hashCode() {

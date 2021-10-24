@@ -45,7 +45,7 @@ public class AccountTests {
         double depositAmount = 1234;
     
         List<TXLine> tx = Arrays.asList(
-            new TXLine(a.iban(), depositAmount, "Deposit", "Deposit", now)
+            new TXLine(a, a.iban(), depositAmount, "Deposit", "Deposit", now)
         );
 
         // when
@@ -65,7 +65,7 @@ public class AccountTests {
         double withdrawAmount = 123;
 
         List<TXLine> tx = Arrays.asList(
-            new TXLine(a.iban(), -withdrawAmount, "Withdraw", "Withdraw", now)
+            new TXLine(a, a.iban(), -withdrawAmount, "Withdraw", "Withdraw", now)
         );
 
         // when
@@ -86,8 +86,8 @@ public class AccountTests {
         double withdrawAmount = 1000;
 
         List<TXLine> tx = Arrays.asList(
-            new TXLine(a.iban(), depositAmount, "Deposit", "Deposit", now),
-            new TXLine(a.iban(), -withdrawAmount, "Withdraw", "Withdraw", now)
+            new TXLine(a, a.iban(), depositAmount, "Deposit", "Deposit", now),
+            new TXLine(a, a.iban(), -withdrawAmount, "Withdraw", "Withdraw", now)
         );
 
         // when
@@ -109,7 +109,7 @@ public class AccountTests {
         String reference = "Rent";
         LocalDateTime now = LocalDateTime.now();
         Iban toIban = new Iban("AT98 76543 09876543210");
-        TXLine tx = new TXLine(toIban, -amount, name, reference, now);
+        TXLine tx = new TXLine(a, toIban, -amount, name, reference, now);
 
         // when
         a.transferTo(toIban, amount, name, reference, now);
@@ -117,7 +117,7 @@ public class AccountTests {
         // then
         assertEquals(-amount, a.balance());
         assertEquals(1, a.transactions().size());
-        assertEquals(tx, a.transactions().get(0));
+        assertEquals(tx, a.transactions().iterator().next());
     }
 
     @Test
@@ -130,7 +130,7 @@ public class AccountTests {
         String reference = "Rent";
         LocalDateTime now = LocalDateTime.now();
         Iban fromIban = new Iban("AT98 76543 09876543210");
-        TXLine tx = new TXLine(fromIban, amount, name, reference, now);
+        TXLine tx = new TXLine(a, fromIban, amount, name, reference, now);
 
         // when
         a.receiveFrom(fromIban, amount, name, reference, now);
@@ -138,7 +138,7 @@ public class AccountTests {
         // then
         assertEquals(amount, a.balance());
         assertEquals(1, a.transactions().size());
-        assertEquals(tx, a.transactions().get(0));
+        assertEquals(tx, a.transactions().iterator().next());
     }
 
     @Test

@@ -1,7 +1,7 @@
 package at.fhv.se.banking.domain.model.account;
 
 public final class AccountId {
-    private final String id;
+    private String id;
 
     public AccountId(String id) {
         this.id = id;
@@ -9,6 +9,10 @@ public final class AccountId {
     
     public String id() {
         return this.id;
+    }
+
+    @SuppressWarnings("unused")
+    private AccountId() {
     }
 
     @Override

@@ -1,7 +1,7 @@
 package at.fhv.se.banking.domain.model;
 
 public final class CustomerId {
-    private final String id;
+    private String id;
 
     public CustomerId(String id) {
         this.id = id;
@@ -9,6 +9,10 @@ public final class CustomerId {
     
     public String id() {
         return this.id;
+    }
+
+    @SuppressWarnings("unused")
+    private CustomerId() {
     }
 
     @Override

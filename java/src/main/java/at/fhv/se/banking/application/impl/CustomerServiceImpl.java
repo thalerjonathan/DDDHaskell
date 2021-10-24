@@ -6,12 +6,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import at.fhv.se.banking.application.api.CustomerService;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
-import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
 import at.fhv.se.banking.application.dto.CustomerDTO;
+import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Account;
@@ -27,6 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private AccountRepository accountRepo;
 
+    @Transactional(readOnly = true)
     @Override
     public List<CustomerDetailsDTO> listAll() {
         List<Customer> customers = this.customerRepo.all();
@@ -36,6 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
             .build()).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public CustomerDTO detailsFor(String id) throws CustomerNotFoundException {
         CustomerId customerId = new CustomerId(id);

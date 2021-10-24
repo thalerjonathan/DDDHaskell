@@ -1,9 +1,11 @@
 package at.fhv.se.banking.infrastructure.db;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Component;
 
@@ -15,24 +17,27 @@ import at.fhv.se.banking.domain.repositories.AccountRepository;
 @Component
 public class HibernateAccountRepository implements AccountRepository {
 
-    private List<Account> accounts;
-
-    HibernateAccountRepository() {
-        this.accounts = new ArrayList<>();
-    }
+    @PersistenceContext
+    private EntityManager em;
     
     @Override
     public List<Account> forCustomer(CustomerId customerId) {
-        return this.accounts.stream().filter(a -> a.owner().equals(customerId)).collect(Collectors.toList());
+        TypedQuery<Account> q = this.em.createQuery("FROM Account a WHERE a.owner = :cId", Account.class);
+        q.setParameter("cId", customerId);
+
+        return q.getResultList();
     }
 
     @Override
     public Optional<Account> byIban(Iban iban) {
-        return this.accounts.stream().filter(a -> a.iban().equals(iban)).findFirst();
+        TypedQuery<Account> q = this.em.createQuery("FROM Account a WHERE a.iban = :iban", Account.class);
+        q.setParameter("iban", iban);
+
+        return Utils.getOptionalResult(q);
     }
 
     @Override
     public void add(Account a) {
-        this.accounts.add(a);
+        this.em.persist(a);
     }
 }

@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="at.fhv.se.banking.domain.TransferServiceTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-10-22T12:47:14" hostname="zazengine" time="0.045">
+<testsuite name="at.fhv.se.banking.domain.TransferServiceTests" tests="7" skipped="0" failures="0" errors="0" timestamp="2021-10-24T13:26:01" hostname="zazengine" time="0.044">
   <properties/>
-  <testcase name="given_customers_and_accounts_when_transfer_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.045"/>
+  <testcase name="given_customers_and_savingssending_giroreceiving_when_transfer_then_throws()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.027"/>
+  <testcase name="given_customers_and_accounts_when_transfer_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.004"/>
+  <testcase name="given_customers_and_girosending_savingreceiving_when_transfer_then_throws()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.002"/>
+  <testcase name="given_customers_when_transfermorethan5000_then_throws()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.002"/>
+  <testcase name="given_samecustomer_and_girosending_savingreceiving_when_transfer_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.003"/>
+  <testcase name="given_samecustomer_and_savingssending_giroreceiving_when_transfer_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.004"/>
+  <testcase name="given_samecustomer_when_transfermorethan5000_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

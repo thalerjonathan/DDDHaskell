@@ -30,7 +30,7 @@ public class SavingsAccount extends Account {
 
     @Override
     public void receiveFrom(Iban from, double amount, String name, String reference, LocalDateTime time) {
-        this.txLines.add(new TXLine(from, amount, name, reference, time));
+        this.txLines.add(new TXLine(this, from, amount, name, reference, time));
     }
 
     @Override
@@ -40,6 +40,11 @@ public class SavingsAccount extends Account {
             throw new AccountException("Cannot overdraw Savings account!");
         }
 
-        this.txLines.add(new TXLine(to, -amount, name, reference, time));
+        this.txLines.add(new TXLine(this, to, -amount, name, reference, time));
+    }
+
+    // required by Hibernate
+    @SuppressWarnings("unused")
+    private SavingsAccount() {
     }
 }

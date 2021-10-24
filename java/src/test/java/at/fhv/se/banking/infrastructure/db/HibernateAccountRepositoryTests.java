@@ -6,24 +6,25 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Account;
 import at.fhv.se.banking.domain.model.account.GiroAccount;
 import at.fhv.se.banking.domain.model.account.Iban;
 import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
-import at.fhv.se.banking.domain.repositories.AccountRepository;
 
+@ActiveProfiles("test")
+@Transactional
+@SpringBootTest
 public class HibernateAccountRepositoryTests {
     
-    private AccountRepository repo;
-
-    @BeforeEach
-    public void beforeEach() {
-        this.repo = new HibernateAccountRepository();
-    }
+    @Autowired
+    private HibernateAccountRepository repo;
 
     @Test
     public void given_account_when_add_then_fetch() throws AccountException {

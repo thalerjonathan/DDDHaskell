@@ -5,20 +5,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
 
+@ActiveProfiles("test")
+@Transactional
+@SpringBootTest
 public class HibernateCustomerRepositoryTests {
     
+    @Autowired
     private HibernateCustomerRepository repo;
-
-    @BeforeEach
-    public void beforeEach() {
-        this.repo = new HibernateCustomerRepository();
-    }
 
     @Test
     public void given_customer_when_added_then_fetched() {

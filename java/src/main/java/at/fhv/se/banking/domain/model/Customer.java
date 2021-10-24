@@ -1,6 +1,10 @@
 package at.fhv.se.banking.domain.model;
 
 public final class Customer {
+    // required by Hibernate
+    @SuppressWarnings("unused")
+    private Long id;
+
     private CustomerId customerId;
     private String name;
 
@@ -15,6 +19,11 @@ public final class Customer {
 
     public String name() {
         return this.name;
+    }
+
+    // required by Hibernate
+    @SuppressWarnings("unused")
+    private Customer() {
     }
 
     @Override

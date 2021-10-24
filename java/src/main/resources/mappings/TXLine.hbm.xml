@@ -7,19 +7,18 @@
             <generator class="native"/>
         </id>
 
-        <property name="text" column="item_text" type="java.lang.String" />
-
-        <component name="iban" class="at.fhv.se.banking.domain.model.account.Iban">
-            <property name="iban" column="iban" type="java.lang.String" />
+        <component name="account" class="at.fhv.se.banking.domain.model.account.Iban">
+            <property name="iban" column="tx_account" type="java.lang.String" />
         </component>
 
-        <!--
-            private final double amount;
-            private final Iban iban;
-            private final String name;
-            private final String reference;
-            private final LocalDateTime time;
+        <property name="amount" column="tx_amount" type="double" />
 
-        -->
+        <component name="iban" class="at.fhv.se.banking.domain.model.account.Iban">
+            <property name="iban" column="tx_iban" type="java.lang.String" />
+        </component>
+
+        <property name="name" column="tx_name" type="java.lang.String" />
+        <property name="reference" column="tx_reference" type="java.lang.String" />
+        <property name="time" column="tx_time" type="java.util.Date" />
     </class>
 </hibernate-mapping>
