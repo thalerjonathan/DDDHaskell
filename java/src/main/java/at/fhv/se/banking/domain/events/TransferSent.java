@@ -47,6 +47,11 @@ public class TransferSent implements DomainEvent {
         return receivingAccount;
     }
 
+    // NOTE: need for JSON deserialisation
+    @SuppressWarnings("unused")
+    private TransferSent() {
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;

@@ -23,8 +23,8 @@ import at.fhv.se.banking.domain.model.account.TXLine;
 import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
+import at.fhv.se.banking.domain.repositories.EventRepository;
 import at.fhv.se.banking.domain.services.api.TransferService;
-import at.fhv.se.banking.infrastructure.db.events.EventRepository;
 
 @Component
 public class AccountServiceImpl implements AccountService {
@@ -153,8 +153,9 @@ public class AccountServiceImpl implements AccountService {
                 receivingCustomer.customerId(),
                 sendingAccount.iban(),
                 receivingAccount.iban());
+                
             eventRepo.persistDomainEvent(transferSent);
-        } catch (AccountException e) {
+        } catch (Exception e) {
             throw new InvalidOperationException(e.getMessage());
         }
     }

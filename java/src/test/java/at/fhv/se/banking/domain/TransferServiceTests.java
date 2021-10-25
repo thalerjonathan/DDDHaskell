@@ -17,7 +17,7 @@ import at.fhv.se.banking.domain.model.account.Iban;
 import at.fhv.se.banking.domain.model.account.SavingsAccount;
 import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 import at.fhv.se.banking.domain.services.api.TransferService;
-import at.fhv.se.banking.domain.services.impl.DefaultTransferServicePolicyImpl;
+import at.fhv.se.banking.domain.services.impl.TransferServicePolicyImpl;
 
 public class TransferServiceTests {
     
@@ -26,7 +26,7 @@ public class TransferServiceTests {
 
     @BeforeEach
     public void beforeEach() {
-        this.transferService = new DefaultTransferServicePolicyImpl();
+        this.transferService = new TransferServicePolicyImpl();
     }
 
     @Test

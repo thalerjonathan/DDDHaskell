@@ -1,6 +1,6 @@
 package at.fhv.se.banking.infrastructure.db.events;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -12,14 +12,14 @@ import at.fhv.se.banking.domain.events.DomainEvent;
 
 public class PersistedEvent {
     private Long id;
-    private Date created;
+    private LocalDateTime created;
     private String type;
     private boolean processed;
     private boolean failed;
     private String failMessage;
     private String payload;
 
-    public PersistedEvent(Date created, String type, String payload) {
+    public PersistedEvent(LocalDateTime created, String type, String payload) {
         this.created = created;
         this.type = type;
         this.payload = payload;
@@ -29,7 +29,7 @@ public class PersistedEvent {
         return this.id;
     }
 
-    public Date created() {
+    public LocalDateTime created() {
         return created;
     }
 
@@ -66,7 +66,7 @@ public class PersistedEvent {
             T evt = objectMapper.readValue(this.payload, clazz);
             return Optional.of(evt);
         } catch (JsonProcessingException e) {
-//            System.out.println(e);
+            e.printStackTrace();
         }
         
         return Optional.empty();

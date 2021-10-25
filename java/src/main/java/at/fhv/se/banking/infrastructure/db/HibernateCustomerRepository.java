@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
+import at.fhv.se.banking.infrastructure.db.utils.Utils;
 
 @Component
 public class HibernateCustomerRepository implements CustomerRepository {

@@ -10,7 +10,7 @@ import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 import at.fhv.se.banking.domain.services.api.TransferService;
 
 @Component
-public class DefaultTransferServicePolicyImpl implements TransferService {
+public class TransferServicePolicyImpl implements TransferService {
 
     private final static double TRANSFER_LIMIT = 5000;
 
@@ -39,7 +39,7 @@ public class DefaultTransferServicePolicyImpl implements TransferService {
     }
 
     private static boolean isSavings(Account a) {
-        // NOTE: this is bad style, refactor (into visitor pattern/double dynamic dispatch?)
+        // TODO: this is bad style, refactor (into visitor pattern/double dynamic dispatch?)
         return a.type().equals("SAVINGS");
     }
 }

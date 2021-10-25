@@ -30,8 +30,8 @@ import at.fhv.se.banking.domain.model.account.Iban;
 import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
+import at.fhv.se.banking.domain.repositories.EventRepository;
 import at.fhv.se.banking.domain.services.api.TransferService;
-import at.fhv.se.banking.infrastructure.db.events.EventRepository;
 
 @SpringBootTest
 public class AccountServiceTests {
@@ -192,7 +192,7 @@ public class AccountServiceTests {
     }
 
     @Test
-    public void given_accountinrepo_when_transfer_theninteractions() throws AccountNotFoundException, CustomerNotFoundException, AccountException, InvalidOperationException {
+    public void given_accountinrepo_when_transfer_theninteractions() throws Exception {
         // given
         double transferAmount = 500;
         String reference = "Rent";

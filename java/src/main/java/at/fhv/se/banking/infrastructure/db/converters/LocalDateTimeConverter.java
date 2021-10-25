@@ -1,4 +1,4 @@
-package at.fhv.se.banking.infrastructure.db;
+package at.fhv.se.banking.infrastructure.db.converters;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

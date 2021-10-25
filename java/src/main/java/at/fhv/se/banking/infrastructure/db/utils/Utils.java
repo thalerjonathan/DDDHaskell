@@ -1,4 +1,4 @@
-package at.fhv.se.banking.infrastructure.db;
+package at.fhv.se.banking.infrastructure.db.utils;
 
 import java.util.List;
 import java.util.Optional;
