@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import at.fhv.se.banking.application.api.CustomerService;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
@@ -19,7 +20,7 @@ import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
 
 @Component
-<span class="fc" id="L22">public class CustomerServiceImpl implements CustomerService {</span>
+<span class="fc" id="L23">public class CustomerServiceImpl implements CustomerService {</span>
 
     @Autowired
     private CustomerRepository customerRepo;
@@ -27,41 +28,43 @@ import at.fhv.se.banking.domain.repositories.CustomerRepository;
     @Autowired
     private AccountRepository accountRepo;
 
+    @Transactional(readOnly = true)
     @Override
-    public List&lt;CustomerDTO&gt; listAll() {
-<span class="fc" id="L32">        List&lt;Customer&gt; customers = this.customerRepo.all();</span>
-<span class="fc" id="L33">        return customers.stream().map(c -&gt; CustomerDTO.builder()</span>
-<span class="fc" id="L34">            .withId(c.customerId())</span>
-<span class="fc" id="L35">            .withName(c.name())</span>
-<span class="fc" id="L36">            .build()).collect(Collectors.toList());</span>
+    public List&lt;CustomerDetailsDTO&gt; listAll() {
+<span class="fc" id="L34">        List&lt;Customer&gt; customers = this.customerRepo.all();</span>
+<span class="fc" id="L35">        return customers.stream().map(c -&gt; CustomerDetailsDTO.builder()</span>
+<span class="fc" id="L36">            .withId(c.customerId())</span>
+<span class="fc" id="L37">            .withName(c.name())</span>
+<span class="fc" id="L38">            .build()).collect(Collectors.toList());</span>
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public CustomerDetailsDTO detailsFor(String id) throws CustomerNotFoundException {
-<span class="fc" id="L41">        CustomerId customerId = new CustomerId(id);</span>
-<span class="fc" id="L42">        Optional&lt;Customer&gt; customerOpt = this.customerRepo.byId(customerId);</span>
-<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (customerOpt.isEmpty()) {</span>
-<span class="fc" id="L44">            throw new CustomerNotFoundException();</span>
+    public CustomerDTO detailsFor(String id) throws CustomerNotFoundException {
+<span class="fc" id="L44">        CustomerId customerId = new CustomerId(id);</span>
+<span class="fc" id="L45">        Optional&lt;Customer&gt; customerOpt = this.customerRepo.byId(customerId);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (customerOpt.isEmpty()) {</span>
+<span class="fc" id="L47">            throw new CustomerNotFoundException();</span>
         }
 
-<span class="fc" id="L47">        Customer customer = customerOpt.get();</span>
-<span class="fc" id="L48">        List&lt;Account&gt; accounts = accountRepo.forCustomer(customerId);</span>
+<span class="fc" id="L50">        Customer customer = customerOpt.get();</span>
+<span class="fc" id="L51">        List&lt;Account&gt; accounts = accountRepo.forCustomer(customerId);</span>
 
-<span class="fc" id="L50">        CustomerDetailsDTO.Builder builder = CustomerDetailsDTO.builder();</span>
-<span class="fc" id="L51">        builder.withCustomer(CustomerDTO.builder()</span>
-<span class="fc" id="L52">            .withId(customerId)</span>
-<span class="fc" id="L53">            .withName(customer.name())</span>
-<span class="fc" id="L54">            .build());</span>
+<span class="fc" id="L53">        CustomerDTO.Builder builder = CustomerDTO.builder();</span>
+<span class="fc" id="L54">        builder.withCustomer(CustomerDetailsDTO.builder()</span>
+<span class="fc" id="L55">            .withId(customerId)</span>
+<span class="fc" id="L56">            .withName(customer.name())</span>
+<span class="fc" id="L57">            .build());</span>
 
-<span class="fc bfc" id="L56" title="All 2 branches covered.">        for (Account a : accounts) {</span>
-<span class="fc" id="L57">            builder.addAccount(AccountDetailsDTO.builder()</span>
-<span class="fc" id="L58">                .withBalance(a.balance())</span>
-<span class="fc" id="L59">                .withIban(a.iban())</span>
-<span class="fc" id="L60">                .withType(a.type())</span>
-<span class="fc" id="L61">                .build());</span>
-<span class="fc" id="L62">        }</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (Account a : accounts) {</span>
+<span class="fc" id="L60">            builder.addAccount(AccountDetailsDTO.builder()</span>
+<span class="fc" id="L61">                .withBalance(a.balance())</span>
+<span class="fc" id="L62">                .withIban(a.iban())</span>
+<span class="fc" id="L63">                .withType(a.type())</span>
+<span class="fc" id="L64">                .build());</span>
+<span class="fc" id="L65">        }</span>
 
-<span class="fc" id="L64">        return builder.build();</span>
+<span class="fc" id="L67">        return builder.build();</span>
     }
     
 }

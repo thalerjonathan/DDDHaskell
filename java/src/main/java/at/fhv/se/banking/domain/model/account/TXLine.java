@@ -1,8 +1,6 @@
 package at.fhv.se.banking.domain.model.account;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 
 public final class TXLine {
     // required by Hibernate
@@ -15,17 +13,15 @@ public final class TXLine {
     private Iban iban;
     private String name;
     private String reference;
-    private Date time; // using Date because Hibernate mapping f*** up when using LocalDateTime
+    private LocalDateTime time; // using Date because Hibernate mapping f*** up when using LocalDateTime
 
-    public TXLine(Account account, Iban iban, double amount, String name, String reference, LocalDateTime timeToConvert) {
+    public TXLine(Account account, Iban iban, double amount, String name, String reference, LocalDateTime time) {
         this.account = account.iban();
         this.amount = amount;
         this.iban = iban;
         this.name = name;
         this.reference = reference;
-        this.time = java.util.Date
-            .from(timeToConvert.atZone(ZoneId.systemDefault())
-            .toInstant());
+        this.time = time;
     }
 
     public double amount() {
@@ -45,7 +41,7 @@ public final class TXLine {
     }
 
     public LocalDateTime time() {
-        return LocalDateTime.ofInstant(time.toInstant(), ZoneId.systemDefault());
+        return this.time;
     }
 
     // required by Hibernate

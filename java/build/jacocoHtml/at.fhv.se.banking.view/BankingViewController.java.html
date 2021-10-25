@@ -17,8 +17,8 @@ import at.fhv.se.banking.application.api.exceptions.AccountNotFoundException;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.api.exceptions.InvalidOperationException;
 import at.fhv.se.banking.application.dto.AccountDTO;
-import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
+import at.fhv.se.banking.application.dto.CustomerDTO;
 import at.fhv.se.banking.view.forms.AccountForm;
 
 @Controller
@@ -46,7 +46,7 @@ import at.fhv.se.banking.view.forms.AccountForm;
 
     @GetMapping(ALL_CUSTOMERS_URL)
     public String allCustomers(Model model) {
-<span class="fc" id="L49">        final List&lt;CustomerDTO&gt; customers = this.customerService.listAll();</span>
+<span class="fc" id="L49">        final List&lt;CustomerDetailsDTO&gt; customers = this.customerService.listAll();</span>
 <span class="fc" id="L50">        model.addAttribute(&quot;customers&quot;, customers);</span>
 
 <span class="fc" id="L52">        return ALL_CUSTOMERS_VIEW;</span>
@@ -57,7 +57,7 @@ import at.fhv.se.banking.view.forms.AccountForm;
             @RequestParam(&quot;id&quot;) String customerId, 
             Model model) {
         try {
-<span class="fc" id="L60">            final CustomerDetailsDTO customerDetails = this.customerService.detailsFor(customerId);</span>
+<span class="fc" id="L60">            final CustomerDTO customerDetails = this.customerService.detailsFor(customerId);</span>
 <span class="fc" id="L61">            model.addAttribute(&quot;customer&quot;, customerDetails);</span>
 <span class="fc" id="L62">            return new ModelAndView(CUSTOMER_VIEW);</span>
 <span class="fc" id="L63">        } catch (CustomerNotFoundException e) {</span>

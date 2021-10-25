@@ -15,7 +15,7 @@ public class SavingsAccount extends Account {
 
     @Override
     public String type() {
-<span class="nc" id="L18">        return ACCOUNT_TYPE;</span>
+<span class="fc" id="L18">        return ACCOUNT_TYPE;</span>
     }
 
     @Override
@@ -30,17 +30,22 @@ public class SavingsAccount extends Account {
 
     @Override
     public void receiveFrom(Iban from, double amount, String name, String reference, LocalDateTime time) {
-<span class="fc" id="L33">        this.txLines.add(new TXLine(from, amount, name, reference, time));</span>
+<span class="fc" id="L33">        this.txLines.add(new TXLine(this, from, amount, name, reference, time));</span>
 <span class="fc" id="L34">    }</span>
 
     @Override
     public void transferTo(Iban to, double amount, String name, String reference, LocalDateTime time) throws AccountException {
 <span class="fc" id="L38">        double balance = this.balance();</span>
-<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (balance - amount &lt; 0) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (balance - amount &lt; 0) {</span>
 <span class="fc" id="L40">            throw new AccountException(&quot;Cannot overdraw Savings account!&quot;);</span>
         }
 
-<span class="nc" id="L43">        this.txLines.add(new TXLine(to, -amount, name, reference, time));</span>
-<span class="nc" id="L44">    }</span>
+<span class="fc" id="L43">        this.txLines.add(new TXLine(this, to, -amount, name, reference, time));</span>
+<span class="fc" id="L44">    }</span>
+
+    // required by Hibernate
+    @SuppressWarnings(&quot;unused&quot;)
+    private SavingsAccount() {
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InMemoryCustomerRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">banking</a> &gt; <a href="index.source.html" class="el_package">at.fhv.se.banking.domain.repositories.impl</a> &gt; <span class="el_source">InMemoryCustomerRepository.java</span></div><h1>InMemoryCustomerRepository.java</h1><pre class="source lang-java linenums">package at.fhv.se.banking.domain.repositories.impl;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import at.fhv.se.banking.domain.model.Customer;
+import at.fhv.se.banking.domain.model.CustomerId;
+import at.fhv.se.banking.domain.repositories.CustomerRepository;
+
+public class InMemoryCustomerRepository implements CustomerRepository {
+
+    private List&lt;Customer&gt; customers;
+
+<span class="nc" id="L17">    InMemoryCustomerRepository() {</span>
+<span class="nc" id="L18">        this.customers = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L19">    }</span>
+
+    @Override
+    public Optional&lt;Customer&gt; byId(CustomerId customerId) {
+<span class="nc" id="L23">        return this.customers.stream().filter(c -&gt; c.customerId().equals(customerId)).findFirst();</span>
+    }
+
+    @Override
+    public List&lt;Customer&gt; all() {
+<span class="nc" id="L28">        return Collections.unmodifiableList(this.customers);</span>
+    }
+
+    @Override
+    public void add(Customer c) {
+<span class="nc" id="L33">        this.customers.add(c);</span>
+<span class="nc" id="L34">    }</span>
+
+    @Override
+    public CustomerId nextCustomerId() {
+<span class="nc" id="L38">        return new CustomerId(UUID.randomUUID().toString().toLowerCase());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

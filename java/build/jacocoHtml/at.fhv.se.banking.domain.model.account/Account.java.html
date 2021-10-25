@@ -3,41 +3,49 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 
 public abstract class Account {
+    // required by Hibernate
+    @SuppressWarnings(&quot;unused&quot;)
+    private Long id;
+    @SuppressWarnings(&quot;unused&quot;)
+    private int version;
+
     private CustomerId owner;
     private Iban iban;
-    protected List&lt;TXLine&gt; txLines;
+    protected Set&lt;TXLine&gt; txLines;
     
-<span class="fc" id="L16">    public Account(CustomerId owner, Iban iban) {</span>
-<span class="fc" id="L17">        this.owner = owner;</span>
-<span class="fc" id="L18">        this.iban = iban;</span>
-<span class="fc" id="L19">        this.txLines = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L24">    public Account(CustomerId owner, Iban iban) {</span>
+<span class="fc" id="L25">        this.owner = owner;</span>
+<span class="fc" id="L26">        this.iban = iban;</span>
+<span class="fc" id="L27">        this.txLines = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L28">    }</span>
 
     public CustomerId owner() {
-<span class="fc" id="L23">        return this.owner;</span>
+<span class="fc" id="L31">        return this.owner;</span>
     }
 
     public Iban iban() {
-<span class="fc" id="L27">        return iban;</span>
+<span class="fc" id="L35">        return iban;</span>
     }
 
     public abstract String type();
 
     public List&lt;TXLine&gt; transactions() {
-<span class="fc" id="L33">        return Collections.unmodifiableList(this.txLines);</span>
+<span class="fc" id="L41">        return Collections.unmodifiableList(new ArrayList&lt;TXLine&gt;(this.txLines));</span>
     }
 
     public double balance() {
-<span class="fc" id="L37">        return this.txLines</span>
-<span class="fc" id="L38">            .stream()</span>
-<span class="fc" id="L39">            .mapToDouble(tx -&gt; tx.amount())</span>
-<span class="fc" id="L40">            .sum();</span>
+<span class="fc" id="L45">        return this.txLines</span>
+<span class="fc" id="L46">            .stream()</span>
+<span class="fc" id="L47">            .mapToDouble(tx -&gt; tx.amount())</span>
+<span class="fc" id="L48">            .sum();</span>
     }
 
     public abstract void deposit(double amount, LocalDateTime time) throws AccountException;
@@ -45,29 +53,33 @@ public abstract class Account {
     public abstract void receiveFrom(Iban from, double amount, String name, String reference, LocalDateTime time);
     public abstract void transferTo(Iban to, double amount, String name, String reference, LocalDateTime time) throws AccountException;
 
+    // required by Hibernate
+<span class="nc" id="L57">    protected Account() {</span>
+<span class="nc" id="L58">    }</span>
+
     @Override
     public int hashCode() {
-<span class="nc" id="L50">        final int prime = 31;</span>
-<span class="nc" id="L51">        int result = 1;</span>
-<span class="nc bnc" id="L52" title="All 2 branches missed.">        result = prime * result + ((iban == null) ? 0 : iban.hashCode());</span>
-<span class="nc" id="L53">        return result;</span>
+<span class="nc" id="L62">        final int prime = 31;</span>
+<span class="nc" id="L63">        int result = 1;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        result = prime * result + ((iban == null) ? 0 : iban.hashCode());</span>
+<span class="nc" id="L65">        return result;</span>
     }
 
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (this == obj)</span>
-<span class="nc" id="L59">            return true;</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (obj == null)</span>
-<span class="nc" id="L61">            return false;</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (getClass() != obj.getClass())</span>
-<span class="nc" id="L63">            return false;</span>
-<span class="nc" id="L64">        Account other = (Account) obj;</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (iban == null) {</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (other.iban != null)</span>
-<span class="nc" id="L67">                return false;</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        } else if (!iban.equals(other.iban))</span>
-<span class="nc" id="L69">            return false;</span>
-<span class="nc" id="L70">        return true;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (this == obj)</span>
+<span class="nc" id="L71">            return true;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (obj == null)</span>
+<span class="nc" id="L73">            return false;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (getClass() != obj.getClass())</span>
+<span class="nc" id="L75">            return false;</span>
+<span class="nc" id="L76">        Account other = (Account) obj;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (iban == null) {</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">            if (other.iban != null)</span>
+<span class="nc" id="L79">                return false;</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        } else if (!iban.equals(other.iban))</span>
+<span class="nc" id="L81">            return false;</span>
+<span class="nc" id="L82">        return true;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
