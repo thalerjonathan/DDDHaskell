@@ -16,12 +16,11 @@ import org.springframework.stereotype.Component;
 
 import at.fhv.se.banking.domain.events.DomainEvent;
 import at.fhv.se.banking.domain.repositories.EventRepository;
-import at.fhv.se.banking.infrastructure.db.events.PersistedEvent;
-import at.fhv.se.banking.infrastructure.db.events.PersistedEventRepository;
+import at.fhv.se.banking.infrastructure.db.entities.PersistedEvent;
 import at.fhv.se.banking.infrastructure.db.utils.Utils;
 
 @Component
-public class HibernatePersistedEventRepository implements PersistedEventRepository, EventRepository {
+public class HibernatePersistedEventRepository implements EventRepository {
 
     @PersistenceContext
 	private EntityManager em;

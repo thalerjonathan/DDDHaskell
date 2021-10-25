@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransferFailed.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">banking</a> &gt; <a href="index.source.html" class="el_package">at.fhv.se.banking.domain.events</a> &gt; <span class="el_source">TransferFailed.java</span></div><h1>TransferFailed.java</h1><pre class="source lang-java linenums">package at.fhv.se.banking.domain.events;
+
+import at.fhv.se.banking.domain.model.CustomerId;
+import at.fhv.se.banking.domain.model.account.Iban;
+
+public class TransferFailed implements DomainEvent {
+    private String error;
+    private double amount;
+    private String reference;
+    private CustomerId sendingCustomer;
+    private CustomerId receivingCustomer;
+    private Iban sendingAccount;
+    private Iban receivingAccount;
+
+<span class="fc" id="L15">    public TransferFailed(String error, TransferSent sent) {</span>
+<span class="fc" id="L16">        this.error = error;</span>
+<span class="fc" id="L17">        this.amount = sent.amount();</span>
+<span class="fc" id="L18">        this.reference = sent.reference();</span>
+<span class="fc" id="L19">        this.sendingCustomer = sent.sendingCustomer();</span>
+<span class="fc" id="L20">        this.receivingCustomer = sent.receivingCustomer();</span>
+<span class="fc" id="L21">        this.sendingAccount = sent.sendingAccount();</span>
+<span class="fc" id="L22">        this.receivingAccount = sent.receivingAccount();   </span>
+<span class="fc" id="L23">    }</span>
+
+    public TransferFailed(String error, double amount, String reference, 
+            CustomerId sendingCustomer, CustomerId receivingCustomer,
+<span class="nc" id="L27">            Iban sendingAccount, Iban receivingAccount) {</span>
+<span class="nc" id="L28">        this.error = error;</span>
+<span class="nc" id="L29">        this.amount = amount;</span>
+<span class="nc" id="L30">        this.reference = reference;</span>
+<span class="nc" id="L31">        this.sendingCustomer = sendingCustomer;</span>
+<span class="nc" id="L32">        this.receivingCustomer = receivingCustomer;</span>
+<span class="nc" id="L33">        this.sendingAccount = sendingAccount;</span>
+<span class="nc" id="L34">        this.receivingAccount = receivingAccount;   </span>
+<span class="nc" id="L35">    }</span>
+
+    public String error() {
+<span class="nc" id="L38">        return this.error;</span>
+    }
+
+    public double amount() {
+<span class="nc" id="L42">        return amount;</span>
+    }
+
+    public String reference() {
+<span class="nc" id="L46">        return reference;</span>
+    }
+
+    public CustomerId sendingCustomer() {
+<span class="nc" id="L50">        return sendingCustomer;</span>
+    }
+
+    public CustomerId receivingCustomer() {
+<span class="nc" id="L54">        return receivingCustomer;</span>
+    }
+
+    public Iban sendingAccount() {
+<span class="nc" id="L58">        return sendingAccount;</span>
+    }
+
+    public Iban receivingAccount() {
+<span class="nc" id="L62">        return receivingAccount;</span>
+    }
+
+    // NOTE: need for JSON deserialisation
+    @SuppressWarnings(&quot;unused&quot;)
+    private TransferFailed() {
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L72">        final int prime = 31;</span>
+<span class="nc" id="L73">        int result = 1;</span>
+        long temp;
+<span class="nc" id="L75">        temp = Double.doubleToLongBits(amount);</span>
+<span class="nc" id="L76">        result = prime * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        result = prime * result + ((error == null) ? 0 : error.hashCode());</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        result = prime * result + ((receivingAccount == null) ? 0 : receivingAccount.hashCode());</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        result = prime * result + ((receivingCustomer == null) ? 0 : receivingCustomer.hashCode());</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        result = prime * result + ((reference == null) ? 0 : reference.hashCode());</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        result = prime * result + ((sendingAccount == null) ? 0 : sendingAccount.hashCode());</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        result = prime * result + ((sendingCustomer == null) ? 0 : sendingCustomer.hashCode());</span>
+<span class="nc" id="L83">        return result;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        if (this == obj)</span>
+<span class="nc" id="L89">            return true;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (obj == null)</span>
+<span class="nc" id="L91">            return false;</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (getClass() != obj.getClass())</span>
+<span class="nc" id="L93">            return false;</span>
+<span class="fc" id="L94">        TransferFailed other = (TransferFailed) obj;</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))</span>
+<span class="nc" id="L96">            return false;</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">        if (error == null) {</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            if (other.error != null)</span>
+<span class="nc" id="L99">                return false;</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        } else if (!error.equals(other.error))</span>
+<span class="nc" id="L101">            return false;</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (receivingAccount == null) {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">            if (other.receivingAccount != null)</span>
+<span class="nc" id="L104">                return false;</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        } else if (!receivingAccount.equals(other.receivingAccount))</span>
+<span class="nc" id="L106">            return false;</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (receivingCustomer == null) {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">            if (other.receivingCustomer != null)</span>
+<span class="nc" id="L109">                return false;</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        } else if (!receivingCustomer.equals(other.receivingCustomer))</span>
+<span class="nc" id="L111">            return false;</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">        if (reference == null) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">            if (other.reference != null)</span>
+<span class="nc" id="L114">                return false;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        } else if (!reference.equals(other.reference))</span>
+<span class="nc" id="L116">            return false;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (sendingAccount == null) {</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">            if (other.sendingAccount != null)</span>
+<span class="nc" id="L119">                return false;</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        } else if (!sendingAccount.equals(other.sendingAccount))</span>
+<span class="nc" id="L121">            return false;</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        if (sendingCustomer == null) {</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            if (other.sendingCustomer != null)</span>
+<span class="nc" id="L124">                return false;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        } else if (!sendingCustomer.equals(other.sendingCustomer))</span>
+<span class="nc" id="L126">            return false;</span>
+<span class="fc" id="L127">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

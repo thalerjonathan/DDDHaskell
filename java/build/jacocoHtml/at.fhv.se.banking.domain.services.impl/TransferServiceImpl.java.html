@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransferServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">banking</a> &gt; <a href="index.source.html" class="el_package">at.fhv.se.banking.domain.services.impl</a> &gt; <span class="el_source">TransferServiceImpl.java</span></div><h1>TransferServiceImpl.java</h1><pre class="source lang-java linenums">package at.fhv.se.banking.domain.services.impl;
+
+import java.time.LocalDateTime;
+
+import org.springframework.stereotype.Component;
+
+import at.fhv.se.banking.domain.model.Customer;
+import at.fhv.se.banking.domain.model.account.Account;
+import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
+import at.fhv.se.banking.domain.services.api.TransferService;
+
+@Component
+<span class="fc" id="L13">public class TransferServiceImpl implements TransferService {</span>
+
+    private final static double TRANSFER_LIMIT = 5000;
+
+    @Override
+    public void transfer(double amount, String reference, LocalDateTime time, Customer sendingCustomer,
+            Account sendingAccount, Customer receivingCustomer, Account receivingAccount) throws AccountException {
+
+<span class="fc" id="L21">        checkTransferRules(amount, sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);</span>
+
+<span class="fc" id="L23">        sendingAccount.transferTo(receivingAccount.iban(), amount, receivingCustomer.name(), reference, time);</span>
+<span class="fc" id="L24">        receivingAccount.receiveFrom(sendingAccount.iban(), amount, sendingCustomer.name(), reference, time);</span>
+<span class="fc" id="L25">    }</span>
+
+    @Override
+    public void transferSend(double amount, String reference, LocalDateTime time, Customer sendingCustomer,
+            Account sendingAccount, Customer receivingCustomer, Account receivingAccount) throws AccountException {
+        
+<span class="fc" id="L31">        checkTransferRules(amount, sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);</span>
+
+<span class="fc" id="L33">        sendingAccount.transferTo(receivingAccount.iban(), amount, receivingCustomer.name(), reference, time);</span>
+<span class="fc" id="L34">    }</span>
+
+    @Override
+    public void transferReceive(double amount, String reference, LocalDateTime time, Customer sendingCustomer,
+            Account sendingAccount, Customer receivingCustomer, Account receivingAccount) throws AccountException {
+
+<span class="fc" id="L40">        checkTransferRules(amount, sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);</span>
+
+<span class="fc" id="L42">        receivingAccount.receiveFrom(sendingAccount.iban(), amount, sendingCustomer.name(), reference, time);</span>
+<span class="fc" id="L43">    }</span>
+
+    private static void checkTransferRules(
+            double amount, 
+            Customer sendingCustomer,
+            Account sendingAccount, 
+            Customer receivingCustomer, 
+            Account receivingAccount) throws AccountException {
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (notTransferSameCustomer(sendingCustomer, receivingCustomer)) {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if (isSavings(sendingAccount)) {</span>
+<span class="fc" id="L53">                throw new AccountException(&quot;Cannot transfer from Savings account!&quot;);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            } else if (isSavings(receivingAccount)) {</span>
+<span class="fc" id="L55">                throw new AccountException(&quot;Cannot transfer to Savings account!&quot;);</span>
+            }
+        
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            if (amount &gt; TRANSFER_LIMIT) {</span>
+<span class="fc" id="L59">                throw new AccountException(&quot;Cannot transfer more than 5000€!&quot;); </span>
+            }
+        }
+<span class="fc" id="L62">    }</span>
+    
+    private static boolean notTransferSameCustomer(Customer sendingCustomer, Customer receivingCustomer) {
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        return false == sendingCustomer.equals(receivingCustomer);</span>
+    }
+
+    private static boolean isSavings(Account a) {
+        // TODO: this is bad style, refactor (into visitor pattern/double dynamic dispatch?)
+<span class="fc" id="L70">        return a.type().equals(&quot;SAVINGS&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

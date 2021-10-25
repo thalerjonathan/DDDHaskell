@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AsyncProcessing.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">banking</a> &gt; <a href="index.source.html" class="el_package">at.fhv.se.banking.application.async</a> &gt; <span class="el_source">AsyncProcessing.java</span></div><h1>AsyncProcessing.java</h1><pre class="source lang-java linenums">package at.fhv.se.banking.application.async;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import at.fhv.se.banking.application.api.EventProcessingService;
+
+@Profile(&quot;!test&quot;)
+@Component
+@EnableScheduling
+@Async
+<span class="fc" id="L16">public class AsyncProcessing {</span>
+
+    // every 10 seconds
+    private static final double EVENT_PROCESSING_FREQUENCY = 0.1;
+
+    @Autowired
+    private EventProcessingService eventProc;
+
+    @Scheduled(fixedRate = (int) (1000.0 / EVENT_PROCESSING_FREQUENCY))
+    public void runEventProcessing() {
+<span class="fc" id="L26">        eventProc.processNextEvent();</span>
+<span class="fc" id="L27">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

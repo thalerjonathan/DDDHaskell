@@ -286,7 +286,7 @@ public class BankingViewTests {
 
         // then
         final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) accountPageAfter.getByXPath("//h3").get(0);
-        Mockito.verify(accountService, times(1)).deposit(iban.toString(), depositAmount);
+        Mockito.verify(accountService, times(1)).deposit(depositAmount, iban.toString());
         assertEquals("Balance: " + (balance + depositAmount), accountBalanceHeading.getTextContent());
     }
 
@@ -320,7 +320,7 @@ public class BankingViewTests {
         // type in the amount
         amountInput.setValueAttribute("" + depositAmount);
         // return different account info with new balance after deposit upon account page redirect
-        Mockito.doThrow(new AccountNotFoundException("")).when(accountService).deposit(iban.toString(), depositAmount);
+        Mockito.doThrow(new AccountNotFoundException("")).when(accountService).deposit(depositAmount, iban.toString());
         // submit form to post the deposit
         final HtmlPage errorPage = submitButton.click();
 
@@ -361,7 +361,7 @@ public class BankingViewTests {
         // type in the amount
         amountInput.setValueAttribute("" + withdrawAmount);
         // return different account info with new balance after deposit upon account page redirect
-        Mockito.doThrow(new AccountNotFoundException("")).when(accountService).withdraw(iban.toString(), withdrawAmount);
+        Mockito.doThrow(new AccountNotFoundException("")).when(accountService).withdraw(withdrawAmount, iban.toString());
         // submit form to post the deposit
         final HtmlPage errorPage = submitButton.click();
 
@@ -414,12 +414,12 @@ public class BankingViewTests {
 
         // then
         final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) accountPageAfter.getByXPath("//h3").get(0);
-        Mockito.verify(accountService, times(1)).withdraw(iban.toString(), withdrawAmount);
+        Mockito.verify(accountService, times(1)).withdraw(withdrawAmount, iban.toString());
         assertEquals("Balance: " + (balance - withdrawAmount), accountBalanceHeading.getTextContent());
     }
 
     @Test
-    public void given_account_when_transfer_thendisplaynewbalance() throws Exception {
+    public void given_account_when_transferTransactional_thendisplaynewbalance() throws Exception {
         // given
         double balance = 1234.0;
         String customerId = "1";
@@ -467,12 +467,12 @@ public class BankingViewTests {
 
         // then
         final HtmlHeading3 accountBalanceHeading = (HtmlHeading3) accountPageAfter.getByXPath("//h3").get(0);
-        Mockito.verify(accountService, times(1)).transfer(iban.toString(), receivingIban.toString(), transferAmount, reference);
+        Mockito.verify(accountService, times(1)).transferTransactional(transferAmount, reference, iban.toString(), receivingIban.toString());
         assertEquals("Balance: " + (balance - transferAmount), accountBalanceHeading.getTextContent());
     }
 
     @Test
-    public void given_account_when_transfer_and_noaccount_thenshowerror() throws Exception {
+    public void given_account_when_transferTransactional_and_noaccount_thenshowerror() throws Exception {
         // given
         String expectedErrorMessage = "Error: Account not found!";
 
@@ -508,7 +508,7 @@ public class BankingViewTests {
         amountInput.setValueAttribute("" + transferAmount);
         referenceInput.setValueAttribute(reference);
         // return different account info with new balance after deposit upon account page redirect
-        Mockito.doThrow(new AccountNotFoundException("")).when(accountService).transfer(iban.toString(), receivingIban.toString(), transferAmount, reference);
+        Mockito.doThrow(new AccountNotFoundException("")).when(accountService).transferTransactional(transferAmount, reference, iban.toString(), receivingIban.toString());
         // submit form to post the deposit
         final HtmlPage errorPage = submitButton.click();
 
@@ -519,7 +519,7 @@ public class BankingViewTests {
     }
 
     @Test
-    public void given_account_when_transfer_and_nocustomer_thenshowerror() throws Exception {
+    public void given_account_when_transferTransactional_and_nocustomer_thenshowerror() throws Exception {
         // given
         String expectedErrorMessage = "Error: Customer not found!";
         
@@ -555,7 +555,7 @@ public class BankingViewTests {
         amountInput.setValueAttribute("" + transferAmount);
         referenceInput.setValueAttribute(reference);
         // return different account info with new balance after deposit upon account page redirect
-        Mockito.doThrow(new CustomerNotFoundException("")).when(accountService).transfer(iban.toString(), receivingIban.toString(), transferAmount, reference);
+        Mockito.doThrow(new CustomerNotFoundException("")).when(accountService).transferTransactional(transferAmount, reference, iban.toString(), receivingIban.toString());
         // submit form to post the deposit
         final HtmlPage errorPage = submitButton.click();
 

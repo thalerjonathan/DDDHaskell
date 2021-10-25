@@ -19,7 +19,6 @@
 
         <property name="name" column="tx_name" type="java.lang.String" />
         <property name="reference" column="tx_reference" type="java.lang.String" />
-        <!-- <property name="time" column="tx_time" type="java.util.Date" /> -->
-        <property name="time" column="tx_time" type="converted::at.fhv.se.banking.infrastructure.db.LocalDateTimeConverter" />
+        <property name="time" column="tx_time" type="converted::at.fhv.se.banking.infrastructure.db.converters.LocalDateTimeConverter" />
     </class>
 </hibernate-mapping>

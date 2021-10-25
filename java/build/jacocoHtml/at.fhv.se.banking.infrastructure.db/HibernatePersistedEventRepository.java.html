@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HibernatePersistedEventRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">banking</a> &gt; <a href="index.source.html" class="el_package">at.fhv.se.banking.infrastructure.db</a> &gt; <span class="el_source">HibernatePersistedEventRepository.java</span></div><h1>HibernatePersistedEventRepository.java</h1><pre class="source lang-java linenums">package at.fhv.se.banking.infrastructure.db;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.stereotype.Component;
+
+import at.fhv.se.banking.domain.events.DomainEvent;
+import at.fhv.se.banking.domain.repositories.EventRepository;
+import at.fhv.se.banking.infrastructure.db.entities.PersistedEvent;
+import at.fhv.se.banking.infrastructure.db.utils.Utils;
+
+@Component
+<span class="fc" id="L23">public class HibernatePersistedEventRepository implements EventRepository {</span>
+
+    @PersistenceContext
+	private EntityManager em;
+
+    @Override
+    public void persistDomainEvent(DomainEvent event) throws Exception {
+<span class="fc" id="L30">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L31">		objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);</span>
+<span class="fc" id="L32">		LocalDateTime created = LocalDateTime.now();</span>
+<span class="fc" id="L33">		String type = event.getClass().getSimpleName();</span>
+		
+		try {
+<span class="fc" id="L36">			String payload = objectMapper.writeValueAsString(event);</span>
+<span class="fc" id="L37">			PersistedEvent pe = new PersistedEvent(created, type, payload);</span>
+<span class="fc" id="L38">			this.em.persist(pe);</span>
+<span class="nc" id="L39">		} catch (JsonProcessingException e) {</span>
+<span class="nc" id="L40">            throw new Exception(e.getMessage());</span>
+<span class="fc" id="L41">		}</span>
+<span class="fc" id="L42">    }</span>
+
+    @Override
+    public Optional&lt;PersistedEvent&gt; nextEvent() {
+<span class="fc" id="L46">        TypedQuery&lt;PersistedEvent&gt; query = this.em.createQuery(&quot;FROM PersistedEvent WHERE processed = :processed AND failed = false ORDER BY created&quot;, PersistedEvent.class);</span>
+<span class="fc" id="L47">		query.setParameter(&quot;processed&quot;, false);</span>
+<span class="fc" id="L48">		query.setMaxResults(1);</span>
+
+<span class="fc" id="L50">		return Utils.getOptionalResult(query);</span>
+    }
+
+    @Override
+    public void remove(PersistedEvent pe) {
+<span class="nc" id="L55">        this.em.remove(pe);</span>
+<span class="nc" id="L56">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

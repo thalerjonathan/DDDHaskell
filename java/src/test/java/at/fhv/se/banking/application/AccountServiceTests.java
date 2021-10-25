@@ -21,6 +21,7 @@ import at.fhv.se.banking.application.dto.AccountDTO;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.TXLineDTO;
 import at.fhv.se.banking.domain.events.DomainEvent;
+import at.fhv.se.banking.domain.events.TransferFailed;
 import at.fhv.se.banking.domain.events.TransferSent;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
@@ -141,7 +142,7 @@ public class AccountServiceTests {
         Mockito.when(timeService.utcNow()).thenReturn(now);
 
         // when
-        this.accountSerivce.deposit(iban.toString(), depositAmount);
+        this.accountSerivce.deposit(depositAmount, iban.toString());
 
         // then
         Mockito.verify(account).deposit(depositAmount, now);
@@ -157,7 +158,7 @@ public class AccountServiceTests {
         Mockito.when(accountRepo.byIban(iban)).thenReturn(Optional.empty());
 
         // when ... then
-        assertThrows(AccountNotFoundException.class, () -> this.accountSerivce.deposit(iban.toString(), depositAmount));
+        assertThrows(AccountNotFoundException.class, () -> this.accountSerivce.deposit(depositAmount, iban.toString()));
     }
 
     @Test
@@ -172,7 +173,7 @@ public class AccountServiceTests {
         Mockito.when(timeService.utcNow()).thenReturn(now);
 
         // when
-        this.accountSerivce.withdraw(iban.toString(), withdrawAmount);
+        this.accountSerivce.withdraw(withdrawAmount, iban.toString());
 
         // then
         Mockito.verify(account).withdraw(withdrawAmount, now);
@@ -188,11 +189,47 @@ public class AccountServiceTests {
         Mockito.when(accountRepo.byIban(iban)).thenReturn(Optional.empty());
 
         // when ... then
-        assertThrows(AccountNotFoundException.class, () -> this.accountSerivce.withdraw(iban.toString(), withdrawAmount));
+        assertThrows(AccountNotFoundException.class, () -> this.accountSerivce.withdraw(withdrawAmount, iban.toString()));
     }
 
     @Test
-    public void given_accountinrepo_when_transfer_theninteractions() throws Exception {
+    public void given_accountinrepo_when_transferTransactional_theninteractions() throws Exception {
+        // given
+        double transferAmount = 500;
+        String reference = "Rent";
+
+        String sendingName = "Jonathan";
+        String receivingName = "Thomas";
+        Iban sendingIban = new Iban("AT12 3456 7890 1234");
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+
+        Customer sendingCustomer = new Customer(new CustomerId("1"), sendingName);
+        Customer receivingCustomer = new Customer(new CustomerId("2"), receivingName);
+
+        Account sendingAccount = Mockito.spy(
+            new GiroAccount(sendingCustomer.customerId(), sendingIban));
+        Account receivingAccount = Mockito.spy(
+            new GiroAccount(receivingCustomer.customerId(), receivingIban));
+
+        LocalDateTime now = LocalDateTime.now();
+
+        Mockito.when(timeService.utcNow()).thenReturn(now);
+
+        Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
+        Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
+
+        Mockito.when(customerRepo.byId(sendingCustomer.customerId())).thenReturn(Optional.of(sendingCustomer));
+        Mockito.when(customerRepo.byId(receivingCustomer.customerId())).thenReturn(Optional.of(receivingCustomer)); 
+
+        // when
+        this.accountSerivce.transferTransactional(transferAmount, reference, sendingIban.toString(), receivingIban.toString());
+
+        // then
+        Mockito.verify(transferSerivce).transfer(transferAmount, reference, now, sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);
+    }
+
+    @Test
+    public void given_accountinrepo_when_transferEventual_theninteractions() throws Exception {
         // given
         double transferAmount = 500;
         String reference = "Rent";
@@ -229,15 +266,15 @@ public class AccountServiceTests {
         Mockito.when(customerRepo.byId(receivingCustomer.customerId())).thenReturn(Optional.of(receivingCustomer)); 
 
         // when
-        this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference);
+        this.accountSerivce.transferEventual(transferAmount, reference, sendingIban.toString(), receivingIban.toString());
 
         // then
-        Mockito.verify(transferSerivce).transfer(transferAmount, reference, now, sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);
+        Mockito.verify(transferSerivce).transferSend(transferAmount, reference, now, sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);
         Mockito.verify(eventRepo).persistDomainEvent(transferSent);
     }
 
     @Test
-    public void given_sendingaccountnotinrepo_when_transfer_thenthrows() throws AccountNotFoundException {
+    public void given_sendingaccountnotinrepo_when_transferTransactional_thenthrows() throws AccountNotFoundException {
         // given
         double transferAmount = 1000;
         String reference = "Rent";
@@ -247,11 +284,11 @@ public class AccountServiceTests {
         Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.empty());
 
         // when ... then
-        assertThrows(AccountNotFoundException.class, () -> this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference));
+        assertThrows(AccountNotFoundException.class, () -> this.accountSerivce.transferTransactional(transferAmount, reference, sendingIban.toString(), receivingIban.toString()));
     }
 
     @Test
-    public void given_receivingaccountnotinrepo_when_transfer_thenthrows() throws AccountNotFoundException, AccountException {
+    public void given_receivingaccountnotinrepo_when_transferTransactional_thenthrows() throws AccountNotFoundException, AccountException {
         // given
         LocalDateTime now = LocalDateTime.now();
         double transferAmount = 1000;
@@ -266,11 +303,11 @@ public class AccountServiceTests {
         Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.empty());
 
         // when ... then
-        assertThrows(AccountNotFoundException.class, () -> this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference));
+        assertThrows(AccountNotFoundException.class, () -> this.accountSerivce.transferTransactional(transferAmount, reference, sendingIban.toString(), receivingIban.toString()));
     }
 
     @Test
-    public void given_sendingcustomernotinrepo_when_transfer_thenthrows() throws AccountNotFoundException {
+    public void given_sendingcustomernotinrepo_when_transferTransactional_thenthrows() throws AccountNotFoundException {
         // given
         double transferAmount = 1000;
         String reference = "Rent";
@@ -289,11 +326,11 @@ public class AccountServiceTests {
         Mockito.when(customerRepo.byId(sendingCustomerId)).thenReturn(Optional.empty());
 
         // when ... then
-        assertThrows(CustomerNotFoundException.class, () -> this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference));
+        assertThrows(CustomerNotFoundException.class, () -> this.accountSerivce.transferTransactional(transferAmount, reference, sendingIban.toString(), receivingIban.toString()));
     }
 
     @Test
-    public void given_receivingcustomernotinrepo_when_transfer_thenthrows() throws AccountNotFoundException {
+    public void given_receivingcustomernotinrepo_when_transferTransactional_thenthrows() throws AccountNotFoundException {
         // given
         double transferAmount = 1000;
         String reference = "Rent";
@@ -315,11 +352,11 @@ public class AccountServiceTests {
         Mockito.when(customerRepo.byId(receivingCustomerId)).thenReturn(Optional.empty());
 
         // when ... then
-        assertThrows(CustomerNotFoundException.class, () -> this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference));
+        assertThrows(CustomerNotFoundException.class, () -> this.accountSerivce.transferTransactional(transferAmount, reference, sendingIban.toString(), receivingIban.toString()));
     }
 
     @Test
-    public void given_accountinrepo_when_transfer_andinvalidoperation_then_throws() throws AccountNotFoundException, CustomerNotFoundException, AccountException, InvalidOperationException {
+    public void given_accountinrepo_when_transferTransactional_andinvalidoperation_then_throws() throws AccountNotFoundException, CustomerNotFoundException, AccountException, InvalidOperationException {
         // given
         double transferAmount = 500;
         String reference = "Rent";
@@ -350,6 +387,291 @@ public class AccountServiceTests {
         Mockito.doThrow(new AccountException("Test")).when(transferSerivce).transfer(transferAmount, reference, now, sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);
 
         // when ... then
-        assertThrows(InvalidOperationException.class, () -> this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference));
+        assertThrows(InvalidOperationException.class, () -> this.accountSerivce.transferTransactional(transferAmount, reference, sendingIban.toString(), receivingIban.toString()));
+    }
+
+    @Test
+    public void given_accountinrepo_when_transferReceive_theninteractions() throws Exception {
+        // given
+        double transferAmount = 500;
+        String reference = "Rent";
+
+        String sendingName = "Jonathan";
+        String receivingName = "Thomas";
+        Iban sendingIban = new Iban("AT12 3456 7890 1234");
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+
+        Customer sendingCustomer = new Customer(new CustomerId("1"), sendingName);
+        Customer receivingCustomer = new Customer(new CustomerId("2"), receivingName);
+
+        Account sendingAccount = Mockito.spy(
+            new GiroAccount(sendingCustomer.customerId(), sendingIban));
+        Account receivingAccount = Mockito.spy(
+            new GiroAccount(receivingCustomer.customerId(), receivingIban));
+
+        LocalDateTime now = LocalDateTime.now();
+
+        TransferSent transferSent = new TransferSent(
+            transferAmount,
+            reference,
+            sendingCustomer.customerId(), 
+            receivingCustomer.customerId(),
+            sendingAccount.iban(),
+            receivingAccount.iban());
+
+        Mockito.when(timeService.utcNow()).thenReturn(now);
+
+        Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
+        Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
+
+        Mockito.when(customerRepo.byId(sendingCustomer.customerId())).thenReturn(Optional.of(sendingCustomer));
+        Mockito.when(customerRepo.byId(receivingCustomer.customerId())).thenReturn(Optional.of(receivingCustomer)); 
+
+        // when
+        this.accountSerivce.transferReceive(transferSent);
+
+        // then
+        Mockito.verify(transferSerivce).transferReceive(
+            transferAmount, 
+            reference, 
+            now, 
+            sendingCustomer, 
+            sendingAccount, 
+            receivingCustomer, 
+            receivingAccount);
+    }
+
+    @Test
+    public void given_sendingAccountNotFound_when_transferEventual_theninteractions() throws Exception {
+        // given
+        double transferAmount = 500;
+        String reference = "Rent";
+
+        String sendingName = "Jonathan";
+        String receivingName = "Thomas";
+        Iban sendingIban = new Iban("AT12 3456 7890 1234");
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+
+        Customer sendingCustomer = new Customer(new CustomerId("1"), sendingName);
+        Customer receivingCustomer = new Customer(new CustomerId("2"), receivingName);
+
+        Account sendingAccount = Mockito.spy(
+            new GiroAccount(sendingCustomer.customerId(), sendingIban));
+        Account receivingAccount = Mockito.spy(
+            new GiroAccount(receivingCustomer.customerId(), receivingIban));
+
+        LocalDateTime now = LocalDateTime.now();
+
+        TransferSent transferSent = new TransferSent(
+            transferAmount,
+            reference,
+            sendingCustomer.customerId(), 
+            receivingCustomer.customerId(),
+            sendingAccount.iban(),
+            receivingAccount.iban());
+
+        DomainEvent transferFailed = new TransferFailed(
+            "Couldn't find account of sending IBAN " + sendingIban,
+            transferSent);
+
+        Mockito.when(timeService.utcNow()).thenReturn(now);
+
+        Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.empty());
+
+        // when
+        this.accountSerivce.transferReceive(transferSent);
+
+        // then
+        Mockito.verify(eventRepo).persistDomainEvent(transferFailed);
+    }
+
+    @Test
+    public void given_receivingAccountNotFound_when_transferEventual_theninteractions() throws Exception {
+        // given
+        double transferAmount = 500;
+        String reference = "Rent";
+
+        String sendingName = "Jonathan";
+        String receivingName = "Thomas";
+        Iban sendingIban = new Iban("AT12 3456 7890 1234");
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+
+        Customer sendingCustomer = new Customer(new CustomerId("1"), sendingName);
+        Customer receivingCustomer = new Customer(new CustomerId("2"), receivingName);
+
+        Account sendingAccount = Mockito.spy(
+            new GiroAccount(sendingCustomer.customerId(), sendingIban));
+        Account receivingAccount = Mockito.spy(
+            new GiroAccount(receivingCustomer.customerId(), receivingIban));
+
+        LocalDateTime now = LocalDateTime.now();
+
+        TransferSent transferSent = new TransferSent(
+            transferAmount,
+            reference,
+            sendingCustomer.customerId(), 
+            receivingCustomer.customerId(),
+            sendingAccount.iban(),
+            receivingAccount.iban());
+
+        DomainEvent transferFailed = new TransferFailed(
+            "Couldn't find account of receiving IBAN " + receivingIban,
+            transferSent);
+
+        Mockito.when(timeService.utcNow()).thenReturn(now);
+
+        Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
+        Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.empty());
+
+        // when
+        this.accountSerivce.transferReceive(transferSent);
+
+        // then
+        Mockito.verify(eventRepo).persistDomainEvent(transferFailed);
+    }
+
+    @Test
+    public void given_sendingCustomerNotFound_when_transferEventual_theninteractions() throws Exception {
+        // given
+        double transferAmount = 500;
+        String reference = "Rent";
+
+        String sendingName = "Jonathan";
+        String receivingName = "Thomas";
+        Iban sendingIban = new Iban("AT12 3456 7890 1234");
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+
+        Customer sendingCustomer = new Customer(new CustomerId("1"), sendingName);
+        Customer receivingCustomer = new Customer(new CustomerId("2"), receivingName);
+
+        Account sendingAccount = Mockito.spy(
+            new GiroAccount(sendingCustomer.customerId(), sendingIban));
+        Account receivingAccount = Mockito.spy(
+            new GiroAccount(receivingCustomer.customerId(), receivingIban));
+
+        LocalDateTime now = LocalDateTime.now();
+
+        TransferSent transferSent = new TransferSent(
+            transferAmount,
+            reference,
+            sendingCustomer.customerId(), 
+            receivingCustomer.customerId(),
+            sendingAccount.iban(),
+            receivingAccount.iban());
+
+        DomainEvent transferFailed = new TransferFailed(
+            "Couldn't find a customer for sending IBAN " + sendingIban,
+            transferSent);
+
+        Mockito.when(timeService.utcNow()).thenReturn(now);
+
+        Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
+        Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
+
+        Mockito.when(customerRepo.byId(sendingCustomer.customerId())).thenReturn(Optional.empty());
+
+        // when
+        this.accountSerivce.transferReceive(transferSent);
+
+        // then
+        Mockito.verify(eventRepo).persistDomainEvent(transferFailed);
+    }
+
+    @Test
+    public void given_receivingCustomerNotFound_when_transferEventual_theninteractions() throws Exception {
+        // given
+        double transferAmount = 500;
+        String reference = "Rent";
+
+        String sendingName = "Jonathan";
+        String receivingName = "Thomas";
+        Iban sendingIban = new Iban("AT12 3456 7890 1234");
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+
+        Customer sendingCustomer = new Customer(new CustomerId("1"), sendingName);
+        Customer receivingCustomer = new Customer(new CustomerId("2"), receivingName);
+
+        Account sendingAccount = Mockito.spy(
+            new GiroAccount(sendingCustomer.customerId(), sendingIban));
+        Account receivingAccount = Mockito.spy(
+            new GiroAccount(receivingCustomer.customerId(), receivingIban));
+
+        LocalDateTime now = LocalDateTime.now();
+
+        TransferSent transferSent = new TransferSent(
+            transferAmount,
+            reference,
+            sendingCustomer.customerId(), 
+            receivingCustomer.customerId(),
+            sendingAccount.iban(),
+            receivingAccount.iban());
+
+        DomainEvent transferFailed = new TransferFailed(
+            "Couldn't find a customer for receiving IBAN " + receivingIban,
+            transferSent);
+
+        Mockito.when(timeService.utcNow()).thenReturn(now);
+
+        Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
+        Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
+
+        Mockito.when(customerRepo.byId(sendingCustomer.customerId())).thenReturn(Optional.of(sendingCustomer));
+        Mockito.when(customerRepo.byId(receivingCustomer.customerId())).thenReturn(Optional.empty()); 
+        
+        // when
+        this.accountSerivce.transferReceive(transferSent);
+
+        // then
+        Mockito.verify(eventRepo).persistDomainEvent(transferFailed);
+    }
+
+    @Test
+    public void given_transferserviceexception_when_transferEventual_theninteractions() throws Exception {
+        // given
+        double transferAmount = 500;
+        String reference = "Rent";
+
+        String sendingName = "Jonathan";
+        String receivingName = "Thomas";
+        Iban sendingIban = new Iban("AT12 3456 7890 1234");
+        Iban receivingIban = new Iban("AT98 7654 3210 9876");
+
+        Customer sendingCustomer = new Customer(new CustomerId("1"), sendingName);
+        Customer receivingCustomer = new Customer(new CustomerId("2"), receivingName);
+
+        Account sendingAccount = Mockito.spy(
+            new GiroAccount(sendingCustomer.customerId(), sendingIban));
+        Account receivingAccount = Mockito.spy(
+            new GiroAccount(receivingCustomer.customerId(), receivingIban));
+
+        LocalDateTime now = LocalDateTime.now();
+
+        TransferSent transferSent = new TransferSent(
+            transferAmount,
+            reference,
+            sendingCustomer.customerId(), 
+            receivingCustomer.customerId(),
+            sendingAccount.iban(),
+            receivingAccount.iban());
+
+        DomainEvent transferFailed = new TransferFailed(
+            "Invalid Operation in receiving transfer: Test",
+            transferSent);
+
+        Mockito.when(timeService.utcNow()).thenReturn(now);
+
+        Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
+        Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
+
+        Mockito.when(customerRepo.byId(sendingCustomer.customerId())).thenReturn(Optional.of(sendingCustomer));
+        Mockito.when(customerRepo.byId(receivingCustomer.customerId())).thenReturn(Optional.of(receivingCustomer));
+
+        Mockito.doThrow(new AccountException("Test")).when(transferSerivce).transferReceive(transferAmount, reference, now, sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);
+
+        // when
+        this.accountSerivce.transferReceive(transferSent);
+
+        // then
+        Mockito.verify(eventRepo).persistDomainEvent(transferFailed);
     }
 }

@@ -5,17 +5,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import at.fhv.se.banking.domain.events.DomainEvent;
 import at.fhv.se.banking.domain.events.TransferSent;
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Iban;
-import at.fhv.se.banking.infrastructure.db.events.PersistedEvent;
+import at.fhv.se.banking.infrastructure.db.entities.PersistedEvent;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @Transactional
 public class HibernatePersistedEventRepositoryTests {
@@ -23,8 +28,8 @@ public class HibernatePersistedEventRepositoryTests {
     @Autowired
     private HibernatePersistedEventRepository eventRepo;
 
-    //@PersistenceContext
-    //private EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
     @Test
     void given_emptyeventtable_when_nextevent_then_returnempty() {
@@ -57,7 +62,7 @@ public class HibernatePersistedEventRepositoryTests {
 
         // when
         this.eventRepo.persistDomainEvent(transferSent);
-        // this.em.flush();
+        this.em.flush();
 
         // then
         PersistedEvent pe = this.eventRepo.nextEvent().get();

@@ -15,6 +15,7 @@ import at.fhv.se.banking.application.dto.AccountDTO;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.TXLineDTO;
 import at.fhv.se.banking.domain.events.DomainEvent;
+import at.fhv.se.banking.domain.events.TransferFailed;
 import at.fhv.se.banking.domain.events.TransferSent;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.account.Account;
@@ -77,7 +78,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Transactional
     @Override
-    public void deposit(String ibanStr, double amount) throws AccountNotFoundException, InvalidOperationException {
+    public void deposit(double amount, String ibanStr) throws AccountNotFoundException, InvalidOperationException {
         Iban iban = new Iban(ibanStr);
         Optional<Account> accountOpt = accountRepo.byIban(iban);
         if (accountOpt.isEmpty()) {
@@ -95,7 +96,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Transactional
     @Override
-    public void withdraw(String ibanStr, double amount) throws AccountNotFoundException, InvalidOperationException {
+    public void withdraw(double amount, String ibanStr) throws AccountNotFoundException, InvalidOperationException {
         Iban iban = new Iban(ibanStr);
         Optional<Account> accountOpt = accountRepo.byIban(iban);
         if (accountOpt.isEmpty()) {
@@ -113,7 +114,111 @@ public class AccountServiceImpl implements AccountService {
 
     @Transactional
     @Override
-    public void transfer(String sendingIbanStr, String receivingIbanStr, double amount, String reference) throws AccountNotFoundException, CustomerNotFoundException, InvalidOperationException {
+    public void transferTransactional(double amount, String reference, String sendingIbanStr, String receivingIbanStr) throws AccountNotFoundException, CustomerNotFoundException, InvalidOperationException {
+        this.transfer(amount, reference, sendingIbanStr, receivingIbanStr, true);
+    }
+
+    @Transactional
+    @Override
+    public void transferEventual(double amount, String reference, String sendingIbanStr, String receivingIbanStr) throws AccountNotFoundException, CustomerNotFoundException, InvalidOperationException {
+        this.transfer(amount, reference, sendingIbanStr, receivingIbanStr, false);
+    }
+
+    @Transactional
+    @Override
+    public void transferReceive(TransferSent transferSent) {
+        Iban sendingIban = transferSent.sendingAccount();
+        Iban receivingIban = transferSent.receivingAccount();
+
+        Optional<Account> sendingAccountOpt = accountRepo.byIban(sendingIban);
+        if (sendingAccountOpt.isEmpty()) {
+            transferFailedEvent("Couldn't find account of sending IBAN " + sendingIban, transferSent);
+            return;
+        }
+
+        Optional<Account> receivingAccountOpt = accountRepo.byIban(receivingIban);
+        if (receivingAccountOpt.isEmpty()) {
+            transferFailedEvent("Couldn't find account of receiving IBAN " + receivingIban, transferSent);
+            return;
+        }
+
+        Account sendingAccount = sendingAccountOpt.get();
+        Account receivingAccount = receivingAccountOpt.get();
+
+        Optional<Customer> sendingCustomerOpt = customerRepo.byId(sendingAccount.owner());
+        if (sendingCustomerOpt.isEmpty()) {
+            transferFailedEvent("Couldn't find a customer for sending IBAN " + sendingIban, transferSent);
+            return;
+        }
+
+        Optional<Customer> receivingCustomerOpt = customerRepo.byId(receivingAccount.owner());
+        if (receivingCustomerOpt.isEmpty()) {
+            transferFailedEvent("Couldn't find a customer for receiving IBAN " + receivingIban, transferSent);
+            return;
+        }
+
+        Customer sendingCustomer = sendingCustomerOpt.get();
+        Customer receivingCustomer = receivingCustomerOpt.get();
+
+        try {
+            this.transferService.transferReceive(
+                transferSent.amount(), 
+                transferSent.reference(), 
+                timeService.utcNow(), 
+                sendingCustomer, 
+                sendingAccount, 
+                receivingCustomer, 
+                receivingAccount);
+        } catch (Exception e) {
+            transferFailedEvent("Invalid Operation in receiving transfer: " + e.getMessage(), transferSent);
+        }    
+    }
+
+    @Transactional
+    @Override
+    public void transferFailed(TransferFailed transferFailed) {
+        Iban sendingIban = transferFailed.sendingAccount();
+
+        Optional<Account> sendingAccountOpt = accountRepo.byIban(sendingIban);
+        if (sendingAccountOpt.isEmpty()) {
+            // NOTE: don't send DomainEvent again, something is deeply broken
+            // NOTE: in real application need proper handling
+            return;
+        }
+
+        Account sendingAccount = sendingAccountOpt.get();
+
+        Optional<Customer> sendingCustomerOpt = customerRepo.byId(sendingAccount.owner());
+        if (sendingCustomerOpt.isEmpty()) {
+            // NOTE: don't send DomainEvent again, something is deeply broken
+            // NOTE: in real application need proper handling
+            return;
+        }
+
+        Customer sendingCustomer = sendingCustomerOpt.get();
+        
+        // NOTE: would add some notification to Customer
+
+        // transfer back to sending account because was removed before
+        sendingAccount.receiveFrom(
+            sendingIban,
+            transferFailed.amount(), 
+            sendingCustomer.name(),
+            transferFailed.reference(), 
+            timeService.utcNow());
+    }
+
+    private void transferFailedEvent(String error, TransferSent sent) {
+        DomainEvent transferFailed = new TransferFailed(error, sent);
+
+        try {
+            this.eventRepo.persistDomainEvent(transferFailed);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void transfer(double amount, String reference, String sendingIbanStr, String receivingIbanStr, boolean transactional) throws AccountNotFoundException, CustomerNotFoundException, InvalidOperationException {
         Iban sendingIban = new Iban(sendingIbanStr);
         Iban receivingIban = new Iban(receivingIbanStr);
 
@@ -144,17 +249,36 @@ public class AccountServiceImpl implements AccountService {
         Customer receivingCustomer = receivingCustomerOpt.get();
 
         try {
-            this.transferService.transfer(amount, reference, timeService.utcNow(), sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);
-            
-            DomainEvent transferSent = new TransferSent(
-                amount,
-                reference,
-                sendingCustomer.customerId(), 
-                receivingCustomer.customerId(),
-                sendingAccount.iban(),
-                receivingAccount.iban());
-                
-            eventRepo.persistDomainEvent(transferSent);
+            if (transactional) {
+                this.transferService.transfer(
+                    amount, 
+                    reference, 
+                    timeService.utcNow(), 
+                    sendingCustomer, 
+                    sendingAccount, 
+                    receivingCustomer, 
+                    receivingAccount);
+
+            } else {
+                this.transferService.transferSend(
+                    amount, 
+                    reference, 
+                    timeService.utcNow(), 
+                    sendingCustomer, 
+                    sendingAccount, 
+                    receivingCustomer, 
+                    receivingAccount);
+
+                DomainEvent transferSent = new TransferSent(
+                    amount,
+                    reference,
+                    sendingCustomer.customerId(), 
+                    receivingCustomer.customerId(),
+                    sendingAccount.iban(),
+                    receivingAccount.iban());
+                    
+                eventRepo.persistDomainEvent(transferSent);
+            }
         } catch (Exception e) {
             throw new InvalidOperationException(e.getMessage());
         }

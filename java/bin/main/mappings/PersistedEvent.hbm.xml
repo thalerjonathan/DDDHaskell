@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-access="field" default-cascade="all">
-    <class name="at.fhv.se.banking.infrastructure.db.events.PersistedEvent" table="persistedevents" lazy="true">
+    <class name="at.fhv.se.banking.infrastructure.db.entities.PersistedEvent" table="persistedevents" lazy="true">
         <cache usage="read-write"/>
 
         <id name="id" type="long" column="id" unsaved-value="-1">
@@ -14,6 +14,9 @@
         <property name="processed" column="persistedevent_processed" type="boolean" />
         <property name="failed" column="persistedevent_failed" type="boolean" />
         <property name="failMessage" column="persistedevent_failMessage" type="java.lang.String" />
-        <property name="payload" column="persistedevent_payload" type="java.lang.String" />
+        <property name="payload" type="java.lang.String">
+            <column name="persistedevent_payload" length="4096" />
+        </property>
+
     </class>
 </hibernate-mapping>

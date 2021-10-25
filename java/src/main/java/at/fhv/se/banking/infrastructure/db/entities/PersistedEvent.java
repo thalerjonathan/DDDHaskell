@@ -1,4 +1,4 @@
-package at.fhv.se.banking.infrastructure.db.events;
+package at.fhv.se.banking.infrastructure.db.entities;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
