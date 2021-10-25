@@ -20,6 +20,8 @@ import at.fhv.se.banking.application.api.exceptions.InvalidOperationException;
 import at.fhv.se.banking.application.dto.AccountDTO;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.TXLineDTO;
+import at.fhv.se.banking.domain.events.DomainEvent;
+import at.fhv.se.banking.domain.events.TransferSent;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Account;
@@ -29,6 +31,7 @@ import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
 import at.fhv.se.banking.domain.services.api.TransferService;
+import at.fhv.se.banking.infrastructure.db.events.EventRepository;
 
 @SpringBootTest
 public class AccountServiceTests {
@@ -47,6 +50,9 @@ public class AccountServiceTests {
 
     @MockBean
     private TransferService transferSerivce;
+
+    @MockBean
+    private EventRepository eventRepo;
 
     @Test
     public void given_accountinrepo_when_byIban_thenreturn() throws AccountNotFoundException, AccountException {
@@ -186,7 +192,7 @@ public class AccountServiceTests {
     }
 
     @Test
-    public void given_accountinrepo_when_transfer_thenexchangedbalances() throws AccountNotFoundException, CustomerNotFoundException, AccountException, InvalidOperationException {
+    public void given_accountinrepo_when_transfer_theninteractions() throws AccountNotFoundException, CustomerNotFoundException, AccountException, InvalidOperationException {
         // given
         double transferAmount = 500;
         String reference = "Rent";
@@ -206,19 +212,28 @@ public class AccountServiceTests {
 
         LocalDateTime now = LocalDateTime.now();
 
+        DomainEvent transferSent = new TransferSent(
+            transferAmount,
+            reference,
+            sendingCustomer.customerId(), 
+            receivingCustomer.customerId(),
+            sendingAccount.iban(),
+            receivingAccount.iban());
+
         Mockito.when(timeService.utcNow()).thenReturn(now);
 
         Mockito.when(accountRepo.byIban(sendingIban)).thenReturn(Optional.of(sendingAccount));
         Mockito.when(accountRepo.byIban(receivingIban)).thenReturn(Optional.of(receivingAccount));
 
         Mockito.when(customerRepo.byId(sendingCustomer.customerId())).thenReturn(Optional.of(sendingCustomer));
-        Mockito.when(customerRepo.byId(receivingCustomer.customerId())).thenReturn(Optional.of(receivingCustomer));
+        Mockito.when(customerRepo.byId(receivingCustomer.customerId())).thenReturn(Optional.of(receivingCustomer)); 
 
         // when
         this.accountSerivce.transfer(sendingIban.toString(), receivingIban.toString(), transferAmount, reference);
 
         // then
         Mockito.verify(transferSerivce).transfer(transferAmount, reference, now, sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);
+        Mockito.verify(eventRepo).persistDomainEvent(transferSent);
     }
 
     @Test

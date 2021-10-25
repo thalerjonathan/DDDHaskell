@@ -14,6 +14,8 @@ import at.fhv.se.banking.application.api.exceptions.InvalidOperationException;
 import at.fhv.se.banking.application.dto.AccountDTO;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
 import at.fhv.se.banking.application.dto.TXLineDTO;
+import at.fhv.se.banking.domain.events.DomainEvent;
+import at.fhv.se.banking.domain.events.TransferSent;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.account.Account;
 import at.fhv.se.banking.domain.model.account.Iban;
@@ -22,6 +24,7 @@ import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
 import at.fhv.se.banking.domain.services.api.TransferService;
+import at.fhv.se.banking.infrastructure.db.events.EventRepository;
 
 @Component
 public class AccountServiceImpl implements AccountService {
@@ -37,6 +40,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private TransferService transferService;
+
+    @Autowired
+    private EventRepository eventRepo;
 
     @Transactional(readOnly = true)
     @Override
@@ -139,6 +145,15 @@ public class AccountServiceImpl implements AccountService {
 
         try {
             this.transferService.transfer(amount, reference, timeService.utcNow(), sendingCustomer, sendingAccount, receivingCustomer, receivingAccount);
+            
+            DomainEvent transferSent = new TransferSent(
+                amount,
+                reference,
+                sendingCustomer.customerId(), 
+                receivingCustomer.customerId(),
+                sendingAccount.iban(),
+                receivingAccount.iban());
+            eventRepo.persistDomainEvent(transferSent);
         } catch (AccountException e) {
             throw new InvalidOperationException(e.getMessage());
         }
