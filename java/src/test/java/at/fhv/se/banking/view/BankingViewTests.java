@@ -38,13 +38,12 @@ import at.fhv.se.banking.application.api.exceptions.AccountNotFoundException;
 import at.fhv.se.banking.application.api.exceptions.CustomerNotFoundException;
 import at.fhv.se.banking.application.dto.AccountDTO;
 import at.fhv.se.banking.application.dto.AccountDetailsDTO;
-import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
 import at.fhv.se.banking.application.dto.CustomerDTO;
+import at.fhv.se.banking.application.dto.CustomerDetailsDTO;
 import at.fhv.se.banking.application.dto.TXLineDTO;
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Iban;
 import at.fhv.se.banking.utils.TestingUtils;
-
 
 @WebAppConfiguration
 @ContextConfiguration

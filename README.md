@@ -31,6 +31,8 @@ What we need
 - we need some form of caching (query / results) 
 - something like unit of work, where changes to the entities/aggregates are tracked and then flushed to the DB at the end of the TX.
 - type safe REST api using servant
+- some kind of service bus to help us with asynchronous processing of domain events for eventual consistency
+- versioning of aggregates for optimistic/pessimistic concurrency control in collaborative domains
 
 Research Questions
 - Can we exploit stm to enforce tx boundaries of aggregates?

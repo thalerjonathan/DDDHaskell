@@ -16,6 +16,7 @@ import at.fhv.se.banking.domain.model.account.GiroAccount;
 import at.fhv.se.banking.domain.model.account.Iban;
 import at.fhv.se.banking.domain.model.account.TXLine;
 import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
+import at.fhv.se.banking.infrastructure.AccountData;
 
 public class AccountTests {
     
