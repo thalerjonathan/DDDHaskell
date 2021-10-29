@@ -11,8 +11,10 @@ import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
 
-public class WithdrawingDepositingSteps {
+@CucumberContextConfiguration
+public class NoIntegrationAccountSteps {
     
     private final static String GIRO_TYPE = "GIRO";
     private final static String SAVINGS_TYPE = "SAVINGS";
