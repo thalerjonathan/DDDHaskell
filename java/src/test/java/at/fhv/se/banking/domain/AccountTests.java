@@ -1,8 +1,8 @@
 package at.fhv.se.banking.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -10,13 +10,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import at.fhv.se.banking.data.AccountData;
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Account;
 import at.fhv.se.banking.domain.model.account.GiroAccount;
 import at.fhv.se.banking.domain.model.account.Iban;
 import at.fhv.se.banking.domain.model.account.TXLine;
 import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
-import at.fhv.se.banking.infrastructure.AccountData;
 
 public class AccountTests {
     
@@ -32,7 +32,7 @@ public class AccountTests {
         // then
         assertEquals(cId, a.owner());
         assertEquals(iban, a.iban());
-        assertEquals(0, a.balance());
+        assertEquals(0, a.balance(), 0.001);
         assertEquals("GIRO", a.type());
         assertTrue(a.transactions().isEmpty());
     }
@@ -53,7 +53,7 @@ public class AccountTests {
         a.deposit(depositAmount, now);
 
         // then
-        assertEquals(depositAmount, a.balance());
+        assertEquals(depositAmount, a.balance(), 0.001);
         assertEquals(tx, a.transactions());
     }
 
@@ -73,7 +73,7 @@ public class AccountTests {
         a.withdraw(withdrawAmount, now);
 
         // then
-        assertEquals(-withdrawAmount, a.balance());
+        assertEquals(-withdrawAmount, a.balance(), 0.001);
         assertEquals(tx, a.transactions());
     }
 
@@ -96,7 +96,7 @@ public class AccountTests {
         a.withdraw(withdrawAmount, now);
 
         // then
-        assertEquals(depositAmount - withdrawAmount, a.balance());
+        assertEquals(depositAmount - withdrawAmount, a.balance(), 0.001);
         assertEquals(tx, a.transactions());
     }
 
@@ -116,7 +116,7 @@ public class AccountTests {
         a.transferTo(toIban, amount, name, reference, now);
 
         // then
-        assertEquals(-amount, a.balance());
+        assertEquals(-amount, a.balance(), 0.001);
         assertEquals(1, a.transactions().size());
         assertEquals(tx, a.transactions().iterator().next());
     }
@@ -137,7 +137,7 @@ public class AccountTests {
         a.receiveFrom(fromIban, amount, name, reference, now);
 
         // then
-        assertEquals(amount, a.balance());
+        assertEquals(amount, a.balance(), 0.001);
         assertEquals(1, a.transactions().size());
         assertEquals(tx, a.transactions().iterator().next());
     }

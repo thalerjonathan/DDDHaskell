@@ -9,8 +9,8 @@ at/fhv/se/banking/domain/repositories/impl/InMemoryCustomerRepository.java
  at.fhv.se.banking.domain.repositories.impl.InMemoryCustomerRepository
 at/fhv/se/banking/domain/events/TransferSent.java
  at.fhv.se.banking.domain.events.TransferSent
-at/fhv/se/banking/TestData.java
- at.fhv.se.banking.TestData
+at/fhv/se/banking/domain/model/account/exceptions/AccountException.java
+ at.fhv.se.banking.domain.model.account.exceptions.AccountException
 at/fhv/se/banking/application/impl/CustomerServiceImpl.java
  at.fhv.se.banking.application.impl.CustomerServiceImpl
 at/fhv/se/banking/application/dto/CustomerDTO.java
@@ -93,5 +93,5 @@ at/fhv/se/banking/infrastructure/db/converters/LocalDateTimeConverter.java
  at.fhv.se.banking.infrastructure.db.converters.LocalDateTimeConverter
 at/fhv/se/banking/domain/model/account/SavingsAccount.java
  at.fhv.se.banking.domain.model.account.SavingsAccount
-at/fhv/se/banking/domain/model/account/exceptions/AccountException.java
- at.fhv.se.banking.domain.model.account.exceptions.AccountException
+at/fhv/se/banking/TestData.java
+ at.fhv.se.banking.TestData

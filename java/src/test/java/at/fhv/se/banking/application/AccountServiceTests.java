@@ -1,7 +1,7 @@
 package at.fhv.se.banking.application;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -146,7 +146,7 @@ public class AccountServiceTests {
 
         // then
         Mockito.verify(account).deposit(depositAmount, now);
-        assertEquals(depositAmount, account.balance());
+        assertEquals(depositAmount, account.balance(), 0.001);
     }
 
     @Test
@@ -177,7 +177,7 @@ public class AccountServiceTests {
 
         // then
         Mockito.verify(account).withdraw(withdrawAmount, now);
-        assertEquals(-withdrawAmount, account.balance());
+        assertEquals(-withdrawAmount, account.balance(), 0.001);
     }
 
     @Test

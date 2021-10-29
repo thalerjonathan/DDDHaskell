@@ -1,7 +1,7 @@
 package at.fhv.se.banking.domain;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import java.time.LocalDateTime;
 
@@ -56,8 +56,8 @@ public class TransferServiceTests {
         Mockito.verify(sendingAccount).transferTo(receivingIban, transferAmount, receivingName, reference, now);
         Mockito.verify(receivingAccount).receiveFrom(sendingIban, transferAmount, sendingName, reference, now);
         
-        assertEquals(-transferAmount, sendingAccount.balance());
-        assertEquals(transferAmount, receivingAccount.balance());
+        assertEquals(-transferAmount, sendingAccount.balance(), 0.001);
+        assertEquals(transferAmount, receivingAccount.balance(), 0.001);
     }
 
     @Test
@@ -133,8 +133,8 @@ public class TransferServiceTests {
         Mockito.verify(sendingAccount).transferTo(receivingIban, transferAmount, name, reference, now);
         Mockito.verify(receivingAccount).receiveFrom(sendingIban, transferAmount, name, reference, now);
 
-        assertEquals(-transferAmount, sendingAccount.balance());
-        assertEquals(transferAmount, receivingAccount.balance());
+        assertEquals(-transferAmount, sendingAccount.balance(), 0.001);
+        assertEquals(transferAmount, receivingAccount.balance(), 0.001);
     }
 
     @Test
@@ -164,8 +164,8 @@ public class TransferServiceTests {
         Mockito.verify(sendingAccount).transferTo(receivingIban, transferAmount, name, reference, now);
         Mockito.verify(receivingAccount).receiveFrom(sendingIban, transferAmount, name, reference, now);
         
-        assertEquals(transferAmount, sendingAccount.balance());
-        assertEquals(-transferAmount, receivingAccount.balance());
+        assertEquals(transferAmount, sendingAccount.balance(), 0.001);
+        assertEquals(-transferAmount, receivingAccount.balance(), 0.001);
     }
 
     @Test
@@ -222,8 +222,8 @@ public class TransferServiceTests {
         Mockito.verify(sendingAccount).transferTo(receivingIban, transferAmount, name, reference, now);
         Mockito.verify(receivingAccount).receiveFrom(sendingIban, transferAmount, name, reference, now);
 
-        assertEquals(initialSendingBalance - transferAmount, sendingAccount.balance());
-        assertEquals(transferAmount, receivingAccount.balance());
+        assertEquals(initialSendingBalance - transferAmount, sendingAccount.balance(), 0.001);
+        assertEquals(transferAmount, receivingAccount.balance(), 0.001);
     }
 
     @Test
@@ -251,7 +251,7 @@ public class TransferServiceTests {
 
         // then
         Mockito.verify(sendingAccount).transferTo(receivingIban, transferAmount, receivingName, reference, now); 
-        assertEquals(-transferAmount, sendingAccount.balance());
+        assertEquals(-transferAmount, sendingAccount.balance(), 0.001);
     }
 
     @Test
@@ -279,6 +279,6 @@ public class TransferServiceTests {
 
         // then
         Mockito.verify(receivingAccount).receiveFrom(sendingIban, transferAmount, sendingName, reference, now);
-        assertEquals(transferAmount, receivingAccount.balance());
+        assertEquals(transferAmount, receivingAccount.balance(), 0.001);
     }
 }

@@ -1,6 +1,6 @@
 package at.fhv.se.banking.infrastructure.db;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -77,7 +77,7 @@ public class HibernateAccountRepositoryTests {
     private static void compareAccounts(Account expected, Account actual) {
         assertEquals(expected.owner(), actual.owner());
         assertEquals(expected.iban(), actual.iban());
-        assertEquals(expected.balance(), actual.balance());
+        assertEquals(expected.balance(), actual.balance(), 0.001);
         assertEquals(expected.type(), actual.type());
         assertEquals(expected.transactions(), actual.transactions());
     }

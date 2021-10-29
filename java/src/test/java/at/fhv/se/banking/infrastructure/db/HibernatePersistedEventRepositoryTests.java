@@ -1,7 +1,6 @@
 package at.fhv.se.banking.infrastructure.db;
 
-import static org.junit.Assert.assertSame;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Optional;
 
@@ -37,7 +36,7 @@ public class HibernatePersistedEventRepositoryTests {
         Optional<PersistedEvent> event = eventRepo.nextEvent();
 
         // then
-        assertSame(Optional.empty(), event);
+        assertEquals(Optional.empty(), event);
     }
 
     @Test
