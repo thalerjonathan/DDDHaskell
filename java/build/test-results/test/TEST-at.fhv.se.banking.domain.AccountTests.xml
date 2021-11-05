@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="at.fhv.se.banking.domain.AccountTests" tests="10" skipped="0" failures="0" errors="0" timestamp="2021-10-25T13:19:00" hostname="zazengine" time="0.014">
+<testsuite name="at.fhv.se.banking.domain.AccountTests" tests="18" skipped="0" failures="0" errors="0" timestamp="2021-11-04T08:46:44" hostname="DESKTOP-PSP3COV" time="0.012">
   <properties/>
-  <testcase name="given_newaccount_when_transferto_then_reflectsbalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.001"/>
-  <testcase name="given_newaccount_when_receiveFrom_then_reflectsbalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.001"/>
-  <testcase name="given_savingsaccountwithbalance_when_withdraw_then_exception()" classname="at.fhv.se.banking.domain.AccountTests" time="0.002"/>
-  <testcase name="given_params_when_newaccount_then_reflectsparameters_balancezero()" classname="at.fhv.se.banking.domain.AccountTests" time="0.002"/>
+  <testcase name="given_giro_account_when_canReceiveFromCustomer_samecustomer_then_true()" classname="at.fhv.se.banking.domain.AccountTests" time="0.001"/>
+  <testcase name="given_newaccount_when_transferto_then_reflectsbalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
+  <testcase name="given_newaccount_when_receiveFrom_then_reflectsbalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
+  <testcase name="given_savingsaccountwithbalance_when_withdraw_then_exception()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
+  <testcase name="given_params_when_newaccount_then_reflectsparameters_balancezero()" classname="at.fhv.se.banking.domain.AccountTests" time="0.001"/>
+  <testcase name="given_savings_account_when_canSendToCustomer_othercustomer_then_false()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
+  <testcase name="given_giro_account_when_canSendToCustomer_othercustomer_then_true()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
   <testcase name="given_newaccount_when_withdrawafterdeposit_then_reflectsbalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.001"/>
   <testcase name="given_savingsaccount_when_deposit_then_exception()" classname="at.fhv.se.banking.domain.AccountTests" time="0.001"/>
+  <testcase name="given_savings_account_when_canReceiveFromCustomer_samecustomer_then_true()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
+  <testcase name="given_giro_account_when_canSendToCustomer_samecustomer_then_true()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
   <testcase name="given_newaccount_when_withdraw_then_reflectsnegativebalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
   <testcase name="given_giroaccount_when_overdraftover1000_then_exception()" classname="at.fhv.se.banking.domain.AccountTests" time="0.002"/>
-  <testcase name="given_newaccount_when_deposit_then_reflectsbalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
+  <testcase name="given_savings_account_when_canSendToCustomer_samecustomer_then_true()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
+  <testcase name="given_savings_account_when_canReceiveFromCustomer_othercustomer_then_false()" classname="at.fhv.se.banking.domain.AccountTests" time="0.001"/>
+  <testcase name="given_newaccount_when_deposit_then_reflectsbalance()" classname="at.fhv.se.banking.domain.AccountTests" time="0.001"/>
   <testcase name="given_savingsaccountwithbalance_when_overdraftthroughtransfer_then_exception()" classname="at.fhv.se.banking.domain.AccountTests" time="0.002"/>
+  <testcase name="given_giro_account_when_canReceiveFromCustomer_othercustomer_then_true()" classname="at.fhv.se.banking.domain.AccountTests" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

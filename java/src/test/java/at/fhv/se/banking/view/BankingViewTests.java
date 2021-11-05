@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
@@ -45,6 +46,7 @@ import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Iban;
 import at.fhv.se.banking.utils.TestingUtils;
 
+@Profile("test")
 @WebAppConfiguration
 @ContextConfiguration
 @SpringBootTest

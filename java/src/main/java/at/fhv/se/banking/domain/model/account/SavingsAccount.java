@@ -43,6 +43,16 @@ public class SavingsAccount extends Account {
         this.txLines.add(new TXLine(this, to, -amount, name, reference, time));
     }
 
+    @Override
+    public boolean canSendToCustomer(CustomerId otherCustomer) { 
+        return owner.equals(otherCustomer);
+    }
+
+    @Override
+    public boolean canReceiveFromCustomer(CustomerId otherCustomer) { 
+        return owner.equals(otherCustomer);
+    }
+
     // required by Hibernate
     @SuppressWarnings("unused")
     private SavingsAccount() {

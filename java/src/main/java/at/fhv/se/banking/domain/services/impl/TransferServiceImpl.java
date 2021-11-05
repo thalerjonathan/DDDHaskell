@@ -48,13 +48,14 @@ public class TransferServiceImpl implements TransferService {
             Account sendingAccount, 
             Customer receivingCustomer, 
             Account receivingAccount) throws AccountException {
+
+        if (false == sendingAccount.canSendToCustomer(receivingCustomer.customerId())) {
+            throw new AccountException("Cannot send to account!");
+        } else if (false == receivingAccount.canSendToCustomer(sendingCustomer.customerId())) {
+            throw new AccountException("Cannot receive from account!");
+        }
+
         if (notTransferSameCustomer(sendingCustomer, receivingCustomer)) {
-            if (isSavings(sendingAccount)) {
-                throw new AccountException("Cannot transfer from Savings account!");
-            } else if (isSavings(receivingAccount)) {
-                throw new AccountException("Cannot transfer to Savings account!");
-            }
-        
             if (amount > TRANSFER_LIMIT) {
                 throw new AccountException("Cannot transfer more than 5000€!"); 
             }
@@ -63,10 +64,5 @@ public class TransferServiceImpl implements TransferService {
     
     private static boolean notTransferSameCustomer(Customer sendingCustomer, Customer receivingCustomer) {
         return false == sendingCustomer.equals(receivingCustomer);
-    }
-
-    private static boolean isSavings(Account a) {
-        // TODO: this is bad style, refactor (into visitor pattern/double dynamic dispatch?)
-        return a.type().equals("SAVINGS");
     }
 }

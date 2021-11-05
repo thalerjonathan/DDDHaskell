@@ -1,6 +1,7 @@
 package at.fhv.se.banking.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -15,10 +16,103 @@ import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Account;
 import at.fhv.se.banking.domain.model.account.GiroAccount;
 import at.fhv.se.banking.domain.model.account.Iban;
+import at.fhv.se.banking.domain.model.account.SavingsAccount;
 import at.fhv.se.banking.domain.model.account.TXLine;
 import at.fhv.se.banking.domain.model.account.exceptions.AccountException;
 
 public class AccountTests {
+    
+    @Test
+    public void given_giro_account_when_canSendToCustomer_samecustomer_then_true() {
+        // given
+        CustomerId cId = new CustomerId("1");
+        Iban iban = new Iban("AT12 12345 01234567890");
+        Account a = new GiroAccount(cId, iban);
+
+        // when ... then
+        assertTrue(a.canSendToCustomer(cId));
+    }
+
+    @Test
+    public void given_giro_account_when_canSendToCustomer_othercustomer_then_true() {
+        // given
+        CustomerId cId1 = new CustomerId("1");
+        CustomerId cId2 = new CustomerId("1");
+        Iban iban = new Iban("AT12 12345 01234567890");
+        Account a = new GiroAccount(cId1, iban);
+
+        // when ... then
+        assertTrue(a.canSendToCustomer(cId2));
+    }
+
+    @Test
+    public void given_savings_account_when_canSendToCustomer_samecustomer_then_true() {
+        // given
+        CustomerId cId = new CustomerId("1");
+        Iban iban = new Iban("AT12 12345 01234567890");
+        Account a = new SavingsAccount(cId, iban);
+
+        // when ... then
+        assertTrue(a.canSendToCustomer(cId));
+    }
+
+    @Test
+    public void given_savings_account_when_canSendToCustomer_othercustomer_then_false() {
+        // given
+        CustomerId cId1 = new CustomerId("1");
+        CustomerId cId2 = new CustomerId("2");
+        Iban iban = new Iban("AT12 12345 01234567890");
+        Account a = new SavingsAccount(cId1, iban);
+
+        // when ... then
+        assertFalse(a.canSendToCustomer(cId2));
+    }
+
+    @Test
+    public void given_giro_account_when_canReceiveFromCustomer_samecustomer_then_true() {
+        // given
+        CustomerId cId = new CustomerId("1");
+        Iban iban = new Iban("AT12 12345 01234567890");
+        Account a = new GiroAccount(cId, iban);
+
+        // when ... then
+        assertTrue(a.canReceiveFromCustomer(cId));
+    }
+
+    @Test
+    public void given_giro_account_when_canReceiveFromCustomer_othercustomer_then_true() {
+        // given
+        CustomerId cId1 = new CustomerId("1");
+        CustomerId cId2 = new CustomerId("1");
+        Iban iban = new Iban("AT12 12345 01234567890");
+        Account a = new GiroAccount(cId1, iban);
+
+        // when ... then
+        assertTrue(a.canReceiveFromCustomer(cId2));
+    }
+
+    @Test
+    public void given_savings_account_when_canReceiveFromCustomer_samecustomer_then_true() {
+        // given
+        CustomerId cId = new CustomerId("1");
+        Iban iban = new Iban("AT12 12345 01234567890");
+        Account a = new SavingsAccount(cId, iban);
+
+        // when ... then
+        assertTrue(a.canReceiveFromCustomer(cId));
+    }
+
+    @Test
+    public void given_savings_account_when_canReceiveFromCustomer_othercustomer_then_false() {
+        // given
+        CustomerId cId1 = new CustomerId("1");
+        CustomerId cId2 = new CustomerId("2");
+        Iban iban = new Iban("AT12 12345 01234567890");
+        Account a = new SavingsAccount(cId1, iban);
+
+        // when ... then
+        assertFalse(a.canSendToCustomer(cId2));
+    }
     
     @Test
     public void given_params_when_newaccount_then_reflectsparameters_balancezero() {

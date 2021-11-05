@@ -17,7 +17,7 @@ public abstract class Account {
     @SuppressWarnings("unused")
     private int version;
 
-    private CustomerId owner;
+    protected CustomerId owner;
     private Iban iban;
     protected Set<TXLine> txLines;
     
@@ -52,6 +52,8 @@ public abstract class Account {
     public abstract void withdraw(double amount, LocalDateTime time) throws AccountException;
     public abstract void receiveFrom(Iban from, double amount, String name, String reference, LocalDateTime time);
     public abstract void transferTo(Iban to, double amount, String name, String reference, LocalDateTime time) throws AccountException;
+    public boolean canSendToCustomer(CustomerId otherCustomer) { return true; }
+    public boolean canReceiveFromCustomer(CustomerId otherCustomer) { return true; }
 
     // required by Hibernate
     protected Account() {
