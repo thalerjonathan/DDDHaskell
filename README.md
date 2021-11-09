@@ -52,11 +52,10 @@ Related Research
 - Domain Driven Design Made Dependently Typed by Andor Penzes
 
 Relevant Books / References
+- FaDD Granin
+- Haskell in Depth
 - Domain Modeling Made Functional Wlaschin
 - DDD evans
 - DDD Vernon
 - DDD Millett
 - Strategic Monoliths
-- Haskell in Depth
-- FaDD Granin
-

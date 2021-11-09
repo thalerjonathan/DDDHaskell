@@ -1,8 +1,26 @@
 # Banking System
-Customers in the banking system have a Name and Address. Customers can have multiple Accounts. Each Account is owned by a specific Customer. Notifications for a customer from the system. Customers can view the current Balance of an Account as well as all Transaction Lines. An Account has a unique IBAN. There are two types of Accounts: Savings and Giro. A Giro Account can be overdrawn by 1000€. A Savings Account can not be overdrawn. Savings Accounts receive an interest of 0.5% per year. Giro Accounts receive an interest of 0.1% per year. The interest is calculated on a monthly basis.
+The goal is to implement a simple banking system for bank employees where they can view customers, their accounts and transactions, as well as performing the following operations:
 
-Customers can withdraw and depositing Money but only from/in to a Giro Account. Each withdrawing transaction has a fee of 0.1€, depositing is free. After withdrawing or depositing Money, the Account should immediately reflect the new balance.
+1. Depositing money into an account.
+2. Withdrawing money from an account.
+3. Transferring money between different accounts.
 
-Customers can transfer Money between Giro Accounts but only up to a limit of 5000€ per transaction. Transferring money between accounts always takes some time, however the Money is withdrawn from the sending Account immediately and is reflected in the balance.
+## Domain Description and Business Rules
 
-TODO: check for concurrent modifications
+- Customers have a name.
+- Customers can have multiple accounts.
+- Each account is owned by a specific customer.
+- An account has a unique IBAN.
+- There are Giro and Savings accounts.
+- A Giro account can be overdrawn by 1000€.
+- Withdrawing and depositing money is only possible from/into a Giro account.
+- Withdrawing and depositing money from/into Savings accounts can only happen through a transfer from/into a Giro account owned by the same Customer.
+- A Savings account can not be overdrawn.
+- After withdrawing or depositing money, the account should immediately reflect the new balance.
+- Transferring money can happen only between Giro accounts and only up to a limit of 5000€ per transaction. The exception is a transfer between a Giro and Savings account of the same customer.
+- When transferring money between accounts, the money is immediately withdrawn from the sending account, therefore immediately reflected in the balance.
+- Transferring money between accounts always takes some time and does not show up immediately in the receiving account.
+- When transferring fails the money is eventually transferred back to the sending account after some time.
+
+## TODOs
+- Optimistic concurrency control with versioning of Aggregates for safe collaboration
