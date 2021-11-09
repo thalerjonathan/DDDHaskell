@@ -43,7 +43,7 @@ public class AccountSteps extends ScenarioTXBoundary {
     private final static String MY_IBAN = "AT12 12345 01234567890";
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerRepository customerRepo;
 
     @Autowired
     private AccountRepository accountRepo;
@@ -70,18 +70,16 @@ public class AccountSteps extends ScenarioTXBoundary {
 
     @Given("a {word} account with Iban {string} and a balance of {double}")
     public void setupAccount(String accountType, String iban, double balance) throws AccountException {
-        CustomerId cId = customerRepository.nextCustomerId();
+        CustomerId cId = customerRepo.nextCustomerId();
         Customer c = new Customer(cId, "Test Customer " + cId);
-        this.customerRepository.add(c);
-
-        setupAccountForCustomer(cId, accountType, iban, balance);
+        this.customerRepo.add(c);
+        this.setupAccountForCustomer(cId, accountType, iban, balance);
     }
 
     @Given("a {word} account of the same customer with Iban {string} and a balance of {double}")
     public void setupAccountSameCustomer(String accountType, String iban, double balance) throws AccountException {
-        CustomerId cId = customerRepository.all().get(0).customerId();
-
-        setupAccountForCustomer(cId, accountType, iban, balance);
+        CustomerId cId = customerRepo.all().get(0).customerId();
+        this.setupAccountForCustomer(cId, accountType, iban, balance);
     }
 
     private void setupAccountForCustomer(CustomerId cId, String accountType, String iban, double balance) throws AccountException {
@@ -99,33 +97,33 @@ public class AccountSteps extends ScenarioTXBoundary {
             fail("Invalid Account Type: " + accountType);
         }
 
-        accountRepo.add(a);
+        this.accountRepo.add(a);
     }
 
     @When("Transferring {double} from Iban {string} to Iban {string}")
     public void transfer(double amount, String sendingIban, String receivingIban) {
         try {
-            accountService.transferTransactional(amount, "Transfer", sendingIban, receivingIban);
+            this.accountService.transferTransactional(amount, "Transfer", sendingIban, receivingIban);
         } catch (AccountNotFoundException | CustomerNotFoundException | InvalidOperationException e) {
-            whenException = e;
+            this.whenException = e;
         }
     }
 
     @When("I deposit {double} into my account")
     public void deposit(double amount) {
         try {
-            accountService.deposit(amount, MY_IBAN);
+            this.accountService.deposit(amount, MY_IBAN);
         } catch (InvalidOperationException | AccountNotFoundException e) {
-            whenException = e;
+            this.whenException = e;
         }
     }
 
     @When("I withdraw {double} from my account")
     public void withdraw(double amount) {
         try {
-            accountService.withdraw(amount, MY_IBAN);
+            this.accountService.withdraw(amount, MY_IBAN);
         } catch (InvalidOperationException | AccountNotFoundException e) {
-            whenException = e;
+            this.whenException = e;
         }
     }
 
@@ -143,7 +141,7 @@ public class AccountSteps extends ScenarioTXBoundary {
 
     @Then("I expect the error {string}") 
     public void expectError(String expectedError) {
-        assertNotNull(whenException);
-        assertEquals(expectedError, whenException.getMessage());
+        assertNotNull(this.whenException);
+        assertEquals(expectedError, this.whenException.getMessage());
     }
 }

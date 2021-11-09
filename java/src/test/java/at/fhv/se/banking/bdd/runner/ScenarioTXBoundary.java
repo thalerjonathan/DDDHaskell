@@ -8,7 +8,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 // Intended as a Scenario-level TX boundary rather than @Transactional (which runs on the method level)
 public class ScenarioTXBoundary {   
     @Autowired
-    PlatformTransactionManager txManager;
+    private PlatformTransactionManager txManager;
 
     private TransactionStatus tx;
     
