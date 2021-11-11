@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="at.fhv.se.banking.view.BankingViewTests" tests="12" skipped="0" failures="0" errors="0" timestamp="2021-11-11T09:56:27" hostname="DESKTOP-PSP3COV" time="2.549">
+<testsuite name="at.fhv.se.banking.view.BankingViewTests" tests="12" skipped="0" failures="0" errors="0" timestamp="2021-11-11T11:15:16" hostname="DESKTOP-PSP3COV" time="2.75">
   <properties/>
-  <testcase name="given_account_when_deposit_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="1.795"/>
-  <testcase name="given_account_when_withdraw_andnoaccount_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.061"/>
-  <testcase name="given_account_when_view_displayinfoandalltransactions()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.086"/>
-  <testcase name="given_customernotfound_when_view_displaydetailsandaccounts_thenerrorpage()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.029"/>
-  <testcase name="given_customer_when_view_displaydetailsandaccounts()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.259"/>
-  <testcase name="given_account_when_transferTransactional_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.109"/>
-  <testcase name="given_noaccount_when_viewdisplayinfoandalltransactions_then_showerrorpage()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.024"/>
-  <testcase name="given_account_when_withdraw_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.046"/>
-  <testcase name="given_customers_when_welcomepage_displaycustomers()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.023"/>
-  <testcase name="given_account_when_deposit_and_noaccount_thenshowerror()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.031"/>
-  <testcase name="given_account_when_transferTransactional_and_noaccount_thenshowerror()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.037"/>
-  <testcase name="given_account_when_transferTransactional_and_nocustomer_thenshowerror()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.039"/>
-  <system-out><![CDATA[10:56:26.365 [Test worker] INFO  o.s.t.c.s.AbstractContextLoader - Could not detect default resource locations for test class [at.fhv.se.banking.view.BankingViewTests]: no resource found for suffixes {-context.xml, Context.groovy}.
-10:56:26.365 [Test worker] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [at.fhv.se.banking.view.BankingViewTests]: BankingViewTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-10:56:26.376 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration at.fhv.se.banking.BankingApplication for test class at.fhv.se.banking.view.BankingViewTests
-10:56:26.379 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-10:56:26.380 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@4630a67d, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@146a3624, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@1bbbb6ec, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@75bb916f, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@36fbd2eb, org.springframework.test.context.support.DirtiesContextTestExecutionListener@73651906, org.springframework.test.context.transaction.TransactionalTestExecutionListener@35afcd50, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@1c360263, org.springframework.test.context.event.EventPublishingTestExecutionListener@74b2e784, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@2f447d3d, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@644ae0c8, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@48c3d338, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@2b2e8363, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@270faeae, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@14704627]
+  <testcase name="given_account_when_deposit_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="1.846"/>
+  <testcase name="given_account_when_withdraw_andnoaccount_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.08"/>
+  <testcase name="given_account_when_view_displayinfoandalltransactions()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.097"/>
+  <testcase name="given_customernotfound_when_view_displaydetailsandaccounts_thenerrorpage()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.035"/>
+  <testcase name="given_customer_when_view_displaydetailsandaccounts()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.296"/>
+  <testcase name="given_account_when_transferTransactional_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.142"/>
+  <testcase name="given_noaccount_when_viewdisplayinfoandalltransactions_then_showerrorpage()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.025"/>
+  <testcase name="given_account_when_withdraw_thendisplaynewbalance()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.06"/>
+  <testcase name="given_customers_when_welcomepage_displaycustomers()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.024"/>
+  <testcase name="given_account_when_deposit_and_noaccount_thenshowerror()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.045"/>
+  <testcase name="given_account_when_transferTransactional_and_noaccount_thenshowerror()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.045"/>
+  <testcase name="given_account_when_transferTransactional_and_nocustomer_thenshowerror()" classname="at.fhv.se.banking.view.BankingViewTests" time="0.042"/>
+  <system-out><![CDATA[12:15:15.252 [Test worker] INFO  o.s.t.c.s.AbstractContextLoader - Could not detect default resource locations for test class [at.fhv.se.banking.view.BankingViewTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+12:15:15.252 [Test worker] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [at.fhv.se.banking.view.BankingViewTests]: BankingViewTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:15:15.252 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration at.fhv.se.banking.BankingApplication for test class at.fhv.se.banking.view.BankingViewTests
+12:15:15.252 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+12:15:15.252 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@4a0efca7, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@48bb3ba9, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@4db9e42, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@14f42066, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@29a21d9b, org.springframework.test.context.support.DirtiesContextTestExecutionListener@38d50d75, org.springframework.test.context.transaction.TransactionalTestExecutionListener@6024ada3, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@55e656d1, org.springframework.test.context.event.EventPublishingTestExecutionListener@6c91c733, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@7cbfc171, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@393332f0, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@5e84abd9, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@3c4e5765, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@3e78add4, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@1efcac59]
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -27,15 +27,15 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v2.5.5)
 
-10:56:26.417 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Starting BankingViewTests using Java 11.0.9.1 on DESKTOP-PSP3COV with PID 1352 (started by Jonathan Thaler in C:\Users\Jonathan Thaler\gitrepos\DDDHaskell\java)
-10:56:26.418 [Test worker] DEBUG a.f.se.banking.view.BankingViewTests - Running with Spring Boot v2.5.5, Spring v5.3.10
-10:56:26.419 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - No active profile set, falling back to default profiles: default
-10:56:26.668 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-10:56:26.683 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 JPA repository interfaces.
-10:56:26.816 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Starting...
-10:56:26.817 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Start completed.
-10:56:26.863 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-10:56:26.944 [Test worker] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+12:15:15.294 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Starting BankingViewTests using Java 11.0.9.1 on DESKTOP-PSP3COV with PID 27116 (started by Jonathan Thaler in C:\Users\Jonathan Thaler\gitrepos\DDDHaskell\java)
+12:15:15.294 [Test worker] DEBUG a.f.se.banking.view.BankingViewTests - Running with Spring Boot v2.5.5, Spring v5.3.10
+12:15:15.294 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - No active profile set, falling back to default profiles: default
+12:15:15.527 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+12:15:15.542 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 JPA repository interfaces.
+12:15:15.658 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Starting...
+12:15:15.658 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Start completed.
+12:15:15.706 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+12:15:15.816 [Test worker] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
 Hibernate: 
     
     drop table if exists accounts CASCADE 
@@ -97,11 +97,11 @@ Hibernate:
        add constraint FK20w7wsg13u9srbq3bd7chfxdh 
        foreign key (account_id) 
        references accounts
-10:56:27.011 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-10:56:27.011 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-10:56:27.144 [Test worker] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-10:56:27.243 [Test worker] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:collabnotes'
-10:56:27.444 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Started BankingViewTests in 1.069 seconds (JVM running for 14.172)
+12:15:15.907 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+12:15:15.907 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+12:15:16.047 [Test worker] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+12:15:16.163 [Test worker] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:collabnotes'
+12:15:16.400 [Test worker] INFO  a.f.se.banking.view.BankingViewTests - Started BankingViewTests in 1.144 seconds (JVM running for 15.436)
 Hibernate: 
     insert 
     into
@@ -272,42 +272,42 @@ Hibernate:
         account_id=? 
     where
         id=?
-10:56:27.506 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:27.506 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:27.506 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-10:56:29.297 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:29.297 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:29.298 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:56:29.359 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:29.359 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:29.360 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:56:29.448 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:29.448 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:29.449 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:56:29.475 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:29.475 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:29.476 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:56:29.735 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:29.735 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:29.736 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:56:29.846 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:29.847 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:29.847 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-10:56:29.871 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:29.871 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:29.872 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:56:29.918 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:29.918 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:29.919 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
-10:56:29.942 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:29.942 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:29.942 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-10:56:29.963 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:29.963 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:29.963 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-10:56:30.012 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-10:56:30.012 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-10:56:30.013 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+12:15:16.465 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:16.465 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:16.465 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+12:15:18.301 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:18.301 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:18.301 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+12:15:18.380 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:18.380 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:18.388 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 8 ms
+12:15:18.479 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:18.479 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:18.479 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+12:15:18.519 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:18.519 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:18.519 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+12:15:18.811 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:18.811 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:18.811 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+12:15:18.962 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:18.962 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:18.962 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+12:15:18.988 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:18.988 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:18.988 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+12:15:19.044 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:19.044 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:19.044 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
+12:15:19.074 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:19.074 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:19.075 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+12:15:19.113 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:19.113 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:19.121 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 8 ms
+12:15:19.160 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+12:15:19.160 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+12:15:19.160 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
 ]]></system-out>
   <system-err><![CDATA[java.lang.instrument.IllegalClassFormatException: Error while instrumenting com/gargoylesoftware/htmlunit/javascript/host/css/StyleAttributes$Definition.
 	at org.jacoco.agent.rt.internal_3570298.CoverageTransformer.transform(CoverageTransformer.java:94)

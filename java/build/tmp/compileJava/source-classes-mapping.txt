@@ -62,8 +62,8 @@ at/fhv/se/banking/application/dto/TXLineDTO.java
  at.fhv.se.banking.application.dto.TXLineDTO$Builder
 at/fhv/se/banking/application/async/AsyncProcessing.java
  at.fhv.se.banking.application.async.AsyncProcessing
-at/fhv/se/banking/domain/model/account/AccountId.java
- at.fhv.se.banking.domain.model.account.AccountId
+at/fhv/se/banking/TestData.java
+ at.fhv.se.banking.TestData
 at/fhv/se/banking/application/api/TimeService.java
  at.fhv.se.banking.application.api.TimeService
 at/fhv/se/banking/domain/model/CustomerId.java
@@ -93,5 +93,3 @@ at/fhv/se/banking/infrastructure/db/entities/PersistedEvent.java
  at.fhv.se.banking.infrastructure.db.entities.PersistedEvent
 at/fhv/se/banking/domain/model/account/SavingsAccount.java
  at.fhv.se.banking.domain.model.account.SavingsAccount
-at/fhv/se/banking/TestData.java
- at.fhv.se.banking.TestData
