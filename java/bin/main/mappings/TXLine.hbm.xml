@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="at.fhv.se.banking.domain.model.account.TXLine" table="transactions" lazy="true">
+        <id name="id" type="long" column="id" unsaved-value="-1">
+            <generator class="native"/>
+        </id>
+
+        <component name="account" class="at.fhv.se.banking.domain.model.account.Iban">
+            <property name="iban" column="tx_account" type="java.lang.String" />
+        </component>
+
+        <property name="amount" column="tx_amount" type="double" />
+
+        <component name="iban" class="at.fhv.se.banking.domain.model.account.Iban">
+            <property name="iban" column="tx_iban" type="java.lang.String" />
+        </component>
+
+        <property name="name" column="tx_name" type="java.lang.String" />
+        <property name="reference" column="tx_reference" type="java.lang.String" />
+        <property name="time" column="tx_time" type="converted::at.fhv.se.banking.infrastructure.db.converters.LocalDateTimeConverter" />
+    </class>
+</hibernate-mapping>

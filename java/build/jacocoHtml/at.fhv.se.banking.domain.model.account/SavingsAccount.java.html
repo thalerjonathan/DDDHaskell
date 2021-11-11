@@ -15,7 +15,7 @@ public class SavingsAccount extends Account {
 
     @Override
     public String type() {
-<span class="fc" id="L18">        return ACCOUNT_TYPE;</span>
+<span class="nc" id="L18">        return ACCOUNT_TYPE;</span>
     }
 
     @Override
@@ -42,6 +42,16 @@ public class SavingsAccount extends Account {
 
 <span class="fc" id="L43">        this.txLines.add(new TXLine(this, to, -amount, name, reference, time));</span>
 <span class="fc" id="L44">    }</span>
+
+    @Override
+    public boolean canSendToCustomer(CustomerId otherCustomer) { 
+<span class="fc" id="L48">        return owner.equals(otherCustomer);</span>
+    }
+
+    @Override
+    public boolean canReceiveFromCustomer(CustomerId otherCustomer) { 
+<span class="fc" id="L53">        return owner.equals(otherCustomer);</span>
+    }
 
     // required by Hibernate
     @SuppressWarnings(&quot;unused&quot;)

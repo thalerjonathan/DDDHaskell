@@ -66,6 +66,8 @@ public class BankingViewTests {
                             .webAppContextSetup(context)
                             .build();
         this.webClient.getOptions().setThrowExceptionOnScriptError(false);
+        this.webClient.getOptions().setJavaScriptEnabled(false);
+        this.webClient.getOptions().setCssEnabled(false);
     }
 
     @AfterEach

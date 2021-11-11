@@ -121,8 +121,8 @@ public class BankingViewController {
             Model model) {
 
         try {
-            //this.accountService.transferTransactional(form.getAmount(), reference, form.getIban(), receivingIban);
-            this.accountService.transferEventual(form.getAmount(), reference, form.getIban(), receivingIban);
+            this.accountService.transferTransactional(form.getAmount(), reference, form.getIban(), receivingIban);
+            //this.accountService.transferEventual(form.getAmount(), reference, form.getIban(), receivingIban);
             return redirectToAccount(form);
         } catch (AccountNotFoundException e) {
             return redirectError("Account not found!");
