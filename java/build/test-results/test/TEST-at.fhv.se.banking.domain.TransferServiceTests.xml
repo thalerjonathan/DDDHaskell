@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="at.fhv.se.banking.domain.TransferServiceTests" tests="9" skipped="0" failures="0" errors="0" timestamp="2021-11-11T11:15:13" hostname="DESKTOP-PSP3COV" time="0.094">
+<testsuite name="at.fhv.se.banking.domain.TransferServiceTests" tests="9" skipped="0" failures="0" errors="0" timestamp="2021-11-11T11:19:51" hostname="DESKTOP-PSP3COV" time="0.074">
   <properties/>
-  <testcase name="given_customers_and_savingssending_giroreceiving_when_transfer_then_throws()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.062"/>
+  <testcase name="given_customers_and_savingssending_giroreceiving_when_transfer_then_throws()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.048"/>
   <testcase name="given_customers_and_accounts_when_transferReceive_then_increaseReceivingBalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.003"/>
   <testcase name="given_customers_and_accounts_when_transfer_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.004"/>
-  <testcase name="given_customers_and_girosending_savingreceiving_when_transfer_then_throws()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.001"/>
+  <testcase name="given_customers_and_girosending_savingreceiving_when_transfer_then_throws()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.002"/>
   <testcase name="given_customers_when_transfermorethan5000_then_throws()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.002"/>
   <testcase name="given_customers_and_accounts_when_transferSend_then_reduceSendingBalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.002"/>
   <testcase name="given_samecustomer_and_girosending_savingreceiving_when_transfer_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.004"/>
-  <testcase name="given_samecustomer_and_savingssending_giroreceiving_when_transfer_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.005"/>
-  <testcase name="given_samecustomer_when_transfermorethan5000_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.005"/>
+  <testcase name="given_samecustomer_and_savingssending_giroreceiving_when_transfer_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.003"/>
+  <testcase name="given_samecustomer_when_transfermorethan5000_then_exchangebalance()" classname="at.fhv.se.banking.domain.TransferServiceTests" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

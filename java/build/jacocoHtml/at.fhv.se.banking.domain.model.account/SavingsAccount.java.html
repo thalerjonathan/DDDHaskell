@@ -30,7 +30,7 @@ public class SavingsAccount extends Account {
 
     @Override
     public void receiveFrom(Iban from, double amount, String name, String reference, LocalDateTime time) {
-<span class="fc" id="L33">        this.txLines.add(new TXLine(this, from, amount, name, reference, time));</span>
+<span class="fc" id="L33">        this.txLines.add(new TXLine(from, amount, name, reference, time));</span>
 <span class="fc" id="L34">    }</span>
 
     @Override
@@ -40,7 +40,7 @@ public class SavingsAccount extends Account {
 <span class="fc" id="L40">            throw new AccountException(&quot;Cannot overdraw Savings account!&quot;);</span>
         }
 
-<span class="fc" id="L43">        this.txLines.add(new TXLine(this, to, -amount, name, reference, time));</span>
+<span class="fc" id="L43">        this.txLines.add(new TXLine(to, -amount, name, reference, time));</span>
 <span class="fc" id="L44">    }</span>
 
     @Override

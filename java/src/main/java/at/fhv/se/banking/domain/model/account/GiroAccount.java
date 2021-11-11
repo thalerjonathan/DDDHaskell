@@ -21,7 +21,7 @@ public class GiroAccount extends Account {
 
     @Override
     public void deposit(double amount, LocalDateTime time) {
-        this.txLines.add(new TXLine(this, this.iban(), amount, "Deposit", "Deposit", time));
+        this.txLines.add(new TXLine(this.iban(), amount, "Deposit", "Deposit", time));
     }
 
     @Override
@@ -30,17 +30,17 @@ public class GiroAccount extends Account {
             throw new AccountException("Cannot overdraw Giro account by more than " + OVERDRAFT_LIMIT + "!");
         }
 
-        this.txLines.add(new TXLine(this, this.iban(), -amount, "Withdraw", "Withdraw", time));
+        this.txLines.add(new TXLine(this.iban(), -amount, "Withdraw", "Withdraw", time));
     }
 
     @Override
     public void receiveFrom(Iban from, double amount, String name, String reference, LocalDateTime time) {
-        this.txLines.add(new TXLine(this, from, amount, name, reference, time));
+        this.txLines.add(new TXLine(from, amount, name, reference, time));
     }
 
     @Override
     public void transferTo(Iban to, double amount, String name, String reference, LocalDateTime time) {
-        this.txLines.add(new TXLine(this, to, -amount, name, reference, time));
+        this.txLines.add(new TXLine(to, -amount, name, reference, time));
     }
 
      // required by Hibernate

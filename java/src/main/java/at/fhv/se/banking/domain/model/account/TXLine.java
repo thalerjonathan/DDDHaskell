@@ -6,8 +6,6 @@ public final class TXLine {
     // required by Hibernate
     @SuppressWarnings("unused")
     private Long id;
-    @SuppressWarnings("unused")
-    private Iban account;
 
     private double amount;
     private Iban iban;
@@ -15,8 +13,7 @@ public final class TXLine {
     private String reference;
     private LocalDateTime time; // using Date because Hibernate mapping f*** up when using LocalDateTime
 
-    public TXLine(Account account, Iban iban, double amount, String name, String reference, LocalDateTime time) {
-        this.account = account.iban();
+    public TXLine(Iban iban, double amount, String name, String reference, LocalDateTime time) {
         this.amount = amount;
         this.iban = iban;
         this.name = name;
