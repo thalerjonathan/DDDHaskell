@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.147s</div>
+<div class="counter">0.073s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,12 +79,12 @@
 </thead>
 <tr>
 <td class="success">given_account_when_add_then_fetch()</td>
-<td class="success">0.124s</td>
+<td class="success">0.054s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">given_accounts_when_add_and_forcustomer_then_fetch()</td>
-<td class="success">0.023s</td>
+<td class="success">0.019s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -92,112 +92,13 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>12:19:51.694 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests], using SpringBootContextLoader
-12:19:51.694 [Test worker] INFO  o.s.t.c.s.AbstractContextLoader - Could not detect default resource locations for test class [at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests]: no resource found for suffixes {-context.xml, Context.groovy}.
-12:19:51.694 [Test worker] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests]: HibernateAccountRepositoryTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-12:19:51.702 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration at.fhv.se.banking.BankingApplication for test class at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests
-12:19:51.702 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-12:19:51.702 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@294d68e9, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@2f6a8a38, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@f9908f1, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@98358d9, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@4b4b6320, org.springframework.test.context.support.DirtiesContextTestExecutionListener@308b1b3b, org.springframework.test.context.transaction.TransactionalTestExecutionListener@7712535b, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@64c498f0, org.springframework.test.context.event.EventPublishingTestExecutionListener@7486a52b, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@1c3c3a43, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@79d12a14, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@39922ec6, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@787c6b22, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@5efb84c, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@751ea36f]
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::                (v2.5.5)
-
-12:19:51.748 [Test worker] INFO  a.f.s.b.i.d.HibernateAccountRepositoryTests - Starting HibernateAccountRepositoryTests using Java 11.0.9.1 on DESKTOP-PSP3COV with PID 26756 (started by Jonathan Thaler in C:\Users\Jonathan Thaler\gitrepos\DDDHaskell\java)
-12:19:51.748 [Test worker] DEBUG a.f.s.b.i.d.HibernateAccountRepositoryTests - Running with Spring Boot v2.5.5, Spring v5.3.10
-12:19:51.748 [Test worker] INFO  a.f.s.b.i.d.HibernateAccountRepositoryTests - The following profiles are active: test
-Hibernate: 
-    select
-        persistede0_.id as id1_2_,
-        persistede0_.persistedevent_created as persiste2_2_,
-        persistede0_.persistedevent_type as persiste3_2_,
-        persistede0_.persistedevent_processed as persiste4_2_,
-        persistede0_.persistedevent_failed as persiste5_2_,
-        persistede0_.persistedevent_fail_message as persiste6_2_,
-        persistede0_.persistedevent_payload as persiste7_2_ 
-    from
-        persistedevents persistede0_ 
-    where
-        persistede0_.persistedevent_processed=? 
-        and persistede0_.persistedevent_failed=0 
-    order by
-        persistede0_.persistedevent_created limit ?
-12:19:51.979 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-12:19:51.995 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 JPA repository interfaces.
-12:19:52.100 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
-12:19:52.100 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
-12:19:52.153 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-12:19:52.253 [Test worker] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-Hibernate: 
-    
-    drop table if exists accounts CASCADE 
-Hibernate: 
-    
-    drop table if exists customers CASCADE 
-Hibernate: 
-    
-    drop table if exists persistedevents CASCADE 
-Hibernate: 
-    
-    drop table if exists transactions CASCADE 
-Hibernate: 
-    
-    create table accounts (
-       id bigint generated by default as identity,
-        account_version integer not null,
-        account_type varchar(255) not null,
-        account_owner_id varchar(255),
-        account_iban varchar(255),
-        primary key (id)
-    )
-Hibernate: 
-    
-    create table customers (
-       customer_id bigint generated by default as identity,
-        customer_name varchar(255),
-        customer_domain_id varchar(255),
-        primary key (customer_id)
-    )
-Hibernate: 
-    
-    create table persistedevents (
-       id bigint generated by default as identity,
-        persistedevent_created timestamp,
-        persistedevent_type varchar(255),
-        persistedevent_processed boolean,
-        persistedevent_failed boolean,
-        persistedevent_fail_message varchar(255),
-        persistedevent_payload varchar(4096),
-        primary key (id)
-    )
-Hibernate: 
-    
-    create table transactions (
-       id bigint generated by default as identity,
-        tx_amount double,
-        tx_iban varchar(255),
-        tx_name varchar(255),
-        tx_reference varchar(255),
-        tx_time timestamp,
-        account_id bigint,
-        primary key (id)
-    )
-Hibernate: 
-    
-    alter table transactions 
-       add constraint FK20w7wsg13u9srbq3bd7chfxdh 
-       foreign key (account_id) 
-       references accounts
-12:19:52.362 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-12:19:52.362 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-12:19:52.508 [Test worker] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-12:19:52.630 [Test worker] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:collabnotes'
-12:19:52.915 [Test worker] INFO  a.f.s.b.i.d.HibernateAccountRepositoryTests - Started HibernateAccountRepositoryTests in 1.2 seconds (JVM running for 14.209)
-12:19:52.923 [Test worker] INFO  o.s.t.c.t.TransactionContext - Began transaction (1) for test context [DefaultTestContext@28693f2f testClass = HibernateAccountRepositoryTests, testInstance = at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests@44d90c9d, testMethod = given_account_when_add_then_fetch@HibernateAccountRepositoryTests, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@180e0d8a testClass = HibernateAccountRepositoryTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@668b9317, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@37a1b341, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@795c653a, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@1b2d60da, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@99906f, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@384cd7cf], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@141207f7]; rollback [true]
+<pre>17:33:47.410 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests], using SpringBootContextLoader
+17:33:47.411 [Test worker] INFO  o.s.t.c.s.AbstractContextLoader - Could not detect default resource locations for test class [at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+17:33:47.411 [Test worker] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests]: HibernateAccountRepositoryTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:33:47.413 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration at.fhv.se.banking.BankingApplication for test class at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests
+17:33:47.415 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+17:33:47.415 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@24380cf1, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@3129c938, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@7b6aa310, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@663b5642, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@28081f0, org.springframework.test.context.support.DirtiesContextTestExecutionListener@7d1ff891, org.springframework.test.context.transaction.TransactionalTestExecutionListener@5343a601, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@6f76636d, org.springframework.test.context.event.EventPublishingTestExecutionListener@697ff072, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@6b2656bc, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@251b9677, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@792ae4b2, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@6f406785, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@360a4f67, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@4fdbdfff]
+17:33:47.420 [Test worker] INFO  o.s.t.c.t.TransactionContext - Began transaction (1) for test context [DefaultTestContext@d6a8227 testClass = HibernateAccountRepositoryTests, testInstance = at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests@69ff859a, testMethod = given_account_when_add_then_fetch@HibernateAccountRepositoryTests, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@78ca9b7d testClass = HibernateAccountRepositoryTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@258e0c1a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@46bbe622, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@4df2cea2, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@7371b122, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@312510bc, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@522987b7], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@798b4de7]; rollback [true]
 Hibernate: 
     insert 
     into
@@ -230,8 +131,8 @@ Hibernate:
         accounts account0_ 
     where
         account0_.account_iban=?
-12:19:53.044 [Test worker] INFO  o.s.t.c.t.TransactionContext - Rolled back transaction for test: [DefaultTestContext@28693f2f testClass = HibernateAccountRepositoryTests, testInstance = at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests@44d90c9d, testMethod = given_account_when_add_then_fetch@HibernateAccountRepositoryTests, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@180e0d8a testClass = HibernateAccountRepositoryTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@668b9317, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@37a1b341, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@795c653a, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@1b2d60da, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@99906f, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@384cd7cf], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
-12:19:53.048 [Test worker] INFO  o.s.t.c.t.TransactionContext - Began transaction (1) for test context [DefaultTestContext@28693f2f testClass = HibernateAccountRepositoryTests, testInstance = at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests@44b4f733, testMethod = given_accounts_when_add_and_forcustomer_then_fetch@HibernateAccountRepositoryTests, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@180e0d8a testClass = HibernateAccountRepositoryTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@668b9317, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@37a1b341, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@795c653a, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@1b2d60da, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@99906f, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@384cd7cf], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@141207f7]; rollback [true]
+17:33:47.473 [Test worker] INFO  o.s.t.c.t.TransactionContext - Rolled back transaction for test: [DefaultTestContext@d6a8227 testClass = HibernateAccountRepositoryTests, testInstance = at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests@69ff859a, testMethod = given_account_when_add_then_fetch@HibernateAccountRepositoryTests, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@78ca9b7d testClass = HibernateAccountRepositoryTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@258e0c1a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@46bbe622, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@4df2cea2, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@7371b122, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@312510bc, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@522987b7], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
+17:33:47.475 [Test worker] INFO  o.s.t.c.t.TransactionContext - Began transaction (1) for test context [DefaultTestContext@d6a8227 testClass = HibernateAccountRepositoryTests, testInstance = at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests@11a43e9, testMethod = given_accounts_when_add_and_forcustomer_then_fetch@HibernateAccountRepositoryTests, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@78ca9b7d testClass = HibernateAccountRepositoryTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@258e0c1a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@46bbe622, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@4df2cea2, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@7371b122, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@312510bc, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@522987b7], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@798b4de7]; rollback [true]
 Hibernate: 
     insert 
     into
@@ -317,7 +218,7 @@ Hibernate:
         accounts account0_ 
     where
         account0_.account_owner_id=?
-12:19:53.067 [Test worker] INFO  o.s.t.c.t.TransactionContext - Rolled back transaction for test: [DefaultTestContext@28693f2f testClass = HibernateAccountRepositoryTests, testInstance = at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests@44b4f733, testMethod = given_accounts_when_add_and_forcustomer_then_fetch@HibernateAccountRepositoryTests, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@180e0d8a testClass = HibernateAccountRepositoryTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@668b9317, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@37a1b341, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@795c653a, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@1b2d60da, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@99906f, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@384cd7cf], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
+17:33:47.493 [Test worker] INFO  o.s.t.c.t.TransactionContext - Rolled back transaction for test: [DefaultTestContext@d6a8227 testClass = HibernateAccountRepositoryTests, testInstance = at.fhv.se.banking.infrastructure.db.HibernateAccountRepositoryTests@11a43e9, testMethod = given_accounts_when_add_and_forcustomer_then_fetch@HibernateAccountRepositoryTests, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@78ca9b7d testClass = HibernateAccountRepositoryTests, locations = '{}', classes = '{class at.fhv.se.banking.BankingApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@258e0c1a, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@46bbe622, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@4df2cea2, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@7371b122, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@312510bc, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@522987b7], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
 </pre>
 </span>
 </div>
@@ -329,7 +230,7 @@ Hibernate:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.0.2</a> at Nov 11, 2021, 12:19:57 PM</p>
+<a href="http://www.gradle.org">Gradle 7.0.2</a> at Nov 15, 2021, 5:33:53 PM</p>
 </div>
 </div>
 </body>

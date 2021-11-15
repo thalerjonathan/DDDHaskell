@@ -6,8 +6,7 @@ import Data.MonadicStreamFunction
 import Data.MonadicStreamFunction.InternalCore
 import Data.Text
 import Data.Time.Clock
-import Domain.Customer (CustomerId (CustomerId))
-import Data.UUID.V4 (nextRandom)
+import Domain.Customer (CustomerId)
 
 newtype Iban = Iban Text deriving Show
 type Money = Double
@@ -37,8 +36,6 @@ data AccountDomainEvent
 
 data AccountLang a
   = ReadTXLines ([TXLine] -> a)
-  | ReadOwner (CustomerId -> a)
-  | ReadIban (Iban -> a)
   | NewTXLine Money Iban Text Text a
   | EmitEvent AccountDomainEvent a
   deriving Functor 
@@ -63,23 +60,18 @@ execCommands a cmds = do
   return (ret, es)
 
 account :: CustomerId -> Iban -> Account
-account cid ib = feedback s0 (proc (cmd, s) -> do
-    ret <- arrM handleCommand -< cmd
+account owner iban = feedback s0 (proc (cmd, s) -> do
+    ret <- arrM (handleCommand owner iban) -< cmd
     returnA -< (ret, s))
   where
-    s0 = AccountState cid ib []
+    -- TODO: the MSF is useless atm 
+    s0 = AccountState owner iban []
 
 txLines :: AccountProgram [TXLine]
 txLines = liftF (ReadTXLines id)
 
 newTxLine :: Money -> Iban -> Text -> Text -> AccountProgram ()
 newTxLine m i name ref = liftF (NewTXLine m i name ref ())
-
-owner :: AccountProgram CustomerId
-owner = liftF (ReadOwner id)
-
-iban :: AccountProgram Iban
-iban = liftF (ReadIban id)
 
 emitEvent :: AccountDomainEvent -> AccountProgram ()
 emitEvent evt = liftF (EmitEvent evt ())
@@ -90,54 +82,44 @@ balance = Prelude.foldr (\(TXLine m _ _ _ _) acc -> acc + m) 0
 overdraftLimit :: Double
 overdraftLimit = -1000
 
-handleCommand :: AccountCommand -> AccountProgram (Maybe AccountCommandResult)
-handleCommand (Withdraw amount) = do
+handleCommand :: CustomerId 
+              -> Iban 
+              -> AccountCommand
+              -> AccountProgram (Maybe AccountCommandResult)
+handleCommand _ iban (Withdraw amount)  = do
   bal <- balance <$> txLines
   if bal - amount < overdraftLimit
     then do
       let ret = AccountException "Cannot overdraw Giro account by more than -1000!"
       return $ Just ret
     else do
-      i <- iban
-      newTxLine (-amount) i "Withdraw" "Withdraw" 
+      newTxLine (-amount) iban "Withdraw" "Withdraw" 
       return Nothing
-handleCommand (Deposit amount) = do
-  i <- iban
-  newTxLine amount i "Deposit" "Deposit" 
+handleCommand _ iban (Deposit amount) = do
+  newTxLine amount iban "Deposit" "Deposit" 
   return Nothing
-handleCommand (TransferTo toIban amount name ref) = do
-  myIban <- iban
-  o <- owner
+handleCommand owner iban (TransferTo toIban amount name ref) = do
   -- TODO: wrong data so far, use correct
-  emitEvent $ TransferSent amount ref o o myIban toIban
+  emitEvent $ TransferSent amount ref owner owner iban toIban
   newTxLine (-amount) toIban name ref
   return Nothing
-handleCommand (ReceiveFrom fromIban amount name ref) = do
-  myIban <- iban
-  o <- owner
+handleCommand owner iban (ReceiveFrom fromIban amount name ref) = do
   -- TODO: wrong data so far, use correct
-  emitEvent $ TransferFailed "TestError" amount ref o o myIban fromIban
+  emitEvent $ TransferFailed "TestError" amount ref owner owner iban fromIban
   newTxLine amount fromIban name ref
   return Nothing
-handleCommand GetBalance = do
+handleCommand _ _ GetBalance = do
   Just . ReturnBalance . balance <$> txLines
-handleCommand GetOwner = do
-  Just . ReturnOwner <$> owner
-handleCommand GetIban = do
-  Just . ReturnIban <$> iban
+handleCommand owner _ GetOwner = do
+  return $ Just (ReturnOwner owner)
+handleCommand _ iban GetIban = do
+  return $ Just (ReturnIban iban)
 
 interpret :: AccountProgram a -> [AccountDomainEvent] -> IO (a, [AccountDomainEvent])
 interpret (Pure a) acc = return (a, Prelude.reverse acc)
 interpret (Free (ReadTXLines contF)) acc = do
   putStrLn "ReadTXLines"
   interpret (contF []) acc
-interpret (Free (ReadOwner contF)) acc = do
-  putStrLn "ReadOwner"
-  uuid <- nextRandom
-  interpret (contF (CustomerId uuid)) acc
-interpret (Free (ReadIban contF)) acc = do
-  putStrLn "ReadIban"
-  interpret (contF (Iban "AT12 12345 01234567890")) acc
 interpret (Free (NewTXLine m i name ref cont)) acc = do
   putStrLn "NewTXLine"
   t <- getCurrentTime
