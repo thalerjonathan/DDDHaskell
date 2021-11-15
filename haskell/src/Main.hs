@@ -9,7 +9,7 @@ import Control.Monad.Except
 import Data.Either.Combinators
 import Infrastructure.Cache.AppCache
 
-import qualified Infrastructure.Web.App as App
+import qualified Infrastructure.Web.Banking as Banking
 import qualified Infrastructure.Web.Server as Server
 import qualified Infrastructure.DB.MySQLPool as MySQLPool
 import qualified Infrastructure.DB.DbConfig as DbCfg
@@ -55,7 +55,7 @@ main = do
       putStrLn $ "Account emitted DomainEvents: " ++ show es
       putStrLn $ "Account returned: " ++ show rets
 
-      Server.startApp (App.banking cache dbPool)
+      Server.startServer (Banking.banking cache dbPool)
 
 -- TODO: https://www.fpcomplete.com/blog/2016/11/exceptions-best-practices-haskell/
 -- TODO: https://www.fpcomplete.com/blog/2018/04/async-exception-handling-haskell/

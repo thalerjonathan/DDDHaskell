@@ -11,6 +11,7 @@ module View.Rest.Handlers
 import Servant
 import Data.Swagger
 import Data.Text
+import Control.Monad.IO.Class
 
 import qualified View.Rest.Api as Api
 
@@ -22,10 +23,13 @@ import Infrastructure.DB.MySQLPool
 -- TODO: use template haskell to annotate functions with REST endpoints just like in Spring
 -- and generate the REST API and all code for handling it automatically
 -- https://wiki.haskell.org/A_practical_Template_Haskell_Tutorial#:~:text=Template%20Haskell%20(TH)%20is%20the,the%20results%20of%20their%20execution.
+-- TODO: put Servant API definition directly here
 handleAllCustomers :: AppCache
                    -> MySqlPool 
                    -> Handler [Api.CustomerDetailsDTO]
-handleAllCustomers _cache _dbPool = undefined
+handleAllCustomers _cache _dbPool = do
+  liftIO $ print ("handleAllCustomers" :: String)
+  return []
 
 handleCustomer :: AppCache
                -> MySqlPool

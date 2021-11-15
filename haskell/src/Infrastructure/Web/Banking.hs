@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings  #-}
 {-# LANGUAGE DataKinds          #-}
 {-# LANGUAGE TypeOperators      #-}
-module Infrastructure.Web.App 
+module Infrastructure.Web.Banking 
   ( banking
   ) where
 

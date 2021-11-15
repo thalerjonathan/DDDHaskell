@@ -60,7 +60,7 @@ executable DDDHaskell
                     , Infrastructure.DB.DbConfig
                     , Infrastructure.DB.BankingDb
                     , Infrastructure.DB.MySQLPool
-                    , Infrastructure.Web.App 
+                    , Infrastructure.Web.Banking 
                     , Infrastructure.Web.Server
                     , View.Rest.Api
                     , View.Rest.Handlers 

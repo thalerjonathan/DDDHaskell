@@ -1,5 +1,5 @@
 module Infrastructure.Web.Server
-  ( startApp 
+  ( startServer
   ) where
 
 import Network.Wai
@@ -10,5 +10,5 @@ port :: Int
 port = 8080
 
 -- developement always over normal HTTP
-startApp :: Application -> IO ()
-startApp = run port
+startServer :: Application -> IO ()
+startServer = run port

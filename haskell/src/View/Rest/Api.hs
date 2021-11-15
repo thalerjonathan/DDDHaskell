@@ -76,16 +76,12 @@ instance ToSchema TXLineDTO where
 instance ToSchema CommandResponse where
   declareNamedSchema proxy = genericDeclareNamedSchema defaultSchemaOptions proxy
 
--- BasicAuth User
-newtype AuthUser = AuthUser { authUserName :: Text } deriving (Eq, Show)
-
--- Users
-type GetAllCustomers  = "/rest/customers/all" :> Get '[JSON] [CustomerDetailsDTO]
-type GetCustomer = "/rest/customer/" :> Capture ":customerId" Text :> Get '[JSON] CustomerDTO
-type GetAccount = "/rest/account/" :> Capture ":accountIban" Text :> Get '[JSON] AccountDTO
-type PutDeposit = "/rest/account/" :> Capture ":accountIban" Text :> "deposit" :> Capture ":amount" Double :> Put '[JSON] CommandResponse
-type PutWithdraw = "/rest/account/" :> Capture ":accountIban" Text :> "withdraw" :> Capture ":amount" Double :> Put '[JSON] CommandResponse
-type PutTransfer = "/rest/account/" :> Capture ":fromIban" Text :> "transfer" :> Capture ":toIban" Text :> Capture ":amount" Double :> Capture ":reference" Text :> Put '[JSON] CommandResponse
+type GetAllCustomers  = "rest" :> "customer" :> "all" :> Get '[JSON] [CustomerDetailsDTO]
+type GetCustomer      = "rest" :> "customer" :> Capture ":id" Text :> Get '[JSON] CustomerDTO
+type GetAccount       = "rest" :> "account" :> Capture ":iban" Text :> Get '[JSON] AccountDTO
+type PutDeposit       = "rest" :> "account" :> Capture ":iban" Text :> "deposit" :> Capture ":amount" Double :> Put '[JSON] CommandResponse
+type PutWithdraw      = "rest" :> "account" :> Capture ":iban" Text :> "withdraw" :> Capture ":amount" Double :> Put '[JSON] CommandResponse
+type PutTransfer      = "rest" :> "account" :> Capture ":fromIban" Text :> "transfer" :> Capture ":toIban" Text :> Capture ":amount" Double :> Capture ":reference" Text :> Put '[JSON] CommandResponse
 
 type BankingRestApi 
   = GetAllCustomers 
@@ -104,7 +100,6 @@ type BankingApi  = (SwaggerApi
                   :<|> PutDeposit
                   :<|> PutWithdraw
                   :<|> PutTransfer)
-                  -- :<|> Raw)
 
 bankingRestApi :: Proxy BankingRestApi
 bankingRestApi = Proxy
