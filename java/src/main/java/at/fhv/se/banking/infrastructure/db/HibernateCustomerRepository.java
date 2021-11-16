@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import at.fhv.se.banking.domain.model.Customer;
 import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.repositories.CustomerRepository;
-import at.fhv.se.banking.infrastructure.db.utils.Utils;
 
 @Component
 public class HibernateCustomerRepository implements CustomerRepository {
@@ -26,7 +25,7 @@ public class HibernateCustomerRepository implements CustomerRepository {
         TypedQuery<Customer> q = this.em.createQuery("FROM Customer c WHERE c.customerId = :cId", Customer.class);
         q.setParameter("cId", cId);
 
-        return Utils.getOptionalResult(q);
+        return q.getResultStream().findFirst();
     }
 
     @Override

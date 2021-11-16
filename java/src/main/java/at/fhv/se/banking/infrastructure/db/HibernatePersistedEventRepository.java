@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import at.fhv.se.banking.domain.events.DomainEvent;
 import at.fhv.se.banking.domain.repositories.EventRepository;
 import at.fhv.se.banking.infrastructure.db.entities.PersistedEvent;
-import at.fhv.se.banking.infrastructure.db.utils.Utils;
 
 @Component
 public class HibernatePersistedEventRepository implements EventRepository {
@@ -47,7 +46,7 @@ public class HibernatePersistedEventRepository implements EventRepository {
 		query.setParameter("processed", false);
 		query.setMaxResults(1);
 
-		return Utils.getOptionalResult(query);
+		return query.getResultStream().findFirst();
     }
 
     @Override

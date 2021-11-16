@@ -13,7 +13,6 @@ import at.fhv.se.banking.domain.model.CustomerId;
 import at.fhv.se.banking.domain.model.account.Account;
 import at.fhv.se.banking.domain.model.account.Iban;
 import at.fhv.se.banking.domain.repositories.AccountRepository;
-import at.fhv.se.banking.infrastructure.db.utils.Utils;
 
 @Component
 public class HibernateAccountRepository implements AccountRepository {
@@ -34,7 +33,7 @@ public class HibernateAccountRepository implements AccountRepository {
         TypedQuery<Account> q = this.em.createQuery("FROM Account a WHERE a.iban = :iban", Account.class);
         q.setParameter("iban", iban);
 
-        return Utils.getOptionalResult(q);
+        return q.getResultStream().findFirst();
     }
 
     @Override
